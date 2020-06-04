@@ -1,0 +1,42 @@
+#inst-container {
+    font-family: 'Average Sans';
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 800px;
+}
+
+#text-top-container, #text-bottom-container {
+    padding: 20px;
+}
+
+#canvas-mid-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.instruction-img {
+    height: 200px;
+}
+
+#inst-button-container {
+    text-align: center;
+    padding: 20px;
+    font-family: 'Average Sans';
+}
+
+#next-inst {
+    text-decoration: none;
+    background-color: #4CAF50;
+    border: 2px solid #4CAF50;
+    color: white;
+    margin: 4px 2px;
+    padding: 8px 16px;
+    font-size: 16px;
+}
+
+#next-inst:hover {
+    background-color: #4CAF50;
+    color: black;
+}

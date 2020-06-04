@@ -1,0 +1,34 @@
+<!--
+    HTML stub for collecting predictions during each trial.
+    This skeleton gets loaded in exp.js during the prediction phase of each trial.
+    Images and text specific to each trial are dynamically loaded at that time.
+-->
+
+<div id="prediction-container">
+        <div id="prediction-banner">Here's a new lure combination:</div>
+        <div id="prediction-shape-container">
+            <canvas id="prediction-shape-canvas"></canvas>
+        </div>
+        <div id="prediction-response-banner"><i>Do you think it will catch fish?</i></div>
+        <div id="prediction-response-checkbox-container">
+            <label class="custom-radio">Yes
+                <input type="radio" name="prediction" value="1">
+                <span class="checkmark"></span>
+            </label>
+            <label class="custom-radio">No
+                <input type="radio" name="prediction" value="0">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div id="prediction-confidence-banner"><i>How confident are you?</i></div>
+        <div id="prediction-confidence-scale-container">
+            <input type="range" class="slider" id="prediction-slider" min="1" max="7" step="1">
+            <div class="sliderticks" id="prediction-sliderticks">
+                <p>1</p><p>2</p><p>3</p><p>4</p><p>5</p><p>6</p><p>7</p>
+            </div>
+            <div class="sliderlabels" id="prediction-sliderlabels">
+                <p><i>Not sure</i></p>
+                <p><i>Very sure</i></p>
+            </div>
+        </div>
+</div>

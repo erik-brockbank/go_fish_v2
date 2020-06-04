@@ -1,0 +1,304 @@
+#exp-container {
+    font-family: 'Average Sans';
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 800px;
+}
+
+#exp-button-container {
+    text-align: center;
+    padding: 20px;
+    font-family: 'Average Sans';
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+#next-exp {
+    text-decoration: none;
+    background-color: #4CAF50;
+    border: 2px solid #4CAF50;
+    color: white;
+    margin: 4px 2px;
+    padding: 8px 16px;
+    font-size: 16px;
+}
+
+#next-exp:hover {
+    background-color: #4CAF50;
+    color: black;
+}
+
+#obs-container {
+    font-family: 'Average Sans';
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+}
+
+#obs-item-container {
+    height: 140px;
+}
+
+
+/* Note the structure of the observations lined up depends on the width and height set here*/
+.obs-item {
+    width: 80px;
+    height: 120px;
+    margin: 7px;
+    float: left;
+    background: #d3d3d3;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.obs-item-canvas {
+    width: 80px;
+    height: 120px;
+}
+
+#obs-outcome-container {
+    height: 50px;
+}
+
+.obs-outcome {
+    width: 80px;
+    padding: 0px 9.5px 0px 9.5px;
+    float: left;
+    text-align: center;
+}
+
+.obs-outcome-img {
+    width: 60px;
+}
+
+#evidence-shape-canvas, #prediction-shape-canvas {
+    height: 200px;
+}
+
+.evidence-outcome-img {
+    height: 150px;
+    padding-left: 20px;
+}
+
+#evidence-response, #generate-response {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+#prediction-response-checkbox-container, #prediction-confidence-scale-container,
+#eval-rule {
+    padding: 20px;
+}
+
+#eval-slider-container {
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+#prediction-confidence-scale-container {
+    margin-bottom: 40px;
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+  }
+
+#prediction-confidence-scale-container, #eval-slider-container {
+    width: 500px;
+}
+
+.memory-test-container {
+    padding-top: 20px;
+}
+
+/* Note the width and margin here are what hold together the layout in combination
+ * with the left float and the right flot of the img container. It's a bit delicate...
+ */
+.memory-probe {
+    width: 160px;
+    margin: 20px;
+    float: left;
+}
+
+.memory-canvas-container {
+    float: right;
+    padding-right: 20px;
+}
+
+.memory-item-canvas {
+    width: 60px;
+}
+
+.memory-checkbox-container {
+    margin-top: 30px;
+}
+
+/* Formatting for judgment task */
+#judgment-container {
+    height: 600px; /* this is a little sketchy but the only way to keep the Next button from crowding up */
+}
+
+.generate-probe {
+    width: 180px;
+    margin: 25px 10px 10px 10px;
+    float: left;
+}
+
+.generate-checkbox-img {
+    width: 50px;
+}
+
+.generate-item-container {
+    float: right;
+    padding-right: 20px;
+    padding-top: 15px;
+}
+
+.generate-checkbox-container {
+    margin-top: 20px;
+}
+
+
+#prediction-sliderticks p {
+    font-size: 18px;
+}
+#prediction-sliderlabels p {
+    font-size: 18px;
+}
+
+#generate-sliderticks p {
+    font-size: 16px;
+}
+#generate-sliderlabels p {
+    font-size: 14px;
+}
+
+
+
+/*
+ * This code taken from top response here:
+ * https://stackoverflow.com/questions/33699852/show-tick-positions-in-custom-range-input
+ */
+.sliderticks {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px; /* customized this to look best */
+  }
+
+.sliderticks p {
+    display: flex;
+    justify-content: center;
+    width: 2px; /* customized this to look best */
+    background: #D3D3D3;
+    height: 10px;
+    line-height: 40px;
+    margin: 0 0 20px 0;
+}
+
+/* This should match sliderticks above */
+.sliderlabels {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.sliderlabels p {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 0 0;
+}
+
+
+/* This code for custom radio buttons taken from here:
+ * https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
+ */
+/* The container */
+.custom-radio {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+/* Hide the browser's default radio button */
+.custom-radio input {
+    position: absolute;
+    opacity: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
+#fish-icon-checkmark {
+    margin-top: 10px; /* I added this to the checkmark styling above */
+}
+
+/* On mouse-over, add a grey background color */
+.custom-radio:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.custom-radio input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.custom-radio input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.custom-radio .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
