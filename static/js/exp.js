@@ -248,7 +248,7 @@ Experiment.prototype.showPrediction = function() {
                 if (that.trial_index >= that.trial_array.length) {
                     console.log("Completed all trials.");
                     that.data["trial_end_ts"] = new Date().getTime();
-                    that.showRuleGeneration();
+                    that.showJudgmentTask();
                 } else {
                     that.showEvidence();
                 }
@@ -259,40 +259,11 @@ Experiment.prototype.showPrediction = function() {
 };
 
 
-Experiment.prototype.showRuleGeneration = function() {
-    console.log("Collecting rule generation.");
-    // Instantiate relevant fields in data object
-    this.data["generation_data"] = {"input_free_response": ""};
-    this.data["generation_data"]["generation_start_ts"] = new Date().getTime();
-    // Update html for rule generation
-    var that = this;
-    $("#obs-container").hide(); // TODO make separate function to clear out full trial stuff (observations etc.)
-    $("#exp-container").empty();
-    $("#next-exp").hide();
-    $("#exp-container").load(this.generate_htmlpath, function() {
-        // Update button response
-        $("#next-exp").show();
-        $("#next-exp").unbind().click(function() {
-            // process whether they wrote anything here (prevent from clicking if they didn't write anything)
-            var resp = $("#generate-response").val();
-            if (resp === "") {
-                alert("Please respond to the prompt!");
-            } else {
-                // Add what they wrote to experiment data object and track time on task
-                that.data["generation_data"]["input_free_response"] = resp;
-                that.data["generation_data"]["generation_end_ts"] = new Date().getTime();
-                that.showJudgmentTask();
-            }
-        });
-    });
-};
-
-
 Experiment.prototype.showJudgmentTask = function() {
     console.log("Collecting rule judgments.");
     // Instantiate relevant fields in data object
-    this.data["generation_data"]["judgment_task"] = [];
-    this.data["generation_data"]["judgment_start_ts"] = new Date().getTime();
+    this.data["generation_data"] = {"judgment_task": [],
+                                    "judgment_start_ts": new Date().getTime()};
     // Update html for rule judgment task
     var that = this;
     $("#exp-container").empty();
@@ -360,7 +331,8 @@ Experiment.prototype.showEvaluationTask = function() {
     this.data["evaluation_data"]["eval_ratings"].push({"eval_index": this.eval_index + 1,
                                                         "eval_n_start_ts": eval_n_start_ts,
                                                         "rule_text": ruleEval.rule_text,
-                                                        "is_target_rule": ruleEval.is_target});
+                                                        "category": ruleEval.category,
+                                                        "evidence": ruleEval.evidence});
     // Update html for evaluation task
     var that = this;
     $("#exp-container").empty();
@@ -376,6 +348,7 @@ Experiment.prototype.showEvaluationTask = function() {
             var slider_resp = $("#eval-slider").val();
             that.data["evaluation_data"]["eval_ratings"][that.eval_index]["input_rule_rating"] = parseInt(slider_resp);
             that.data["evaluation_data"]["eval_ratings"][that.eval_index]["eval_n_end_ts"] = new Date().getTime();
+            console.log("Rule evaluation: ", parseInt(slider_resp));
             // Check whether eval task is complete and either proceed to memory task or complete next eval item
             that.eval_index += 1;
             if (that.eval_index >= that.evalArray.length) {

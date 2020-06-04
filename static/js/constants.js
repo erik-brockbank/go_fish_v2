@@ -401,31 +401,36 @@ const JUDGMENT_ARRAY = [
  *  is_target: a (bool) variable indicating whether this is the rule we are most interested in
  */
 const EVAL_ARRAY = [
-    // TODO consider including how much evidence each rule is consistent with
     {
         rule_text: "If a lure combination has a red shape or a blue shape, it will catch fish.",
-        is_target: false // 5/8
+        category: "misc",
+        evidence: 0.628 // 5/8
     },
     {
         rule_text: "If a lure combination has a diamond, it will catch fish.",
-        is_target: false // 5/8
+        category: "misc",
+        evidence: 0.628 // 5/8
     },
     {
         rule_text: "If a lure combination has a pointy shape on the bottom, it will catch fish.",
-        is_target: true // 8/8
+        category: "target",
+        evidence: 1.0 // 8/8
     },
     {
         rule_text: "There is no pattern to which lure combinations catch fish: the results are " +
             "random, but there are approximately equal numbers that catch fish and don’t.",
-        is_target: false // NA
+        category: "rand",
+        evidence: 0.0 // could be 0 or 8/8
     },
-    { // Distractor rule
+    {
         rule_text: "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",
-        is_target: false // 8/8
+        category: "distractor",
+        evidence: 1.0 // 8/8
     },
     {
         rule_text: "If a lure combination has a purple dot on at least one of the lures, it will catch fish.",
-        is_target: false // 6/8
+        category: "misc",
+        evidence: 0.75 // 6/8
     },
 ];
 
