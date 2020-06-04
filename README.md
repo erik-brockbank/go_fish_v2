@@ -1,10 +1,5 @@
 # go_fish v2
 
-## TODO
-- Add new evaluation rules, incl. high-prior "generalizable" rule
-- Add completely novel shapes to generation 2AFC task (?)
-- Add additional prediction to each trial (?)
-
 ## Changes from v1
 - Modified the hypothesis evaluation Likert scales to be in range ("Not good", "Very good") with no visible discrete tick marks, underlying scores in (1, 100)
 - Modified data writing of hypothesis evaluation to include `category` var for each rule (values include "target", "distractor", "misc") and `evidence` var for each rule noting what percent of previous evidence the rule is consistent with
