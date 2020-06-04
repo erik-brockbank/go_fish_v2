@@ -1,10 +1,10 @@
 /*
  * Startup library for loading in html content
  * Instructions for startup:
- * 1. navigate to go_fish directory
+ * 1. navigate to go_fish_v2 directory
  * 2. python -m http.server {port}
- * 3. navigate to http://localhost:{port}/go_fish.html for experiment version
- *      http://localhost:{port}/go_fish.html?&mode=test for test version
+ * 3. navigate to http://localhost:{port}/go_fish_v2.html for experiment version
+ *      http://localhost:{port}/go_fish_v2.html?&mode=test for test version
  * 4. Don't forget: insure that `PROD` global below is set to "test" (set to "prod") on server
  */
 
