@@ -8,8 +8,6 @@
  * 4. Don't forget: insure that `PROD` global below is set to "test" (set to "prod") on server
  */
 
-PROD = "test"; // set to "test" if running locally, "prod" otherwise
-
 
 $(window).ready(function() {
     $("body").load(HTML_LOOKUP[PROD]["consent"], function() {
@@ -31,7 +29,7 @@ loadExperiment = function() {
 
 
     console.log("Starting experiment with test = ", istest, "; control = ", control);
-    var exp = new Experiment(istest, control);
+    var exp = new Experiment(istest, control, EXPT_NAME, EXPT_VERSION);
     // Initialize experiment with global variables used throughout experiment logic
     // NB: this is cumbersome but means we avoid referencing these as global constants inside the experiment logic
     exp.initialize(htmlpath = HTML_LOOKUP[PROD]["experiment"],

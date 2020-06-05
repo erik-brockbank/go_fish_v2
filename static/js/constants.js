@@ -2,6 +2,9 @@
  * Experiment constants library
  */
 
+const EXPT_NAME = "go_fish";
+const EXPT_VERSION = 2;
+const PROD = "prod"; // set to "test" if running locally, "prod" otherwise
 
 /*
  * HTML_LOOKUP is a lookup dictionary with paths to the html files loaded dynamically during the experiment
@@ -9,16 +12,16 @@
 const HTML_LOOKUP = { // lookup table with human-understandable html file keys and the path to those files as vals
     // Prod pathways //
     "prod": {
-        "consent": "/go_fish/static/html/consent.html",
-        "instructions": "/go_fish/static/html/inst.html",
-        "experiment": "/go_fish/static/html/exp.html",
-        "evidence": "/go_fish/static/html/evidence.html",
-        "evidence_resp": "/go_fish/static/html/evidence_response.html",
-        "prediction": "/go_fish/static/html/prediction.html",
-        "generate": "/go_fish/static/html/generate_input.html",
-        "judgment": "/go_fish/static/html/generate_task.html",
-        "evaluation": "/go_fish/static/html/evaluate.html",
-        "memory": "/go_fish/static/html/memory.html"
+        "consent": "/go_fish_v2/static/html/consent.html",
+        "instructions": "/go_fish_v2/static/html/inst.html",
+        "experiment": "/go_fish_v2/static/html/exp.html",
+        "evidence": "/go_fish_v2/static/html/evidence.html",
+        "evidence_resp": "/go_fish_v2/static/html/evidence_response.html",
+        "prediction": "/go_fish_v2/static/html/prediction.html",
+        "generate": "/go_fish_v2/static/html/generate_input.html",
+        "judgment": "/go_fish_v2/static/html/generate_task.html",
+        "evaluation": "/go_fish_v2/static/html/evaluate.html",
+        "memory": "/go_fish_v2/static/html/memory.html"
     },
     // Local pathways //
     "test": {

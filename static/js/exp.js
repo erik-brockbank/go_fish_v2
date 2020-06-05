@@ -16,9 +16,11 @@
  * very little initialization. Instead, the initialize() function handles the nitty gritty of
  * assigning various global states.
  */
-Experiment = function(istest, control) {
+Experiment = function(istest, control, name, version) {
     this.istest = istest; // `test` experiments simulate a real experiment but write results as TEST_{exptid}.json
     this.control = control; // `control` holds condition: TRUE if control, else FALSE
+    this.name = name; // `name` used at time of data write
+    this.version = version; // `version` allows for easy tracking of multiple versions
     var uid = new Date().getTime();
     if (istest) {this.exptid = "TEST_" + uid;}
     else {this.exptid = "user_" + uid;}
@@ -432,8 +434,8 @@ Experiment.prototype.endExperiment = function() {
 Experiment.prototype.writeData = function() {
     console.log("Writing experiment data to json");
     var expt = {
-        "exptname": "go_fish", // name of experiment for easy reference
-        "exptversion": "1" // version number for the broader experiment run (in case we modify subsequently)
+        "exptname": this.name, // name of experiment for easy reference
+        "exptversion": this.version // version number for the broader experiment run (in case we modify subsequently)
     };
     var client_trials = {
         "test": this.istest,
