@@ -266,6 +266,7 @@ Experiment.prototype.showJudgmentTask = function() {
                                     "judgment_start_ts": new Date().getTime()};
     // Update html for rule judgment task
     var that = this;
+    $("#obs-container").hide(); // TODO make separate function to clear out full trial stuff (observations etc.)
     $("#exp-container").empty();
     $("#next-exp").hide();
     $("#exp-container").load(this.judgment_htmlpath, function() {

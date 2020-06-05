@@ -398,17 +398,23 @@ const JUDGMENT_ARRAY = [
  * during the evaluation task of the experiment.
  * Each element contains:
  *  rule_text: the string containing the rule to be evaluated
- *  is_target: a (bool) variable indicating whether this is the rule we are most interested in
+ *  category: a string variable indicating what kind of rule this is
+ *  evidence: proportion of the 8 evidence trials that this rule is consistent with
  */
 const EVAL_ARRAY = [
     {
-        rule_text: "If a lure combination has a red shape or a blue shape, it will catch fish.",
+        rule_text: "If a lure combination has a blue shape, it will catch fish.",
         category: "misc",
-        evidence: 0.628 // 5/8
+        evidence: 0.5 // 4/8 (2/4 confirm)
     },
     {
-        rule_text: "If a lure combination has a diamond, it will catch fish.",
-        category: "misc",
+        rule_text: "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",
+        category: "distractor",
+        evidence: 1.0 // 8/8
+    },
+    {
+        rule_text: "If a lure combination has colors that are more visible under water (red, yellow), it will catch fish.",
+        category: "abstract_color",
         evidence: 0.628 // 5/8
     },
     {
@@ -417,21 +423,26 @@ const EVAL_ARRAY = [
         evidence: 1.0 // 8/8
     },
     {
+        rule_text: "If a lure combination has a four-pointed star, it will catch fish.",
+        category: "misc",
+        evidence: 0.5 // 4/8 (but only 1/4 confirm)
+    },
+    {
+        rule_text: "If a lure combination has a yellow or red shape with a purple dot, it will catch fish",
+        category: "misc",
+        evidence: 0.875 // 7/8 (but 4/4 confirm)
+    },
+    {
+        rule_text: "If a lure combination is shaped more like a fish, it will catch fish.",
+        category: "abstract_shape",
+        evidence: 0.375 // 3/8 but this is a bit subjective. Thinking trials 1, 2, 4, 5 (round top shape) look like fish; 1, 4, 5 catch fish
+    },
+    {
         rule_text: "There is no pattern to which lure combinations catch fish: the results are " +
             "random, but there are approximately equal numbers that catch fish and don’t.",
         category: "rand",
         evidence: 0.0 // could be 0 or 8/8
-    },
-    {
-        rule_text: "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",
-        category: "distractor",
-        evidence: 1.0 // 8/8
-    },
-    {
-        rule_text: "If a lure combination has a purple dot on at least one of the lures, it will catch fish.",
-        category: "misc",
-        evidence: 0.75 // 6/8
-    },
+    }
 ];
 
 
