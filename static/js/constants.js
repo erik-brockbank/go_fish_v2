@@ -418,7 +418,7 @@ const EVAL_ARRAY = [
     {
         rule_text: "If a lure combination has colors that are more visible under water (red, yellow), it will catch fish.",
         category: "abstract_color",
-        evidence: 0.628 // 5/8
+        evidence: 0.628 // 5/8 (4/4 confirm)
     },
     {
         rule_text: "If a lure combination has a pointy shape on the bottom, it will catch fish.",
@@ -515,7 +515,7 @@ const MEMORY_ARRAY = [
             bottom_color: "blue",
             bottom_texture: false
         },
-        in_expt: 1,
+        in_expt: 0,
         catches_fish: 0
     },
     { // Evidence lure #6
