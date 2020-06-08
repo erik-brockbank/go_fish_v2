@@ -1,0 +1,2 @@
+expt_version,subjID,is_test,is_control,instruction_start_ts,instruction_end_ts,expt_start_ts,expt_end_ts,judgment_start_ts,judgment_end_ts,evaluation_start_ts,evaluation_end_ts,memory_start_ts,memory_end_ts
+2,user_1591397297490,False,False,1591397297490,1591397299896,1591397297490,1591397571418,1591397374338,1591397405487,1591397405488,1591397535515,1591397535515,1591397571417
