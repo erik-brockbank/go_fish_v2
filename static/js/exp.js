@@ -34,9 +34,9 @@ Experiment = function(istest, control, name, version) {
  * that sub-functions below don't need to know about
  */
 Experiment.prototype.initialize = function(htmlpath, inst_htmlpath, evidence_htmlpath, evidence_resp_htmlpath,
-        prediction_htmlpath, generate_htmlpath, judgment_htmlpath, eval_htmlpath, memory_htmlpath,
+        prediction_htmlpath, eval_htmlpath, memory_htmlpath,
         fish_img_path, no_fish_img_path, fish_img_path_small, no_fish_img_path_small,
-        instruction_array, trial_array, judgment_array, eval_array, memory_array,
+        instruction_array, trial_array, eval_array, memory_array,
         fish_caught_msg, no_fish_msg, fish_explain_msg, no_fish_explain_msg,
         fish_describe_msg, no_fish_describe_msg, end_game_msg) {
     // file path variables
@@ -45,8 +45,6 @@ Experiment.prototype.initialize = function(htmlpath, inst_htmlpath, evidence_htm
     this.evidence_htmlpath = evidence_htmlpath; // path to html file for displaying evidence
     this.evidence_resp_htmlpath = evidence_resp_htmlpath; // path to html file for responding to evidence
     this.prediction_htmlpath = prediction_htmlpath; // path to html file for collecting prediction data
-    this.generate_htmlpath = generate_htmlpath; // path to html file for hypothesis generation task
-    this.judgment_htmlpath = judgment_htmlpath; // path to html file for judgment task
     this.eval_htmlpath = eval_htmlpath; // path to html file for evaluation task
     this.memory_htmlpath = memory_htmlpath; // path to html file for memory task
     this.fish_img_path = fish_img_path; // path to image used when fish caught
@@ -57,7 +55,6 @@ Experiment.prototype.initialize = function(htmlpath, inst_htmlpath, evidence_htm
     // global objects
     this.instruction_array = instruction_array; // array object with text and images used for instructions
     this.trial_array = trial_array; // array object with lures used for trials
-    this.judgment_array = judgment_array; // array object with lures used for judgment task
     this.evalArray = eval_array; // array object with rules used in the evaluation task
     this.memory_array = memory_array; // array object with lures used in the memory task
 
@@ -250,7 +247,9 @@ Experiment.prototype.showPrediction = function() {
                 if (that.trial_index >= that.trial_array.length) {
                     console.log("Completed all trials.");
                     that.data["trial_end_ts"] = new Date().getTime();
-                    that.showJudgmentTask();
+                    // Shuffle eval array before beginning eval
+                    that.evalArray = _.shuffle(that.evalArray);
+                    that.showEvaluationTask();
                 } else {
                     that.showEvidence();
                 }
@@ -258,65 +257,6 @@ Experiment.prototype.showPrediction = function() {
         });
     });
 
-};
-
-
-Experiment.prototype.showJudgmentTask = function() {
-    console.log("Collecting rule judgments.");
-    // Instantiate relevant fields in data object
-    this.data["generation_data"] = {"judgment_task": [],
-                                    "judgment_start_ts": new Date().getTime()};
-    // Update html for rule judgment task
-    var that = this;
-    $("#obs-container").hide(); // TODO make separate function to clear out full trial stuff (observations etc.)
-    $("#exp-container").empty();
-    $("#next-exp").hide();
-    $("#exp-container").load(this.judgment_htmlpath, function() {
-        for (jIndex = 1; jIndex <= that.judgment_array.length; jIndex++) {
-            var jItem = that.judgment_array[jIndex - 1];
-            var shapeInfo = jItem.probe;
-            var jShape = new Lure(shapeInfo.top_shape, shapeInfo.bottom_shape,
-                shapeInfo.top_color, shapeInfo.bottom_color, shapeInfo.top_texture, shapeInfo.bottom_texture);
-            // write shape info to data object
-            that.data["generation_data"]["judgment_task"].push({"judgment_index": jIndex,
-                                                                "judgment_shape": shapeInfo,
-                                                                "judgment_catches_fish": jItem.catches_fish});
-            jShape.drawLure(canvasId = "generate-item-canvas-" + jIndex, sizeConfig = "generate"); // TODO store this ID somewhere sensible
-
-            // Set image for radio buttons (catch fish, no fish)
-            // TODO store these IDs somewhere sensible
-            $("#checkbox-fish-generate-" + jIndex).attr("src", that.fish_img_path_small);
-            $("#checkbox-no_fish-generate-" + jIndex).attr("src", that.no_fish_img_path_small);
-        }
-
-        // Update button response
-        $("#next-exp").show();
-        $("#next-exp").unbind().click(function() {
-            // Process whether they clicked anything here (prevent from clicking next if they didn't)
-            var radio_responses = [];
-            var slider_responses = [];
-            for (j = 1; j <= that.judgment_array.length; j++) {
-                var radio_resp = $("input[name='generate-" + j + "']:checked").val();
-                var slider_resp = $("#prediction-slider-" + j).val();
-                if (radio_resp !== undefined) {
-                    radio_responses.push(parseInt(radio_resp));
-                    slider_responses.push(parseInt(slider_resp));
-                }
-            }
-            // check that participant responded to all radio buttons
-            if (radio_responses.length < that.judgment_array.length) {
-                alert("Please select an answer for all the checkboxes and sliders!");
-            } else {
-                // Add selected answers to experiment data object
-                for (j = 0; j < that.data["generation_data"]["judgment_task"].length; j++) {
-                    that.data["generation_data"]["judgment_task"][j]["input_judgment"] = radio_responses[j];
-                    that.data["generation_data"]["judgment_task"][j]["input_judgment_conf"] = slider_responses[j];
-                }
-                that.data["generation_data"]["judgment_end_ts"] = new Date().getTime();
-                that.showEvaluationTask();
-            }
-        });
-    });
 };
 
 
@@ -332,6 +272,7 @@ Experiment.prototype.showEvaluationTask = function() {
     var ruleEval = this.evalArray[this.eval_index];
     // Update data with this eval object
     this.data["evaluation_data"]["eval_ratings"].push({"eval_index": this.eval_index + 1,
+                                                        "eval_id": ruleEval.id,
                                                         "eval_n_start_ts": eval_n_start_ts,
                                                         "rule_text": ruleEval.rule_text,
                                                         "category": ruleEval.category,
