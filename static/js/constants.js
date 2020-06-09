@@ -4,7 +4,7 @@
 
 const EXPT_NAME = "go_fish";
 const EXPT_VERSION = 2;
-const PROD = "prod"; // set to "test" if running locally, "prod" otherwise
+const PROD = "test"; // set to "test" if running locally, "prod" otherwise
 
 /*
  * HTML_LOOKUP is a lookup dictionary with paths to the html files loaded dynamically during the experiment
@@ -336,7 +336,7 @@ const EVAL_ARRAY = [
         evidence: 0.5 // 4/8 (but only 1/4 confirm)
     },
     {
-        rule_text: "If a lure combination has a yellow or red shape with a purple dot, it will catch fish",
+        rule_text: "If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",
         category: "misc",
         id: 6,
         evidence: 0.875 // 7/8 (but 4/4 confirm)

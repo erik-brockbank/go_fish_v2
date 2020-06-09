@@ -282,8 +282,8 @@ Experiment.prototype.showEvaluationTask = function() {
     $("#exp-container").empty();
     $("#next-exp").hide();
     $("#exp-container").load(this.eval_htmlpath, function() {
-        $("#obs-container").show(); // show observed evidence during evaluation task
         $("#eval-rule").text(ruleEval.rule_text);
+        $("#obs-container").show(); // show observed evidence during evaluation task
 
         // Update button response
         $("#next-exp").show();

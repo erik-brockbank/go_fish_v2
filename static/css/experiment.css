@@ -85,17 +85,29 @@
     padding-left: 20px;
 }
 
-#evidence-response, #generate-response {
+#evidence-response {
     margin-top: 20px;
     margin-bottom: 40px;
 }
 
-#prediction-response-checkbox-container, #prediction-confidence-scale-container,
-#eval-rule {
+#prediction-response-checkbox-container, #prediction-confidence-scale-container {
     padding: 20px;
 }
 
+#eval-content {
+    text-align: center;
+    padding-top: 25px;
+}
+
+#eval-rule {
+    display: inline-block;
+    text-align: left;
+    padding: 20px;
+    width: 500px;
+}
+
 #eval-slider-container {
+    display: inline-block;
     padding: 20px;
     margin-bottom: 40px;
 }
@@ -162,31 +174,6 @@
     margin-top: 30px;
 }
 
-/* Formatting for judgment task */
-#judgment-container {
-    height: 600px; /* this is a little sketchy but the only way to keep the Next button from crowding up */
-}
-
-.generate-probe {
-    width: 180px;
-    margin: 25px 10px 10px 10px;
-    float: left;
-}
-
-.generate-checkbox-img {
-    width: 50px;
-}
-
-.generate-item-container {
-    float: right;
-    padding-right: 20px;
-    padding-top: 15px;
-}
-
-.generate-checkbox-container {
-    margin-top: 20px;
-}
-
 
 #prediction-sliderticks p {
     font-size: 18px;
@@ -194,16 +181,6 @@
 #prediction-sliderlabels p {
     font-size: 18px;
     width: 25px;
-}
-
-#generate-sliderticks p {
-    font-size: 16px;
-}
-#generate-sliderlabels p {
-    font-size: 14px;
-    width: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
 }
 
 #evaluate-sliderlabels p {
