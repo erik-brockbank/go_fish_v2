@@ -19,18 +19,14 @@ DATA_PATH = "/Users/erikbrockbank/web/go_fish_v2/data/" # path to data files
 
 OUTPUT_FILE_SUMMARY = "01_{}_meta.csv".format(EXPERIMENT)
 OUTPUT_FILE_TRIALS = "02_{}_trials.csv".format(EXPERIMENT)
-OUTPUT_FILE_JUDGMENT = "03_{}_generation_judgment.csv".format(EXPERIMENT)
-OUTPUT_FILE_EVALUATION = "04_{}_evaluation.csv".format(EXPERIMENT)
-OUTPUT_FILE_MEMORY = "05_{}_memory.csv".format(EXPERIMENT)
+OUTPUT_FILE_EVALUATION = "03_{}_evaluation.csv".format(EXPERIMENT)
+OUTPUT_FILE_MEMORY = "04_{}_memory.csv".format(EXPERIMENT)
 
 csv_output_summary = open(OUTPUT_FILE_SUMMARY, "w")
 csvwriter_summary = csv.writer(csv_output_summary)
 
 csv_output_trials = open(OUTPUT_FILE_TRIALS, "w")
 csvwriter_trials = csv.writer(csv_output_trials)
-
-csv_output_judgment = open(OUTPUT_FILE_JUDGMENT, "w")
-csvwriter_judgment = csv.writer(csv_output_judgment)
 
 csv_output_evaluation = open(OUTPUT_FILE_EVALUATION, "w")
 csvwriter_evaluation = csv.writer(csv_output_evaluation)
@@ -49,7 +45,6 @@ for f in files:
         is_control = parsed_content["trials"]["is_control"]
         # Fetch relevant data to write to csv
         trial_data = parsed_content["trials"]["trial_data"]
-        generation_data_judgments = parsed_content["trials"]["generation_data"]["judgment_task"]
         eval_data = parsed_content["trials"]["evaluation_data"]["eval_ratings"]
         memory_data = parsed_content["trials"]["memory_data"]["memory_responses"]
 
@@ -58,7 +53,6 @@ for f in files:
             header_summary = ["expt_version", "subjID", "is_test", "is_control",
                 "instruction_start_ts", "instruction_end_ts",
                 "expt_start_ts", "expt_end_ts",
-                "judgment_start_ts", "judgment_end_ts",
                 "evaluation_start_ts", "evaluation_end_ts",
                 "memory_start_ts", "memory_end_ts"]
             csvwriter_summary.writerow(header_summary)
@@ -66,10 +60,6 @@ for f in files:
             header_trials = ["subjID", "is_control"] # init header array
             header_trials.extend(trial_data[0].keys())
             csvwriter_trials.writerow(header_trials)
-
-            header_judgment = ["subjID", "is_control"] # init header array
-            header_judgment.extend(generation_data_judgments[0].keys())
-            csvwriter_judgment.writerow(header_judgment)
 
             header_eval = ["subjID", "is_control"] # init header array
             # print(eval_data)
@@ -86,12 +76,6 @@ for f in files:
             vals = [subjID, is_control] # init data array
             vals.extend(s.values())
             csvwriter_trials.writerow(vals)
-
-        # Write generation task judgment data
-        for s in generation_data_judgments:
-            vals = [subjID, is_control] # init data array
-            vals.extend(s.values())
-            csvwriter_judgment.writerow(vals)
 
         # Write evaluation task data
         for s in eval_data:
@@ -114,8 +98,6 @@ for f in files:
                 parsed_content["trials"]["instruction_data"]["instruction_end_ts"],
                 parsed_content["trials"]["expt_start_ts"],
                 parsed_content["trials"]["expt_end_ts"],
-                parsed_content["trials"]["generation_data"]["judgment_start_ts"],
-                parsed_content["trials"]["generation_data"]["judgment_end_ts"],
                 parsed_content["trials"]["evaluation_data"]["evaluation_start_ts"],
                 parsed_content["trials"]["evaluation_data"]["evaluation_end_ts"],
                 parsed_content["trials"]["memory_data"]["memory_start_ts"],
@@ -128,6 +110,5 @@ for f in files:
 
 csv_output_summary.close()
 csv_output_trials.close()
-csv_output_judgment.close()
 csv_output_evaluation.close()
 csv_output_memory.close()

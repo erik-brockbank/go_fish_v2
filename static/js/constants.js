@@ -4,7 +4,7 @@
 
 const EXPT_NAME = "go_fish";
 const EXPT_VERSION = 2;
-const PROD = "test"; // set to "test" if running locally, "prod" otherwise
+const PROD = "prod"; // set to "test" if running locally, "prod" otherwise
 
 /*
  * HTML_LOOKUP is a lookup dictionary with paths to the html files loaded dynamically during the experiment

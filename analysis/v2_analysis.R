@@ -15,9 +15,8 @@ library(patchwork)
 # Data files
 SUMMARY_DATA = "01_go_fish_v2_meta.csv"
 TRIAL_DATA = "02_go_fish_v2_trials.csv"
-GENERATION_JUDG_DATA = "03_go_fish_v2_generation_judgment.csv"
-EVAL_DATA = "04_go_fish_v2_evaluation.csv"
-MEMORY_DATA = "05_go_fish_v2_memory.csv"
+EVAL_DATA = "03_go_fish_v2_evaluation.csv"
+MEMORY_DATA = "04_go_fish_v2_memory.csv"
 
 
 
@@ -47,17 +46,6 @@ read_trial_data = function(filepath) {
 }
 
 
-# Read in and process data from generation "judgment" (binary response) task
-read_generation_judgment_data = function(filepath) {
-  generation_judgment_data = read_csv(filepath)
-  generation_judgment_data = generation_judgment_data %>%
-    mutate(
-      condition = ifelse(is_control == TRUE, "Describe", "Explain"),
-      input_correct = (input_judgment == judgment_catches_fish))
-  return(generation_judgment_data)
-}
-
-
 # Read in and process data from rule evaluation task
 read_evaluation_data = function(filepath) {
   evaluation_data = read_csv(filepath)
@@ -76,27 +64,6 @@ read_memory_data = function(filepath) {
   return(memory_data)
 }
 
-
-# Summarize generation judgment data by participant
-get_generation_judgment_subj_summary = function(generation_judgment_data) {
-  generation_subject_summary = generation_judgment_data %>%
-    group_by(condition, subjID) %>%
-    summarize(subj_accuracy = sum(input_correct) / n())
-  return(generation_subject_summary)
-}
-
-
-# Summarize generation judgment data across participants
-get_generation_judgment_summary = function(generation_judgment_subject_summary) {
-  generation_judg_summary = generation_judgment_subject_summary %>%
-    group_by(condition) %>%
-    summarize(mean_accuracy = mean(subj_accuracy),
-              subjects = n(),
-              se_accuracy = sd(subj_accuracy) / sqrt(n()),
-              ci_lower = mean_accuracy - se_accuracy,
-              ci_upper = mean_accuracy + se_accuracy)
-  return(generation_judg_summary)
-}
 
 # Summarize evaluation data across participants and conditions for target and non-target rules
 get_evaluation_summary = function(evaluation_data) {
@@ -253,30 +220,6 @@ individ_plot_theme = theme(
   legend.key = element_rect(colour = "transparent", fill = "transparent")
 )
 
-# Bar chart of classification accuracy on binary generation judgment task by condition
-plot_generation_judgments = function(generation_judgment_summary) {
-  generation_judgment_summary %>%
-    ggplot(aes(x = condition, y = mean_accuracy, 
-               color = condition, fill = condition)) +
-    geom_bar(stat = "identity", alpha = 0.5, width = 0.5) +
-    geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.25) +
-    geom_hline(yintercept = 0.5, linetype = "dashed", size = 1) +
-    labs(x = "", y = "Mean classification accuracy") +
-    ylim(c(0, 1)) +
-    scale_color_viridis(discrete = T,
-                        name = element_blank(),
-                        # Change defaults to be blue/green instead of yellow/purple
-                        begin = 0.25,
-                        end = 0.75) +
-    scale_fill_viridis(discrete = T,
-                       name = element_blank(),
-                       # Change defaults to be blue/green instead of yellow/purple
-                       begin = 0.25,
-                       end = 0.75) +
-    individ_plot_theme +
-    theme(axis.text.x = element_blank())
-}
-
 # Bar chart of average evaluation ratings across conditions on rule evaluation task
 plot_evaluation_results = function(evaluation_summary) {
   evaluation_summary %>%
@@ -357,13 +300,10 @@ plot_time_data = function(time_summary, ylab, ymax, title) {
 # Read in data
 summary_data = read_summary_data(SUMMARY_DATA)
 trial_data = read_trial_data(TRIAL_DATA)
-generation_judgment_data = read_generation_judgment_data(GENERATION_JUDG_DATA)
 evaluation_data = read_evaluation_data(EVAL_DATA)
 memory_data = read_memory_data(MEMORY_DATA)
 
 # Summarize data
-generation_judgment_subject_summary = get_generation_judgment_subj_summary(generation_judgment_data)
-generation_judgment_summary = get_generation_judgment_summary(generation_judgment_subject_summary)
 evaluation_summary = get_evaluation_summary(evaluation_data)
 
 completion_time_summary = get_time_summary(summary_data)
@@ -378,19 +318,6 @@ memory_summary = get_memory_summary(memory_subject_summary)
 # DATA ANALYSIS ================================================================
 
 ### GENERATION
-plot_generation_judgments(generation_judgment_summary)
-
-# t-test comparing accuracy in each condition
-t.test(
-  generation_judgment_subject_summary$subj_accuracy[generation_judgment_subject_summary$condition == "Describe"],
-  generation_judgment_subject_summary$subj_accuracy[generation_judgment_subject_summary$condition == "Explain"],
-  var.equal = T
-)
-
-# chi-squared test comparing number of people who got 100% accuracy on judgment task
-# NB: we want table to be subj_accuracy == 1 but we do < 1 below to get count of == 1 as the *first* column
-count_data = table(generation_judgment_subject_summary$condition, generation_judgment_subject_summary$subj_accuracy < 1)
-chisq.test(count_data) # NB: this is equivalent to prop.test(count_data)
 
 
 ### EVALUATION
@@ -426,19 +353,6 @@ t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == 
        var.equal = T)
 
 
-# 3. Memory performance comparing participants who did and didn't get the correct rule
-# NB: uses a threshold for judgment task performance (100% accuracy below, but check other thresholds)
-memory_hypothesis_join = memory_subject_summary %>%
-  inner_join(generation_judgment_subject_summary, by = c("subjID", "condition")) %>%
-  rename("memory_accuracy" = subj_accuracy.x,
-         "judgment_accuracy" = subj_accuracy.y)
-
-t.test(memory_hypothesis_join$memory_accuracy[memory_hypothesis_join$judgment_accuracy < 1.0],
-       memory_hypothesis_join$memory_accuracy[memory_hypothesis_join$judgment_accuracy >= 1.0],
-       var.equal = T)
-
-
-
 
 # COVARIATE ANALYSIS: TIME =====================================================
 
@@ -461,29 +375,6 @@ t.test(trial_time_subject_summary$mean_trial_completion[trial_time_subject_summa
 
 # Plot graphs from 1. and 2. above side by side with patchwork
 time_on_task + time_on_trials
-
-
-# 3. Overall time on task comparing participants who did and didn't get the correct rule
-# NB: uses a threshold for judgment task performance (100% accuracy below, but check other thresholds)
-task_time_join = summary_data %>%
-  inner_join(generation_judgment_subject_summary, by = c("subjID", "condition"))
-
-t.test(task_time_join$experiment_completion_time[task_time_join$subj_accuracy < 1.0],
-       task_time_join$experiment_completion_time[task_time_join$subj_accuracy >= 1.0],
-       var.equal = T) # Means are seconds on task
-
-
-
-# 4. Time on evidence trials comparing participants who did and didn't get the correct rule
-# NB: uses a threshold for judgment task performance (100% accuracy below, but check other thresholds)
-trial_time_join = trial_time_subject_summary %>%
-  inner_join(generation_judgment_subject_summary, by = c("subjID", "condition"))
-
-t.test(trial_time_join$mean_trial_completion[trial_time_join$subj_accuracy < 1.0],
-       trial_time_join$mean_trial_completion[trial_time_join$subj_accuracy >= 1.0],
-       var.equal = T) # Means are seconds on trials
-
-
 
 
 
