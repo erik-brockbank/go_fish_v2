@@ -5,6 +5,8 @@
 const EXPT_NAME = "go_fish";
 const EXPT_VERSION = 2;
 const PROD = "prod"; // set to "test" if running locally, "prod" otherwise
+const EXPERIMENT_ID = ""; // static int assigned to this experiment by SONA
+const CREDIT_TOKEN = ""; // static hash assigned to this experiment by SONA
 
 /*
  * HTML_LOOKUP is a lookup dictionary with paths to the html files loaded dynamically during the experiment

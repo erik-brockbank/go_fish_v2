@@ -22,6 +22,9 @@ loadExperiment = function() {
     var istest = false;
     var urlParams = new URLSearchParams(window.location.href);
     if (urlParams.has("mode") && urlParams.get("mode").includes("test")) {istest = true;}
+    if (urlParams.has("survey_code")) {
+        var SURVEY_CODE = urlParams.get("survey_code");
+    }
 
     // Set experiment condition
     // var control = true; // DEBUGGING
@@ -29,7 +32,14 @@ loadExperiment = function() {
 
 
     console.log("Starting experiment with test = ", istest, "; control = ", control);
-    var exp = new Experiment(istest, control, EXPT_NAME, EXPT_VERSION);
+    var exp = new Experiment(
+        istest = istest,
+        control = control,
+        name = EXPT_NAME,
+        version = EXPT_VERSION,
+        experiment_id = EXPERIMENT_ID,
+        credit_token = CREDIT_TOKEN,
+        survey_code = SURVEY_CODE);
     // Initialize experiment with global variables used throughout experiment logic
     // NB: this is cumbersome but means we avoid referencing these as global constants inside the experiment logic
     exp.initialize(htmlpath = HTML_LOOKUP[PROD]["experiment"],

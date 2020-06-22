@@ -16,11 +16,14 @@
  * very little initialization. Instead, the initialize() function handles the nitty gritty of
  * assigning various global states.
  */
-Experiment = function(istest, control, name, version) {
+Experiment = function(istest, control, name, version, experiment_id, credit_token, survey_code) {
     this.istest = istest; // `test` experiments simulate a real experiment but write results as TEST_{exptid}.json
     this.control = control; // `control` holds condition: TRUE if control, else FALSE
     this.name = name; // `name` used at time of data write
     this.version = version; // `version` allows for easy tracking of multiple versions
+    this.experiment_id = experiment_id; // static SONA assigned experiment id for this experiment
+    this.credit_token = credit_token; // static SONA assigned credit token for this experiment
+    this.survey_code = survey_code; // SONA assigned survey code for this participant
     var uid = new Date().getTime();
     if (istest) {this.exptid = "TEST_" + uid;}
     else {this.exptid = "user_" + uid;}
@@ -376,20 +379,24 @@ Experiment.prototype.writeData = function() {
     console.log("Writing experiment data to json");
     var expt = {
         "exptname": this.name, // name of experiment for easy reference
-        "exptversion": this.version // version number for the broader experiment run (in case we modify subsequently)
+        "exptversion": this.version, // version number for the broader experiment run (in case we modify subsequently)
+        "sona_experiment_id": this.experiment_id, // SONA experiment ID for this experiment
+        "sona_credit_token": this.credit_token // SONA credit token for this experiment
     };
     var client_trials = {
         "test": this.istest,
-        "sid": this.exptid
+        "sid": this.exptid,
+        "sona_survey_code": this.survey_code // SONA survey code for this participant
     };
     // Write trial data
     this.ajaxWrite({"expt": expt,
                     "client": client_trials,
-                    "trials": this.data});
+                    "trials": this.data},
+                    this.postCompletion);
 };
 
 
-Experiment.prototype.ajaxWrite = function(jsondata) {
+Experiment.prototype.ajaxWrite = function(jsondata, callback) {
     var results = JSON.stringify(jsondata);
     console.log(results);
     $.ajax({
@@ -404,5 +411,28 @@ Experiment.prototype.ajaxWrite = function(jsondata) {
                         "Status: " + status + "\n" +
                         "Error: " + error);
         }
-    });
+    }).complete(callback);
+};
+
+// Send SONA completion
+Experiment.prototype.postCompletion = function() {
+    // Utility function for handling SONA credit form posts
+    addHidden = function(id, value) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("name", id);
+        input.setAttribute("value", value);
+        return(input);
+    };
+    // URL for this experiment:
+    // https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=XXXX&credit_token=XXXX&survey_code=XXXX
+    var form = document.createElement('form')
+    form.method = 'GET';
+    form.action = 'https://ucsd.sona-systems.com/webstudy_credit.aspx';
+    form.appendChild(addHidden('experiment_id', this.experiment_id));
+    form.appendChild(addHidden('credit_token', this.credit_token));
+    form.appendChild(addHidden('survey_code', this.survey_code));
+    document.body.appendChild(form);
+    console.log("Attempting completion post to SONA: ", form);
+    form.submit();
 };
