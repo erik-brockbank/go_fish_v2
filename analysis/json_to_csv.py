@@ -35,7 +35,7 @@ csv_output_memory = open(OUTPUT_FILE_MEMORY, "w")
 csvwriter_memory = csv.writer(csv_output_memory)
 
 write_index = 0
-files = [f for f in listdir(DATA_PATH) if f.endswith(".json") and "user" in f]
+files = [f for f in listdir(DATA_PATH) if f.endswith(".json")]
 for f in files:
     with io.open(join(DATA_PATH + f), "r", encoding = "utf-8", errors = "ignore") as readfile:
         print("Processing: {}".format(f))
@@ -51,6 +51,7 @@ for f in files:
         if write_index == 0:
             # Write summary data
             header_summary = ["expt_version", "subjID", "is_test", "is_control",
+                "sona_experiment_id", "sona_credit_token", "sona_survey_code",
                 "instruction_start_ts", "instruction_end_ts",
                 "expt_start_ts", "expt_end_ts",
                 "evaluation_start_ts", "evaluation_end_ts",
@@ -93,7 +94,10 @@ for f in files:
         vals = [parsed_content["expt"]["exptversion"],
                 subjID,
                 parsed_content["trials"]["is_test"],
-                parsed_content["trials"]["is_control"],
+                is_control,
+                parsed_content["expt"]["sona_experiment_id"],
+                parsed_content["expt"]["sona_credit_token"],
+                parsed_content["client"]["sona_survey_code"],
                 parsed_content["trials"]["instruction_data"]["instruction_start_ts"],
                 parsed_content["trials"]["instruction_data"]["instruction_end_ts"],
                 parsed_content["trials"]["expt_start_ts"],
