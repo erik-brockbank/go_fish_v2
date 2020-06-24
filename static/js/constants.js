@@ -323,7 +323,7 @@ const EVAL_ARRAY = [
         rule_text: "If a lure combination has colors that are more visible under water (red, yellow), it will catch fish.",
         category: "abstract_color",
         id: 3,
-        evidence: 0.628 // 5/8 (4/4 confirm)
+        evidence: 0.625 // 5/8 (4/4 confirm)
     },
     {
         rule_text: "If a lure combination has a pointy shape on the bottom, it will catch fish.",
