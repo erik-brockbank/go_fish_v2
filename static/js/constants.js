@@ -320,7 +320,7 @@ const EVAL_ARRAY = [
         evidence: 1.0 // 8/8
     },
     {
-        rule_text: "If a lure combination has colors that are more visible under water (red, yellow), it will catch fish.",
+        rule_text: "If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",
         category: "abstract_color",
         id: 3,
         evidence: 0.625 // 5/8 (4/4 confirm)
@@ -344,10 +344,10 @@ const EVAL_ARRAY = [
         evidence: 0.875 // 7/8 (but 4/4 confirm)
     },
     {
-        rule_text: "If a lure combination is shaped more like a fish, it will catch fish.",
+        rule_text: "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",
         category: "abstract_shape",
         id: 7,
-        evidence: 0.375 // 3/8 but this is a bit subjective. Thinking trials 1, 2, 4, 5 (round top shape) look like fish; 1, 4, 5 catch fish
+        evidence: 0.75 // 6/8 (3/4 confirm)
     },
     {
         rule_text: "There is no pattern to which lure combinations catch fish: the results are " +
