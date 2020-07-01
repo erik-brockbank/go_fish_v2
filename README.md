@@ -12,7 +12,7 @@
 
 ## To run experiment locallly:
 1. cd to `go_fish_v2` directory
-2. set `PROD` global in `constants.js` to be either "test" or "prod"
+2. set `PROD` global in `constants.js` to be "test" (may need to be set to "prod" when running on server depending on server path configs)
 3. `python -m http.server {port}` (or your favorite local web server)
 4. In browser, navigate to:
 - `http://localhost:{port}/go_fish_v2.html` for experiment version
