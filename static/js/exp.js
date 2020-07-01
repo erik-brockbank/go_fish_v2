@@ -228,15 +228,19 @@ Experiment.prototype.showPrediction = function() {
     $("#next-exp").hide();
     $("#exp-container").load(this.prediction_htmlpath, function() {
         evidenceShape.drawLure(canvasId = "prediction-shape-canvas", sizeConfig = "prediction"); // TODO store this ID somewhere sensible
-
+        // Ensure that participant clicks slider range before allowing them to continue
+        var sliderClicked = false;
+        $("#prediction-slider").on('click', function(event) {
+            sliderClicked = true;
+        });
         // Update button response
         $("#next-exp").show();
         $("#next-exp").unbind().click(function() {
             // Process whether they clicked everything here (prevent from clicking if they didn't click stuff)
             var radio_resp = $("input[name='prediction']:checked").val();
             var slider_resp = $("#prediction-slider").val();
-            if (radio_resp === undefined) {
-                alert("Please select an answer for both the checkbox and the slider!");
+            if (radio_resp === undefined | !sliderClicked) {
+                alert("Please click both the checkbox and the slider to select an answer!");
             } else {
                 // Add checkbox and slider values to experiment data object
                 that.data["trial_data"][that.trial_index]["input_prediction_catches_fish"] = parseInt(radio_resp);
@@ -286,24 +290,34 @@ Experiment.prototype.showEvaluationTask = function() {
     $("#next-exp").hide();
     $("#exp-container").load(this.eval_htmlpath, function() {
         $("#eval-rule").text(ruleEval.rule_text);
+        $("#eval-progress").text("Progress: " + (that.eval_index + 1).toString() + " / " + that.evalArray.length.toString());
         $("#obs-container").show(); // show observed evidence during evaluation task
+        // Ensure that participant clicks slider range before allowing them to continue
+        var sliderClicked = false;
+        $("#eval-slider").on('click', function(event) {
+            sliderClicked = true;
+        });
 
         // Update button response
         $("#next-exp").show();
         $("#next-exp").unbind().click(function() {
             // Add what user selected to experiment data object and timestamp end of evaluation
-            var slider_resp = $("#eval-slider").val();
-            that.data["evaluation_data"]["eval_ratings"][that.eval_index]["input_rule_rating"] = parseInt(slider_resp);
-            that.data["evaluation_data"]["eval_ratings"][that.eval_index]["eval_n_end_ts"] = new Date().getTime();
-            console.log("Rule evaluation: ", parseInt(slider_resp));
-            // Check whether eval task is complete and either proceed to memory task or complete next eval item
-            that.eval_index += 1;
-            if (that.eval_index >= that.evalArray.length) {
-                // Add end timestamp to data
-                that.data["evaluation_data"]["evaluation_end_ts"] = new Date().getTime();
-                that.showMemoryTask();
+            if (!sliderClicked) {
+                alert("Please click within the slider range to select an answer!");
             } else {
-                that.showEvaluationTask();
+                var slider_resp = $("#eval-slider").val();
+                that.data["evaluation_data"]["eval_ratings"][that.eval_index]["input_rule_rating"] = parseInt(slider_resp);
+                that.data["evaluation_data"]["eval_ratings"][that.eval_index]["eval_n_end_ts"] = new Date().getTime();
+                console.log("Rule evaluation: ", parseInt(slider_resp));
+                // Check whether eval task is complete and either proceed to memory task or complete next eval item
+                that.eval_index += 1;
+                if (that.eval_index >= that.evalArray.length) {
+                    // Add end timestamp to data
+                    that.data["evaluation_data"]["evaluation_end_ts"] = new Date().getTime();
+                    that.showMemoryTask();
+                } else {
+                    that.showEvaluationTask();
+                }
             }
         });
     });

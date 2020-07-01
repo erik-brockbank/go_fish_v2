@@ -362,12 +362,12 @@ Star = function(sizeConfig, position, color, texture) {
             this.x = 75;
             this.y = 70;
             this.outer_radius = 30;
-            this.inner_radius = 15;
+            this.inner_radius = 12;
         } else if (position == "bottom") {
             this.x = 75;
             this.y = 115;
             this.outer_radius = 15;
-            this.inner_radius = 7.5;
+            this.inner_radius = 5;
         }
     }
     if (sizeConfig == "observations") {
@@ -375,12 +375,12 @@ Star = function(sizeConfig, position, color, texture) {
             this.x = 40;
             this.y = 50;
             this.outer_radius = 30;
-            this.inner_radius = 15;
+            this.inner_radius = 12;
         } else if (position == "bottom") {
             this.x = 40;
             this.y = 95;
             this.outer_radius = 15;
-            this.inner_radius = 7.5;
+            this.inner_radius = 5;
         }
     }
     if (sizeConfig == "generate" || sizeConfig == "memory") {
@@ -388,12 +388,12 @@ Star = function(sizeConfig, position, color, texture) {
             this.x = 30;
             this.y = 50;
             this.outer_radius = 30;
-            this.inner_radius = 15;
+            this.inner_radius = 12;
         } else if (position == "bottom") {
             this.x = 30;
             this.y = 95;
             this.outer_radius = 15;
-            this.inner_radius = 7.5;
+            this.inner_radius = 5;
         }
     }
     this.spikes = 4;

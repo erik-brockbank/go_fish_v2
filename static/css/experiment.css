@@ -112,6 +112,10 @@
     margin-bottom: 40px;
 }
 
+#eval-progress {
+    font-size: 16px;
+}
+
 #prediction-confidence-scale-container {
     margin-bottom: 40px;
 }
