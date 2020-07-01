@@ -5,6 +5,7 @@
 - Small changes to previous hypotheses in evaluation, including larger range of correctness for non-target (and non-abstract) hypotheses
 - Modified the hypothesis evaluation Likert scales to be in range ("Not good", "Very good") with no visible discrete tick marks, underlying scores in (1, 100)
 - Participants prevented from clicking through task without clicking on slider range on pages with Likert scales
+- Added dynamic progress div in evaluation task showing X / 8 evaluations completed
 - Modified data writing of hypothesis evaluation to include `category` var for each rule (values include "target", "distractor", "misc") `evidence` var for each rule noting what percent of previous evidence the rule is consistent with, and `id` to uniquely identify each rule
 - Removed hypothesis generation free response task and classification task
 - Small change to star shape makes it more visibly distinct from diamond
