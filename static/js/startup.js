@@ -23,8 +23,7 @@ loadExperiment = function() {
     var urlParams = new URLSearchParams(window.location.href);
     if (urlParams.has("mode") && urlParams.get("mode").includes("test")) {istest = true;}
     if (urlParams.has("survey_code")) {
-        console.log("survey code!");
-        var SURVEY_CODE = urlParams.get("survey_code");
+        var SURVEY_CODE = urlParams.get("survey_code").replace("#", ""); // sometimes # is appended to url
     }
 
     // Set experiment condition
