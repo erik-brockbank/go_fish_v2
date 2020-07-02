@@ -5,7 +5,7 @@
 const EXPT_NAME = "go_fish";
 const EXPT_VERSION = 2;
 const PROD = "prod"; // set to "test" if running locally, "prod" otherwise
-const EXPERIMENT_ID = ""; // static int assigned to this experiment by SONA
+const EXPERIMENT_ID = "1889"; // static int assigned to this experiment by SONA
 const CREDIT_TOKEN = ""; // static hash assigned to this experiment by SONA
 
 /*
