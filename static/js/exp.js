@@ -406,7 +406,7 @@ Experiment.prototype.writeData = function() {
     this.ajaxWrite({"expt": expt,
                     "client": client_trials,
                     "trials": this.data},
-                    this.postCompletion);
+                    this.postCompletion(this.experiment_id, this.credit_token, this.survey_code));
 };
 
 
@@ -429,7 +429,7 @@ Experiment.prototype.ajaxWrite = function(jsondata, callback) {
 };
 
 // Send SONA completion
-Experiment.prototype.postCompletion = function() {
+Experiment.prototype.postCompletion = function(experiment_id, credit_token, sona_survey_code) {
     // Utility function for handling SONA credit form posts
     addHidden = function(id, value) {
         var input = document.createElement("input");
@@ -443,9 +443,9 @@ Experiment.prototype.postCompletion = function() {
     var form = document.createElement('form')
     form.method = 'GET';
     form.action = 'https://ucsd.sona-systems.com/webstudy_credit.aspx';
-    form.appendChild(addHidden('experiment_id', this.experiment_id));
-    form.appendChild(addHidden('credit_token', this.credit_token));
-    form.appendChild(addHidden('survey_code', this.survey_code));
+    form.appendChild(addHidden('experiment_id', experiment_id));
+    form.appendChild(addHidden('credit_token', credit_token));
+    form.appendChild(addHidden('survey_code', sona_survey_code));
     document.body.appendChild(form);
     console.log("Attempting completion post to SONA: ", form);
     form.submit();
