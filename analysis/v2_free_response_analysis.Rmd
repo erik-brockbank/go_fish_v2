@@ -1,0 +1,122 @@
+---
+title: "Go Fish V2 Explanation and Description Responses"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(viridis)
+library(patchwork)
+library(knitr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+```{r globals, include=FALSE}
+# Data files
+SUMMARY_DATA = "01_go_fish_v2_meta.csv"
+TRIAL_DATA = "02_go_fish_v2_trials.csv"
+EVAL_DATA = "03_go_fish_v2_evaluation.csv"
+MEMORY_DATA = "04_go_fish_v2_memory.csv"
+
+```
+
+
+
+```{r analysis_fxn, include=FALSE}
+# Read in and process summary data file
+read_summary_data = function(filepath) {
+  # Read in data at filepath and add/modify columns as needed
+  summary_data = read_csv(filepath)
+  summary_data = summary_data %>%
+    mutate(condition = ifelse(is_control == TRUE, "Describe", "Explain"),
+           experiment_completion_time = (expt_end_ts - expt_start_ts) / 1000)
+  return(summary_data)
+}
+
+# Read in and process data from explain/describe trials
+read_trial_data = function(filepath) {
+  trial_data = read_csv(filepath)
+  trial_data = trial_data %>%
+    mutate(
+      condition = ifelse(is_control == TRUE, "Describe", "Explain"),
+      input_correct = (input_prediction_catches_fish == prediction_catches_fish))
+  trial_data$input_evidence_response = str_replace_all(
+    trial_data$input_evidence_response, "\n" , "[newline]")
+  return(trial_data)
+}
+
+# Read in and process data from rule evaluation task
+read_evaluation_data = function(filepath) {
+  evaluation_data = read_csv(filepath)
+  evaluation_data = evaluation_data %>%
+    mutate(condition = ifelse(is_control == TRUE, "Describe", "Explain"))
+  return(evaluation_data)
+}
+```
+
+
+
+```{r data, include=FALSE}
+# Read in data
+summary_data = read_summary_data(SUMMARY_DATA)
+trial_data = read_trial_data(TRIAL_DATA)
+evaluation_data = read_evaluation_data(EVAL_DATA)
+```
+
+
+
+# Summary
+This document is intended for easy review and analysis of participant free response data. 
+
+We display participant explanations and descriptions during the evidence phase of the experiment. 
+
+```{r condition_summary}
+
+summary_data %>%
+  group_by(condition) %>%
+  summarize(participants = n()) %>%
+  kable(col.names = c("Condition", "Participants"))
+
+```
+
+
+
+# Explanations
+
+Below we list each subject's trial explanations ordered by trial index (1-8). 
+
+TODO add their eventual evaluation of the target rule (and distractors?)
+
+
+```{r explanations}
+
+trial_data %>%
+  filter(condition == "Explain") %>%
+  select(subjID, condition, trial_index, input_evidence_response) %>%
+  arrange(subjID, trial_index) %>%
+  kable(col.names = c("Subject ID", "Condition", "Trial", "Explanation"))
+
+```
+
+
+
+# Descriptions
+
+Below we list each control subject's trial descriptions ordered by trial index (1-8).
+
+TODO add their eventual evaluation of the target rule (and distractors?)
+
+
+```{r descriptions}
+
+trial_data %>%
+  filter(condition == "Describe") %>%
+  select(subjID, condition, trial_index, input_evidence_response) %>%
+  arrange(subjID, trial_index) %>%
+  kable(col.names = c("Subject ID", "Condition", "Trial", "Description"))
+
+```
+
+

@@ -297,6 +297,10 @@ plot_time_data = function(time_summary, ylab, ymax, title) {
 
 
 # DATA INITIALIZATION ==========================================================
+
+# TODO We have two data files with SONA survey code 33490, and only one participant...
+
+
 # Read in data
 summary_data = read_summary_data(SUMMARY_DATA)
 trial_data = read_trial_data(TRIAL_DATA)
@@ -319,13 +323,42 @@ memory_summary = get_memory_summary(memory_subject_summary)
 
 ### GENERATION
 
+# TODO consider looking at prediction accuracy over trials to see if this group
+# is less noisy than v1 (unlikely but could be interesting)
+
 
 ### EVALUATION
 plot_evaluation_results(evaluation_summary)
 
-# TODO decide which analyses from v1 analysis/cog sci write-up to include here
+
+# Target rule comparison
+t.test(evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
+                                           evaluation_data$category == "target"], 
+       evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
+                                           evaluation_data$category == "target"],
+       equal.var = T)
+
+# Distractor comparison
+t.test(evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
+                                           evaluation_data$category == "distractor"], 
+       evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
+                                           evaluation_data$category == "distractor"],
+       equal.var = T)
+
+# Abstract: shape comparison
+t.test(evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
+                                           evaluation_data$category == "abstract_shape"], 
+       evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
+                                           evaluation_data$category == "abstract_shape"],
+       equal.var = T)
 
 
+# Abstract: color comparison
+t.test(evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
+                                           evaluation_data$category == "abstract_color"], 
+       evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
+                                           evaluation_data$category == "abstract_color"],
+       equal.var = T)
 
 
 
@@ -360,6 +393,7 @@ t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == 
 # NB: this generates the plot but we display below with patchwork
 time_on_task = plot_time_data(completion_time_summary, ylab = "Seconds", ymax = 1000, title = "Mean time on experiment")
 
+# Do the two conditions spend significantly different amounts of time on the experiment?
 t.test(summary_data$experiment_completion_time[summary_data$condition == "Describe"],
        summary_data$experiment_completion_time[summary_data$condition == "Explain"],
        var.equal = T) # Means are seconds on task
@@ -369,6 +403,7 @@ t.test(summary_data$experiment_completion_time[summary_data$condition == "Descri
 # NB: this generates the plot but we display below with patchwork
 time_on_trials = plot_time_data(trial_time_summary, ylab = "Seconds", ymax = 80, title = "Mean time on trials")
 
+# Do the two conditions spend significantly different amounts of time on each trial?
 t.test(trial_time_subject_summary$mean_trial_completion[trial_time_subject_summary$condition == "Describe"],
        trial_time_subject_summary$mean_trial_completion[trial_time_subject_summary$condition == "Explain"],
        var.equal = T) # Means are seconds on trials
