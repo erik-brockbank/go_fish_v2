@@ -20,6 +20,8 @@ TRIAL_DATA = "02_go_fish_v2_trials.csv"
 EVAL_DATA = "03_go_fish_v2_evaluation.csv"
 MEMORY_DATA = "04_go_fish_v2_memory.csv"
 
+REPEAT_SONA = c("user_1593731799971") # One participant did the experiment twice
+
 ```
 
 
@@ -63,6 +65,14 @@ read_evaluation_data = function(filepath) {
 summary_data = read_summary_data(SUMMARY_DATA)
 trial_data = read_trial_data(TRIAL_DATA)
 evaluation_data = read_evaluation_data(EVAL_DATA)
+
+# remove repeat user
+summary_data = summary_data %>%
+  filter(!subjID %in% REPEAT_SONA)
+trial_data = trial_data %>%
+  filter(!subjID %in% REPEAT_SONA)
+evaluation_data = evaluation_data %>%
+  filter(!subjID %in% REPEAT_SONA)
 ```
 
 

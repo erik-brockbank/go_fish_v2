@@ -220,8 +220,15 @@ individ_plot_theme = theme(
   legend.key = element_rect(colour = "transparent", fill = "transparent")
 )
 
+RULESET_LOOKUP = c("target" = "Target", "distractor" = "Distractor", 
+                   "abstract_color" = "Abstract (color)", "abstract_shape" = "Abstract (shape)",
+                   "misc" = "All other rules", "rand" = "All other rules")
+
 # Bar chart of average evaluation ratings across conditions on rule evaluation task
-plot_evaluation_results = function(evaluation_summary) {
+plot_evaluation_results = function(evaluation_summary, evaluation_data) {
+  evaluation_data_coded = evaluation_data %>%
+    mutate(ruleset = RULESET_LOOKUP[category])
+  
   evaluation_summary %>%
     ggplot(aes(x = ruleset, y = mean_rating, 
                color = condition, fill = condition)) +
@@ -230,6 +237,8 @@ plot_evaluation_results = function(evaluation_summary) {
       aes(ymin = ci_lower, ymax = ci_upper), 
       position = position_dodge(width = 0.5, preserve = "single"), 
       width = 0.2) +
+    geom_point(data = evaluation_data_coded, aes(x = ruleset, y = input_rule_rating, color = condition),
+               alpha = 0.75, size = 2) +
     labs(y = "Mean evaluation rating") +
     scale_x_discrete(name = element_blank()) +
     scale_color_viridis(discrete = T,
@@ -271,13 +280,15 @@ plot_memory_data = function(memory_summary) {
 }
 
 # Bar chart of experiment completion time or avg. trial time
-plot_time_data = function(time_summary, ylab, ymax, title) {
+plot_time_data = function(time_summary, individual_time_data, ylab, ymax, title) {
   time_summary %>%
     ggplot(aes(x = condition, y = mean_task_time, 
                color = condition, fill = condition)) +
     geom_bar(stat = "identity", width = 0.5, alpha = 0.5) +
     geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.25) +
-    ylim(0, ymax) +
+    geom_point(data = individual_time_data, aes(x = condition, y = experiment_completion_time, color = condition),
+               alpha = 0.75, size = 2) +
+    #ylim(0, ymax) +
     labs(x = "", y = ylab) +
     ggtitle(title) +
     scale_color_viridis(discrete = T,
@@ -307,6 +318,25 @@ trial_data = read_trial_data(TRIAL_DATA)
 evaluation_data = read_evaluation_data(EVAL_DATA)
 memory_data = read_memory_data(MEMORY_DATA)
 
+# Filter out repeat users
+summary_data %>% 
+  filter(sona_survey_code == 33490) %>%
+  select(subjID, expt_start_ts, expt_end_ts)
+
+REPEAT_SONA = c("user_1593731799971")
+
+CATCH_USERS = c("user_1594011271068")
+
+summary_data = summary_data %>%
+  filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
+trial_data = trial_data %>%
+  filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
+evaluation_data = evaluation_data %>%
+  filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
+memory_data = memory_data %>%
+  filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
+
+
 # Summarize data
 evaluation_summary = get_evaluation_summary(evaluation_data)
 
@@ -321,6 +351,13 @@ memory_summary = get_memory_summary(memory_subject_summary)
 
 # DATA ANALYSIS ================================================================
 
+### SUMMARY
+summary_data %>%
+  group_by(condition) %>%
+  summarize(N = n()) %>%
+  rename("Condition" = condition)
+
+
 ### GENERATION
 
 # TODO consider looking at prediction accuracy over trials to see if this group
@@ -328,7 +365,7 @@ memory_summary = get_memory_summary(memory_subject_summary)
 
 
 ### EVALUATION
-plot_evaluation_results(evaluation_summary)
+plot_evaluation_results(evaluation_summary, evaluation_data)
 
 
 # Target rule comparison
@@ -391,7 +428,8 @@ t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == 
 
 # 1. Overall time on task across conditions
 # NB: this generates the plot but we display below with patchwork
-time_on_task = plot_time_data(completion_time_summary, ylab = "Seconds", ymax = 1000, title = "Mean time on experiment")
+time_on_task = plot_time_data(completion_time_summary, summary_data,
+                              ylab = "Seconds", ymax = 1000, title = "Mean time on experiment")
 
 # Do the two conditions spend significantly different amounts of time on the experiment?
 t.test(summary_data$experiment_completion_time[summary_data$condition == "Describe"],
@@ -401,7 +439,7 @@ t.test(summary_data$experiment_completion_time[summary_data$condition == "Descri
 
 # 2. Time on evidence trials across conditions
 # NB: this generates the plot but we display below with patchwork
-time_on_trials = plot_time_data(trial_time_summary, ylab = "Seconds", ymax = 80, title = "Mean time on trials")
+time_on_trials = plot_time_data(trial_time_summary, NULL, ylab = "Seconds", ymax = 80, title = "Mean time on trials")
 
 # Do the two conditions spend significantly different amounts of time on each trial?
 t.test(trial_time_subject_summary$mean_trial_completion[trial_time_subject_summary$condition == "Describe"],
@@ -413,7 +451,25 @@ time_on_task + time_on_trials
 
 
 
+# APPENDIX =====================================================================
+
+CATCH_RULE = "If a lure combination has a star shape, it will catch fish."
+
+catch_eval = evaluation_data %>%
+  filter(rule_text == CATCH_RULE)
+
+catch_eval %>%
+  ggplot(aes(x = condition, y = input_rule_rating, color = condition)) +
+  geom_point(size = 3, alpha = 0.5) +
+  individ_plot_theme
 
 
+evaluation_data %>%
+  filter(rule_text == CATCH_RULE & input_rule_rating > 80) %>%
+  select(subjID)
+
+evaluation_data %>%
+  filter(subjID == "user_1594011271068") %>%
+  select(category, input_rule_rating)
 
 

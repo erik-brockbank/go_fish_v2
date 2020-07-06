@@ -1,0 +1,463 @@
+{
+    "expt": {
+        "exptname": "go_fish",
+        "exptversion": 2,
+        "sona_experiment_id": "1889",
+        "sona_credit_token": "dc56fda841254cf7b818f6074c925e46"
+    },
+    "client": {
+        "test": false,
+        "sid": "user_1594011396451",
+        "sona_survey_code": "27263"
+    },
+    "trials": {
+        "is_test": false,
+        "is_control": false,
+        "expt_start_ts": 1594011396451,
+        "instruction_data": {
+            "instruction_start_ts": 1594011396451,
+            "instruction_end_ts": 1594011426522
+        },
+        "trial_start_ts": 1594011426522,
+        "trial_data": [
+            {
+                "trial_index": 1,
+                "trial_n_start_ts": 1594011426745,
+                "evidence_shape": {
+                    "top_shape": "teardrop",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "triangle",
+                    "bottom_color": "yellow",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "Combination of 3 items",
+                "evidence_resp_start_ts": 1594011434691,
+                "evidence_resp_end_ts": 1594011451929,
+                "prediction_start_ts": 1594011451930,
+                "prediction_shape": {
+                    "top_shape": "teardrop",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "green",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 5,
+                "prediction_end_ts": 1594011461784,
+                "trial_n_end_ts": 1594011461784
+            },
+            {
+                "trial_index": 2,
+                "trial_n_start_ts": 1594011461784,
+                "evidence_shape": {
+                    "top_shape": "circle",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "There are only two shapes, I think there needs to be 3 to be successful.",
+                "evidence_resp_start_ts": 1594011465434,
+                "evidence_resp_end_ts": 1594011491511,
+                "prediction_start_ts": 1594011491512,
+                "prediction_shape": {
+                    "top_shape": "circle",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "triangle",
+                    "bottom_color": "red",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 5,
+                "prediction_end_ts": 1594011500387,
+                "trial_n_end_ts": 1594011500387
+            },
+            {
+                "trial_index": 3,
+                "trial_n_start_ts": 1594011500387,
+                "evidence_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "It has 3 shapes like my initial hypothesis, but maybe now there is also a color requirement?",
+                "evidence_resp_start_ts": 1594011505085,
+                "evidence_resp_end_ts": 1594011546299,
+                "prediction_start_ts": 1594011546300,
+                "prediction_shape": {
+                    "top_shape": "triangle",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1594011552941,
+                "trial_n_end_ts": 1594011552941
+            },
+            {
+                "trial_index": 4,
+                "trial_n_start_ts": 1594011552942,
+                "evidence_shape": {
+                    "top_shape": "oval",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "star",
+                    "bottom_color": "yellow",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "There are 3 shapes and possibly there needs to be a yellow and a purple? And maybe a pointed tip? ",
+                "evidence_resp_start_ts": 1594011563680,
+                "evidence_resp_end_ts": 1594011600429,
+                "prediction_start_ts": 1594011600429,
+                "prediction_shape": {
+                    "top_shape": "oval",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1594011606070,
+                "trial_n_end_ts": 1594011606070
+            },
+            {
+                "trial_index": 5,
+                "trial_n_start_ts": 1594011606071,
+                "evidence_shape": {
+                    "top_shape": "circle",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "I think there definitely has to be a pointed tip at the bottom. There are more than 3 shapes and 2 of the original colors from the first lure... so maybe there needs to be 3+ shapes and 2+ of the similar color and a pointed tip? ",
+                "evidence_resp_start_ts": 1594011609893,
+                "evidence_resp_end_ts": 1594011666532,
+                "prediction_start_ts": 1594011666533,
+                "prediction_shape": {
+                    "top_shape": "circle",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 7,
+                "prediction_end_ts": 1594011671899,
+                "trial_n_end_ts": 1594011671899
+            },
+            {
+                "trial_index": 6,
+                "trial_n_start_ts": 1594011671899,
+                "evidence_shape": {
+                    "top_shape": "star",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "red",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "It didn't catch a fish since there's only 2 shapes and a rounded tip. ",
+                "evidence_resp_start_ts": 1594011674923,
+                "evidence_resp_end_ts": 1594011698739,
+                "prediction_start_ts": 1594011698739,
+                "prediction_shape": {
+                    "top_shape": "star",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "star",
+                    "bottom_color": "yellow",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1594011704664,
+                "trial_n_end_ts": 1594011704664
+            },
+            {
+                "trial_index": 7,
+                "trial_n_start_ts": 1594011704664,
+                "evidence_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "Pointed tip and possibly 2 of the same colors of lure 1... need to see more to see if color has any effect.",
+                "evidence_resp_start_ts": 1594011707911,
+                "evidence_resp_end_ts": 1594011735839,
+                "prediction_start_ts": 1594011735840,
+                "prediction_shape": {
+                    "top_shape": "star",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 4,
+                "prediction_end_ts": 1594011757321,
+                "trial_n_end_ts": 1594011757321
+            },
+            {
+                "trial_index": 8,
+                "trial_n_start_ts": 1594011757321,
+                "evidence_shape": {
+                    "top_shape": "triangle",
+                    "top_color": "green",
+                    "top_texture": true,
+                    "bottom_shape": "oval",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "Rounded tip",
+                "evidence_resp_start_ts": 1594011761008,
+                "evidence_resp_end_ts": 1594011768309,
+                "prediction_start_ts": 1594011768309,
+                "prediction_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "oval",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 7,
+                "prediction_end_ts": 1594011772856,
+                "trial_n_end_ts": 1594011772856
+            }
+        ],
+        "trial_end_ts": 1594011772857,
+        "evaluation_data": {
+            "eval_ratings": [
+                {
+                    "eval_index": 1,
+                    "eval_id": 8,
+                    "eval_n_start_ts": 1594011772858,
+                    "rule_text": "There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don\u2019t.",
+                    "category": "rand",
+                    "evidence": 0,
+                    "input_rule_rating": 15,
+                    "eval_n_end_ts": 1594011789898
+                },
+                {
+                    "eval_index": 2,
+                    "eval_id": 4,
+                    "eval_n_start_ts": 1594011789899,
+                    "rule_text": "If a lure combination has a pointy shape on the bottom, it will catch fish.",
+                    "category": "target",
+                    "evidence": 1,
+                    "input_rule_rating": 100,
+                    "eval_n_end_ts": 1594011793940
+                },
+                {
+                    "eval_index": 3,
+                    "eval_id": 5,
+                    "eval_n_start_ts": 1594011793940,
+                    "rule_text": "If a lure combination has a star shape, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.5,
+                    "input_rule_rating": 34,
+                    "eval_n_end_ts": 1594011805645
+                },
+                {
+                    "eval_index": 4,
+                    "eval_id": 1,
+                    "eval_n_start_ts": 1594011805645,
+                    "rule_text": "If a lure combination has a blue shape, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.5,
+                    "input_rule_rating": 1,
+                    "eval_n_end_ts": 1594011809719
+                },
+                {
+                    "eval_index": 5,
+                    "eval_id": 2,
+                    "eval_n_start_ts": 1594011809719,
+                    "rule_text": "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",
+                    "category": "distractor",
+                    "evidence": 1,
+                    "input_rule_rating": 63,
+                    "eval_n_end_ts": 1594011820427
+                },
+                {
+                    "eval_index": 6,
+                    "eval_id": 3,
+                    "eval_n_start_ts": 1594011820428,
+                    "rule_text": "If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",
+                    "category": "abstract_color",
+                    "evidence": 0.625,
+                    "input_rule_rating": 60,
+                    "eval_n_end_ts": 1594011831217
+                },
+                {
+                    "eval_index": 7,
+                    "eval_id": 7,
+                    "eval_n_start_ts": 1594011831218,
+                    "rule_text": "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",
+                    "category": "abstract_shape",
+                    "evidence": 0.75,
+                    "input_rule_rating": 45,
+                    "eval_n_end_ts": 1594011844062
+                },
+                {
+                    "eval_index": 8,
+                    "eval_id": 6,
+                    "eval_n_start_ts": 1594011844062,
+                    "rule_text": "If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.875,
+                    "input_rule_rating": 70,
+                    "eval_n_end_ts": 1594011860433
+                }
+            ],
+            "evaluation_start_ts": 1594011772858,
+            "evaluation_end_ts": 1594011860434
+        },
+        "memory_data": {
+            "memory_responses": [
+                {
+                    "memory_shape": {
+                        "top_shape": "teardrop",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "diamond",
+                        "bottom_color": "green",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "triangle",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "green",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "oval",
+                        "top_color": "green",
+                        "top_texture": false,
+                        "bottom_shape": "diamond",
+                        "bottom_color": "red",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "teardrop",
+                        "top_color": "red",
+                        "top_texture": true,
+                        "bottom_shape": "triangle",
+                        "bottom_color": "yellow",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "diamond",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "blue",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "star",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "red",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "circle",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "oval",
+                        "bottom_color": "yellow",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "star",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "star",
+                        "bottom_color": "yellow",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 1
+                }
+            ],
+            "memory_start_ts": 1594011860434,
+            "memory_end_ts": 1594011900049
+        },
+        "expt_end_ts": 1594011900049
+    }
+}

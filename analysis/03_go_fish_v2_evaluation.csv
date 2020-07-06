@@ -87,6 +87,14 @@ user_1593720445707,True,5,6,1593720843948,"If a lure combination has a yellow or
 user_1593720445707,True,6,5,1593720849207,"If a lure combination has a star shape, it will catch fish.",misc,0.5,46,1593720854864
 user_1593720445707,True,7,1,1593720854864,"If a lure combination has a blue shape, it will catch fish.",misc,0.5,16,1593720860059
 user_1593720445707,True,8,7,1593720860059,"If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",abstract_shape,0.75,75,1593720864352
+user_1593966097127,True,1,2,1593966486771,"If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",distractor,1,1,1593966506376
+user_1593966097127,True,2,5,1593966506377,"If a lure combination has a star shape, it will catch fish.",misc,0.5,22,1593966513415
+user_1593966097127,True,3,4,1593966513416,"If a lure combination has a pointy shape on the bottom, it will catch fish.",target,1,100,1593966518458
+user_1593966097127,True,4,8,1593966518459,"There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t.",rand,0,1,1593966523282
+user_1593966097127,True,5,1,1593966523283,"If a lure combination has a blue shape, it will catch fish.",misc,0.5,1,1593966527392
+user_1593966097127,True,6,3,1593966527392,"If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",abstract_color,0.625,10,1593966571392
+user_1593966097127,True,7,7,1593966571393,"If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",abstract_shape,0.75,5,1593966577349
+user_1593966097127,True,8,6,1593966577350,"If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",misc,0.875,79,1593966588186
 user_1593719505167,True,1,2,1593719790454,"If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",distractor,1,70,1593719812998
 user_1593719505167,True,2,8,1593719812999,"There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t.",rand,0,24,1593719820613
 user_1593719505167,True,3,1,1593719820613,"If a lure combination has a blue shape, it will catch fish.",misc,0.5,3,1593719827957
@@ -103,6 +111,14 @@ user_1593720709026,False,5,7,1593721262267,"If a lure combination has a rounded 
 user_1593720709026,False,6,1,1593721274654,"If a lure combination has a blue shape, it will catch fish.",misc,0.5,27,1593721281783
 user_1593720709026,False,7,8,1593721281783,"There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t.",rand,0,47,1593721288412
 user_1593720709026,False,8,5,1593721288412,"If a lure combination has a star shape, it will catch fish.",misc,0.5,32,1593721295169
+user_1594011396451,False,1,8,1594011772858,"There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t.",rand,0,15,1594011789898
+user_1594011396451,False,2,4,1594011789899,"If a lure combination has a pointy shape on the bottom, it will catch fish.",target,1,100,1594011793940
+user_1594011396451,False,3,5,1594011793940,"If a lure combination has a star shape, it will catch fish.",misc,0.5,34,1594011805645
+user_1594011396451,False,4,1,1594011805645,"If a lure combination has a blue shape, it will catch fish.",misc,0.5,1,1594011809719
+user_1594011396451,False,5,2,1594011809719,"If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",distractor,1,63,1594011820427
+user_1594011396451,False,6,3,1594011820428,"If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",abstract_color,0.625,60,1594011831217
+user_1594011396451,False,7,7,1594011831218,"If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",abstract_shape,0.75,45,1594011844062
+user_1594011396451,False,8,6,1594011844062,"If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",misc,0.875,70,1594011860433
 user_1593724431363,True,1,5,1593724895277,"If a lure combination has a star shape, it will catch fish.",misc,0.5,30,1593724920064
 user_1593724431363,True,2,4,1593724920064,"If a lure combination has a pointy shape on the bottom, it will catch fish.",target,1,100,1593724927269
 user_1593724431363,True,3,7,1593724927269,"If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",abstract_shape,0.75,72,1593724941709
@@ -111,6 +127,22 @@ user_1593724431363,True,5,2,1593724952095,"If a lure combination has a yellow sh
 user_1593724431363,True,6,3,1593724962148,"If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",abstract_color,0.625,43,1593724973874
 user_1593724431363,True,7,6,1593724973874,"If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",misc,0.875,59,1593724986222
 user_1593724431363,True,8,1,1593724986223,"If a lure combination has a blue shape, it will catch fish.",misc,0.5,33,1593724993966
+user_1593937911109,False,1,5,1593938625642,"If a lure combination has a star shape, it will catch fish.",misc,0.5,67,1593938647402
+user_1593937911109,False,2,3,1593938647402,"If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",abstract_color,0.625,100,1593938658729
+user_1593937911109,False,3,1,1593938658730,"If a lure combination has a blue shape, it will catch fish.",misc,0.5,36,1593938669369
+user_1593937911109,False,4,4,1593938669372,"If a lure combination has a pointy shape on the bottom, it will catch fish.",target,1,100,1593938678976
+user_1593937911109,False,5,8,1593938678978,"There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t.",rand,0,20,1593938692056
+user_1593937911109,False,6,7,1593938692059,"If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",abstract_shape,0.75,100,1593938704158
+user_1593937911109,False,7,2,1593938704159,"If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",distractor,1,99,1593938717085
+user_1593937911109,False,8,6,1593938717088,"If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",misc,0.875,70,1593938733590
+user_1593905484047,True,1,4,1593905790875,"If a lure combination has a pointy shape on the bottom, it will catch fish.",target,1,69,1593905805945
+user_1593905484047,True,2,6,1593905805945,"If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",misc,0.875,5,1593905822458
+user_1593905484047,True,3,1,1593905822459,"If a lure combination has a blue shape, it will catch fish.",misc,0.5,12,1593905829313
+user_1593905484047,True,4,3,1593905829313,"If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",abstract_color,0.625,27,1593905836369
+user_1593905484047,True,5,2,1593905836369,"If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",distractor,1,61,1593905852959
+user_1593905484047,True,6,7,1593905852959,"If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",abstract_shape,0.75,29,1593905860863
+user_1593905484047,True,7,8,1593905860863,"There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t.",rand,0,69,1593905864586
+user_1593905484047,True,8,5,1593905864586,"If a lure combination has a star shape, it will catch fish.",misc,0.5,31,1593905869579
 user_1593719878330,False,1,6,1593720100223,"If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",misc,0.875,99,1593720112189
 user_1593719878330,False,2,7,1593720112190,"If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",abstract_shape,0.75,58,1593720119925
 user_1593719878330,False,3,3,1593720119926,"If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",abstract_color,0.625,47,1593720127726
@@ -119,3 +151,19 @@ user_1593719878330,False,5,4,1593720133086,"If a lure combination has a pointy s
 user_1593719878330,False,6,2,1593720141102,"If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",distractor,1,100,1593720145654
 user_1593719878330,False,7,5,1593720145655,"If a lure combination has a star shape, it will catch fish.",misc,0.5,1,1593720149094
 user_1593719878330,False,8,8,1593720149094,"There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t.",rand,0,1,1593720156854
+user_1593990658345,True,1,3,1593991533341,"If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",abstract_color,0.625,30,1593991553744
+user_1593990658345,True,2,1,1593991553744,"If a lure combination has a blue shape, it will catch fish.",misc,0.5,30,1593991571251
+user_1593990658345,True,3,7,1593991571252,"If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",abstract_shape,0.75,96,1593991578372
+user_1593990658345,True,4,8,1593991578372,"There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t.",rand,0,73,1593991631737
+user_1593990658345,True,5,5,1593991631738,"If a lure combination has a star shape, it will catch fish.",misc,0.5,34,1593991642282
+user_1593990658345,True,6,2,1593991642282,"If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",distractor,1,64,1593991677912
+user_1593990658345,True,7,6,1593991677912,"If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",misc,0.875,85,1593991697688
+user_1593990658345,True,8,4,1593991697689,"If a lure combination has a pointy shape on the bottom, it will catch fish.",target,1,88,1593991708159
+user_1594011271068,False,1,4,1594011540795,"If a lure combination has a pointy shape on the bottom, it will catch fish.",target,1,4,1594011552016
+user_1594011271068,False,2,1,1594011552016,"If a lure combination has a blue shape, it will catch fish.",misc,0.5,96,1594011564433
+user_1594011271068,False,3,3,1594011564433,"If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",abstract_color,0.625,51,1594011571579
+user_1594011271068,False,4,6,1594011571579,"If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",misc,0.875,26,1594011577399
+user_1594011271068,False,5,5,1594011577399,"If a lure combination has a star shape, it will catch fish.",misc,0.5,83,1594011580635
+user_1594011271068,False,6,8,1594011580635,"There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t.",rand,0,75,1594011583862
+user_1594011271068,False,7,2,1594011583862,"If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",distractor,1,70,1594011586972
+user_1594011271068,False,8,7,1594011586973,"If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",abstract_shape,0.75,72,1594011590840
