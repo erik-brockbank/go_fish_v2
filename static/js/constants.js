@@ -320,10 +320,11 @@ const EVAL_ARRAY = [
         evidence: 1.0 // 8/8
     },
     {
-        rule_text: "If a lure combination has colors that are more visible under water (red or yellow), it will catch fish.",
+        rule_text: "If a lure combination has a top lure with bright colors that are more visible " +
+            "under water (red or yellow), it will catch fish.",
         category: "abstract_color",
         id: 3,
-        evidence: 0.625 // 5/8 (4/4 confirm)
+        evidence: 0.75 // 6/8 (3/4 confirm)
     },
     {
         rule_text: "If a lure combination has a pointy shape on the bottom, it will catch fish.",
@@ -332,16 +333,16 @@ const EVAL_ARRAY = [
         evidence: 1.0 // 8/8
     },
     {
-        rule_text: "If a lure combination has a star shape, it will catch fish.",
+        rule_text: "If a lure combination has a red shape on the bottom, it will catch fish.",
         category: "misc",
         id: 5,
-        evidence: 0.5 // 4/8 (but only 1/4 confirm)
+        evidence: 0.25 // 2/8 (0/4 confirm)
     },
     {
-        rule_text: "If a lure combination has a yellow or red shape with a purple dot, it will catch fish.",
+        rule_text: "If a lure combination has a purple dot on at least one of the lures, it will catch fish.",
         category: "misc",
         id: 6,
-        evidence: 0.875 // 7/8 (but 4/4 confirm)
+        evidence: 0.75 // 6/8 (4/4 confirm)
     },
     {
         rule_text: "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",

@@ -19,6 +19,9 @@ EVAL_DATA = "03_go_fish_v2_evaluation.csv"
 MEMORY_DATA = "04_go_fish_v2_memory.csv"
 
 
+RULESET_LOOKUP = c("target" = "Target", "distractor" = "Distractor", 
+                   "abstract_color" = "Abstract (color)", "abstract_shape" = "Abstract (shape)",
+                   "misc" = "All other rules", "rand" = "Random")
 
 
 # ANALYSIS FUNCTIONS ===========================================================
@@ -67,67 +70,17 @@ read_memory_data = function(filepath) {
 
 # Summarize evaluation data across participants and conditions for target and non-target rules
 get_evaluation_summary = function(evaluation_data) {
-  # Average rating across participants on target rule
-  eval_summary_target_rule = evaluation_data %>%
-    filter(category == "target") %>% # for target rule, summarize across participants
-    group_by(condition) %>%
-    summarize(ruleset = "Target",
-              mean_rating = mean(input_rule_rating),
-              subjects = n(),
-              se_rating = sd(input_rule_rating) / sqrt(n()),
-              ci_lower = mean_rating - se_rating,
-              ci_upper = mean_rating + se_rating)
-  
-  # Average rating across participants on distractor rule
-  eval_summary_distractor_rule = evaluation_data %>%
-    filter(category == "distractor") %>% # for distractor rule, summarize across participants
-    group_by(condition) %>%
-    summarize(ruleset = "Distractor",
-              mean_rating = mean(input_rule_rating),
-              subjects = n(),
-              se_rating = sd(input_rule_rating) / sqrt(n()),
-              ci_lower = mean_rating - se_rating,
-              ci_upper = mean_rating + se_rating)
-  
-  eval_summary_abstract_color = evaluation_data %>%
-    filter(category == "abstract_color") %>% # for abstract color rule, summarize across participants
-    group_by(condition) %>%
-    summarize(ruleset = "Abstract (color)",
-              mean_rating = mean(input_rule_rating),
-              subjects = n(),
-              se_rating = sd(input_rule_rating) / sqrt(n()),
-              ci_lower = mean_rating - se_rating,
-              ci_upper = mean_rating + se_rating)
-  
-  eval_summary_abstract_shape = evaluation_data %>%
-    filter(category == "abstract_shape") %>% # for abstract shape rule, summarize across participants
-    group_by(condition) %>%
-    summarize(ruleset = "Abstract (shape)",
-              mean_rating = mean(input_rule_rating),
-              subjects = n(),
-              se_rating = sd(input_rule_rating) / sqrt(n()),
-              ci_lower = mean_rating - se_rating,
-              ci_upper = mean_rating + se_rating)
-    
-  
-  # Average of each participant's average across non-target rules
-  eval_summary_other_rules = evaluation_data %>%
-    filter(category %in% c("misc", "rand")) %>% # for all other rules, summarize average of participant avgs
-    group_by(condition, subjID) %>%
+  evaluation_data %>%
+    mutate(ruleset = RULESET_LOOKUP[category]) %>%
+    group_by(condition, ruleset, subjID) %>%
     summarize(mean_subj_rating = mean(input_rule_rating),
               rules = n()) %>%
-    group_by(condition) %>%
-    summarize(ruleset = "All other rules",
-              mean_rating = mean(mean_subj_rating),
+    group_by(ruleset, condition) %>%
+    summarize(mean_rating = mean(mean_subj_rating),
               subjects = n(),
               se_rating = sd(mean_subj_rating) / sqrt(n()),
               ci_lower = mean_rating - se_rating,
               ci_upper = mean_rating + se_rating)
-  
-  eval_summary = rbind(eval_summary_target_rule, eval_summary_distractor_rule, 
-                       eval_summary_abstract_color, eval_summary_abstract_shape,
-                       eval_summary_other_rules)
-  return(eval_summary)
 }
 
 
@@ -219,10 +172,6 @@ individ_plot_theme = theme(
   legend.position = "bottom",
   legend.key = element_rect(colour = "transparent", fill = "transparent")
 )
-
-RULESET_LOOKUP = c("target" = "Target", "distractor" = "Distractor", 
-                   "abstract_color" = "Abstract (color)", "abstract_shape" = "Abstract (shape)",
-                   "misc" = "All other rules", "rand" = "All other rules")
 
 # Bar chart of average evaluation ratings across conditions on rule evaluation task
 plot_evaluation_results = function(evaluation_summary, evaluation_data) {
