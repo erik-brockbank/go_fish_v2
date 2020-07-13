@@ -267,23 +267,30 @@ trial_data = read_trial_data(TRIAL_DATA)
 evaluation_data = read_evaluation_data(EVAL_DATA)
 memory_data = read_memory_data(MEMORY_DATA)
 
+
+# Check for repeat users
+summary_data %>%
+  group_by(sona_survey_code) %>%
+  summarize(completions = n()) %>%
+  filter(completions > 1)
+
 # Filter out repeat users
-summary_data %>% 
-  filter(sona_survey_code == 33490) %>%
-  select(subjID, expt_start_ts, expt_end_ts)
+# summary_data %>% 
+#   filter(sona_survey_code == 33490) %>%
+#   select(subjID, expt_start_ts, expt_end_ts)
+# 
+# REPEAT_SONA = c("user_1593731799971")
+# 
+# CATCH_USERS = c("user_1594011271068")
 
-REPEAT_SONA = c("user_1593731799971")
-
-CATCH_USERS = c("user_1594011271068")
-
-summary_data = summary_data %>%
-  filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
-trial_data = trial_data %>%
-  filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
-evaluation_data = evaluation_data %>%
-  filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
-memory_data = memory_data %>%
-  filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
+# summary_data = summary_data %>%
+#   filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
+# trial_data = trial_data %>%
+#   filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
+# evaluation_data = evaluation_data %>%
+#   filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
+# memory_data = memory_data %>%
+#   filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
 
 
 # Summarize data
@@ -402,7 +409,7 @@ time_on_task + time_on_trials
 
 # APPENDIX =====================================================================
 
-CATCH_RULE = "If a lure combination has a star shape, it will catch fish."
+CATCH_RULE = "If a lure combination has a red shape on the bottom, it will catch fish."
 
 catch_eval = evaluation_data %>%
   filter(rule_text == CATCH_RULE)
@@ -412,13 +419,17 @@ catch_eval %>%
   geom_point(size = 3, alpha = 0.5) +
   individ_plot_theme
 
+# Select participants that should be removed
+catch_users = evaluation_data %>%
+  filter(rule_text == CATCH_RULE & input_rule_rating > 80)
 
-evaluation_data %>%
-  filter(rule_text == CATCH_RULE & input_rule_rating > 80) %>%
-  select(subjID)
+table(catch_users$condition)
 
+
+# Glimpse ratings on all rules by catch participants
 evaluation_data %>%
-  filter(subjID == "user_1594011271068") %>%
+  filter(subjID %in% catch_users$subjID) %>%
+  group_by(subjID) %>%
   select(category, input_rule_rating)
 
 
