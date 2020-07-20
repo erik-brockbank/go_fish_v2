@@ -229,15 +229,13 @@ plot_memory_data = function(memory_summary) {
 }
 
 # Bar chart of experiment completion time or avg. trial time
-plot_time_data = function(time_summary, individual_time_data, ylab, ymax, title) {
+plot_time_data = function(time_summary, ylab, ymax, title) {
   time_summary %>%
     ggplot(aes(x = condition, y = mean_task_time, 
                color = condition, fill = condition)) +
     geom_bar(stat = "identity", width = 0.5, alpha = 0.5) +
     geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.25) +
-    geom_point(data = individual_time_data, aes(x = condition, y = experiment_completion_time, color = condition),
-               alpha = 0.75, size = 2) +
-    #ylim(0, ymax) +
+    ylim(0, ymax) +
     labs(x = "", y = ylab) +
     ggtitle(title) +
     scale_color_viridis(discrete = T,
@@ -384,8 +382,7 @@ t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == 
 
 # 1. Overall time on task across conditions
 # NB: this generates the plot but we display below with patchwork
-time_on_task = plot_time_data(completion_time_summary, summary_data,
-                              ylab = "Seconds", ymax = 1000, title = "Mean time on experiment")
+time_on_task = plot_time_data(completion_time_summary, ylab = "Seconds", ymax = 1000, title = "Mean time on experiment")
 
 # Do the two conditions spend significantly different amounts of time on the experiment?
 t.test(summary_data$experiment_completion_time[summary_data$condition == "Describe"],
@@ -395,7 +392,7 @@ t.test(summary_data$experiment_completion_time[summary_data$condition == "Descri
 
 # 2. Time on evidence trials across conditions
 # NB: this generates the plot but we display below with patchwork
-time_on_trials = plot_time_data(trial_time_summary, NULL, ylab = "Seconds", ymax = 80, title = "Mean time on trials")
+time_on_trials = plot_time_data(trial_time_summary, ylab = "Seconds", ymax = 80, title = "Mean time on trials")
 
 # Do the two conditions spend significantly different amounts of time on each trial?
 t.test(trial_time_subject_summary$mean_trial_completion[trial_time_subject_summary$condition == "Describe"],

@@ -1,0 +1,463 @@
+{
+    "expt": {
+        "exptname": "go_fish",
+        "exptversion": 2,
+        "sona_experiment_id": "1889",
+        "sona_credit_token": "dc56fda841254cf7b818f6074c925e46"
+    },
+    "client": {
+        "test": false,
+        "sid": "user_1595062975653",
+        "sona_survey_code": "32600"
+    },
+    "trials": {
+        "is_test": false,
+        "is_control": true,
+        "expt_start_ts": 1595062975654,
+        "instruction_data": {
+            "instruction_start_ts": 1595062975654,
+            "instruction_end_ts": 1595063091008
+        },
+        "trial_start_ts": 1595063091008,
+        "trial_data": [
+            {
+                "trial_index": 1,
+                "trial_n_start_ts": 1595063091286,
+                "evidence_shape": {
+                    "top_shape": "teardrop",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "triangle",
+                    "bottom_color": "yellow",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "large red circular lure that has a yellow triangle attached to the bottom of it,and has a triangular point at the top of it along with a tiny purple circle on the red part of the lure.",
+                "evidence_resp_start_ts": 1595063115014,
+                "evidence_resp_end_ts": 1595063258782,
+                "prediction_start_ts": 1595063258783,
+                "prediction_shape": {
+                    "top_shape": "teardrop",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "green",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 5,
+                "prediction_end_ts": 1595063286296,
+                "trial_n_end_ts": 1595063286296
+            },
+            {
+                "trial_index": 2,
+                "trial_n_start_ts": 1595063286296,
+                "evidence_shape": {
+                    "top_shape": "circle",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "the lure was a big green circle with a blue tear drop shape hanging from the bottom of it.",
+                "evidence_resp_start_ts": 1595063298914,
+                "evidence_resp_end_ts": 1595063335569,
+                "prediction_start_ts": 1595063335570,
+                "prediction_shape": {
+                    "top_shape": "circle",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "triangle",
+                    "bottom_color": "red",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595063347347,
+                "trial_n_end_ts": 1595063347347
+            },
+            {
+                "trial_index": 3,
+                "trial_n_start_ts": 1595063347348,
+                "evidence_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "yellow diamond shaped lure with a green sphere hanging at the bottom of it, the green sphere has a purple circle on it.",
+                "evidence_resp_start_ts": 1595063362171,
+                "evidence_resp_end_ts": 1595063422467,
+                "prediction_start_ts": 1595063422468,
+                "prediction_shape": {
+                    "top_shape": "triangle",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 7,
+                "prediction_end_ts": 1595063438892,
+                "trial_n_end_ts": 1595063438892
+            },
+            {
+                "trial_index": 4,
+                "trial_n_start_ts": 1595063438892,
+                "evidence_shape": {
+                    "top_shape": "oval",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "star",
+                    "bottom_color": "yellow",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "blue oval shaped lure with yellow 4 point star hanging from the bottom of it, star has a purple circle on it.",
+                "evidence_resp_start_ts": 1595063456264,
+                "evidence_resp_end_ts": 1595063526587,
+                "prediction_start_ts": 1595063526587,
+                "prediction_shape": {
+                    "top_shape": "oval",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595063542002,
+                "trial_n_end_ts": 1595063542002
+            },
+            {
+                "trial_index": 5,
+                "trial_n_start_ts": 1595063542002,
+                "evidence_shape": {
+                    "top_shape": "circle",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "big red circle with tiny purple circle on it, and hanging from that is a green diamond with a tiny purple circle on it.",
+                "evidence_resp_start_ts": 1595063563421,
+                "evidence_resp_end_ts": 1595063628590,
+                "prediction_start_ts": 1595063628591,
+                "prediction_shape": {
+                    "top_shape": "circle",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595063652704,
+                "trial_n_end_ts": 1595063652704
+            },
+            {
+                "trial_index": 6,
+                "trial_n_start_ts": 1595063652704,
+                "evidence_shape": {
+                    "top_shape": "star",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "red",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "big blue 4 point star shaped lure with a small red circle hanging from the bottom of it.",
+                "evidence_resp_start_ts": 1595063662321,
+                "evidence_resp_end_ts": 1595063732031,
+                "prediction_start_ts": 1595063732031,
+                "prediction_shape": {
+                    "top_shape": "star",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "star",
+                    "bottom_color": "yellow",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 5,
+                "prediction_end_ts": 1595063758328,
+                "trial_n_end_ts": 1595063758328
+            },
+            {
+                "trial_index": 7,
+                "trial_n_start_ts": 1595063758328,
+                "evidence_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "big yellow diamond shape with a tiny purple circle on it, with a small blue diamond hanging from the bottom of it.",
+                "evidence_resp_start_ts": 1595063770278,
+                "evidence_resp_end_ts": 1595063827219,
+                "prediction_start_ts": 1595063827220,
+                "prediction_shape": {
+                    "top_shape": "star",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595063848703,
+                "trial_n_end_ts": 1595063848703
+            },
+            {
+                "trial_index": 8,
+                "trial_n_start_ts": 1595063848704,
+                "evidence_shape": {
+                    "top_shape": "triangle",
+                    "top_color": "green",
+                    "top_texture": true,
+                    "bottom_shape": "oval",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "Big green triangle with tiny purple circle on it,and hanging from the bottom of that is a small red oval with a tiny purple circle on it.",
+                "evidence_resp_start_ts": 1595063853909,
+                "evidence_resp_end_ts": 1595063918426,
+                "prediction_start_ts": 1595063918426,
+                "prediction_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "oval",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 7,
+                "prediction_end_ts": 1595063925205,
+                "trial_n_end_ts": 1595063925205
+            }
+        ],
+        "trial_end_ts": 1595063925206,
+        "evaluation_data": {
+            "eval_ratings": [
+                {
+                    "eval_index": 1,
+                    "eval_id": 6,
+                    "eval_n_start_ts": 1595063925207,
+                    "rule_text": "If a lure combination has a purple dot on at least one of the lures, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.75,
+                    "input_rule_rating": 14,
+                    "eval_n_end_ts": 1595063942813
+                },
+                {
+                    "eval_index": 2,
+                    "eval_id": 1,
+                    "eval_n_start_ts": 1595063942814,
+                    "rule_text": "If a lure combination has a blue shape, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.5,
+                    "input_rule_rating": 18,
+                    "eval_n_end_ts": 1595063951470
+                },
+                {
+                    "eval_index": 3,
+                    "eval_id": 7,
+                    "eval_n_start_ts": 1595063951470,
+                    "rule_text": "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",
+                    "category": "abstract_shape",
+                    "evidence": 0.75,
+                    "input_rule_rating": 13,
+                    "eval_n_end_ts": 1595063963465
+                },
+                {
+                    "eval_index": 4,
+                    "eval_id": 5,
+                    "eval_n_start_ts": 1595063963466,
+                    "rule_text": "If a lure combination has a red shape on the bottom, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.25,
+                    "input_rule_rating": 1,
+                    "eval_n_end_ts": 1595063970607
+                },
+                {
+                    "eval_index": 5,
+                    "eval_id": 3,
+                    "eval_n_start_ts": 1595063970608,
+                    "rule_text": "If a lure combination has a top lure with bright colors that are more visible under water (red or yellow), it will catch fish.",
+                    "category": "abstract_color",
+                    "evidence": 0.75,
+                    "input_rule_rating": 23,
+                    "eval_n_end_ts": 1595063987047
+                },
+                {
+                    "eval_index": 6,
+                    "eval_id": 4,
+                    "eval_n_start_ts": 1595063987048,
+                    "rule_text": "If a lure combination has a pointy shape on the bottom, it will catch fish.",
+                    "category": "target",
+                    "evidence": 1,
+                    "input_rule_rating": 100,
+                    "eval_n_end_ts": 1595063994496
+                },
+                {
+                    "eval_index": 7,
+                    "eval_id": 2,
+                    "eval_n_start_ts": 1595063994497,
+                    "rule_text": "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",
+                    "category": "distractor",
+                    "evidence": 1,
+                    "input_rule_rating": 51,
+                    "eval_n_end_ts": 1595064016411
+                },
+                {
+                    "eval_index": 8,
+                    "eval_id": 8,
+                    "eval_n_start_ts": 1595064016411,
+                    "rule_text": "There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don\u2019t.",
+                    "category": "rand",
+                    "evidence": 0,
+                    "input_rule_rating": 59,
+                    "eval_n_end_ts": 1595064034907
+                }
+            ],
+            "evaluation_start_ts": 1595063925207,
+            "evaluation_end_ts": 1595064034907
+        },
+        "memory_data": {
+            "memory_responses": [
+                {
+                    "memory_shape": {
+                        "top_shape": "teardrop",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "diamond",
+                        "bottom_color": "green",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "triangle",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "green",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "oval",
+                        "top_color": "green",
+                        "top_texture": false,
+                        "bottom_shape": "diamond",
+                        "bottom_color": "red",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "teardrop",
+                        "top_color": "red",
+                        "top_texture": true,
+                        "bottom_shape": "triangle",
+                        "bottom_color": "yellow",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "diamond",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "blue",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "star",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "red",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "circle",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "oval",
+                        "bottom_color": "yellow",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "star",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "star",
+                        "bottom_color": "yellow",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 1
+                }
+            ],
+            "memory_start_ts": 1595064034908,
+            "memory_end_ts": 1595064073228
+        },
+        "expt_end_ts": 1595064073229
+    }
+}

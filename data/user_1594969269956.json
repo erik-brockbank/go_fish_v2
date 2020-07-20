@@ -1,0 +1,463 @@
+{
+    "expt": {
+        "exptname": "go_fish",
+        "exptversion": 2,
+        "sona_experiment_id": "1889",
+        "sona_credit_token": "dc56fda841254cf7b818f6074c925e46"
+    },
+    "client": {
+        "test": false,
+        "sid": "user_1594969269956",
+        "sona_survey_code": "25931"
+    },
+    "trials": {
+        "is_test": false,
+        "is_control": false,
+        "expt_start_ts": 1594969269957,
+        "instruction_data": {
+            "instruction_start_ts": 1594969269957,
+            "instruction_end_ts": 1594969285657
+        },
+        "trial_start_ts": 1594969285657,
+        "trial_data": [
+            {
+                "trial_index": 1,
+                "trial_n_start_ts": 1594969285849,
+                "evidence_shape": {
+                    "top_shape": "teardrop",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "triangle",
+                    "bottom_color": "yellow",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "It's pretty red drop and yellow triangle",
+                "evidence_resp_start_ts": 1594969288806,
+                "evidence_resp_end_ts": 1594969409823,
+                "prediction_start_ts": 1594969409824,
+                "prediction_shape": {
+                    "top_shape": "teardrop",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "green",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 2,
+                "prediction_end_ts": 1594969439371,
+                "trial_n_end_ts": 1594969439371
+            },
+            {
+                "trial_index": 2,
+                "trial_n_start_ts": 1594969439371,
+                "evidence_shape": {
+                    "top_shape": "circle",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "green circle and blue drop ",
+                "evidence_resp_start_ts": 1594969441937,
+                "evidence_resp_end_ts": 1594969461237,
+                "prediction_start_ts": 1594969461238,
+                "prediction_shape": {
+                    "top_shape": "circle",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "triangle",
+                    "bottom_color": "red",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 2,
+                "prediction_end_ts": 1594969467052,
+                "trial_n_end_ts": 1594969467052
+            },
+            {
+                "trial_index": 3,
+                "trial_n_start_ts": 1594969467053,
+                "evidence_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "the combination is not good ",
+                "evidence_resp_start_ts": 1594969470069,
+                "evidence_resp_end_ts": 1594969487630,
+                "prediction_start_ts": 1594969487630,
+                "prediction_shape": {
+                    "top_shape": "triangle",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 3,
+                "prediction_end_ts": 1594969499594,
+                "trial_n_end_ts": 1594969499594
+            },
+            {
+                "trial_index": 4,
+                "trial_n_start_ts": 1594969499595,
+                "evidence_shape": {
+                    "top_shape": "oval",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "star",
+                    "bottom_color": "yellow",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "with the yellow bottom",
+                "evidence_resp_start_ts": 1594969501754,
+                "evidence_resp_end_ts": 1594969516829,
+                "prediction_start_ts": 1594969516829,
+                "prediction_shape": {
+                    "top_shape": "oval",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 2,
+                "prediction_end_ts": 1594969523012,
+                "trial_n_end_ts": 1594969523012
+            },
+            {
+                "trial_index": 5,
+                "trial_n_start_ts": 1594969523013,
+                "evidence_shape": {
+                    "top_shape": "circle",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "The same red circle and green bottom",
+                "evidence_resp_start_ts": 1594969524873,
+                "evidence_resp_end_ts": 1594969540632,
+                "prediction_start_ts": 1594969540632,
+                "prediction_shape": {
+                    "top_shape": "circle",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 2,
+                "prediction_end_ts": 1594969548025,
+                "trial_n_end_ts": 1594969548025
+            },
+            {
+                "trial_index": 6,
+                "trial_n_start_ts": 1594969548025,
+                "evidence_shape": {
+                    "top_shape": "star",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "red",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "blue start and red  circle ",
+                "evidence_resp_start_ts": 1594969550388,
+                "evidence_resp_end_ts": 1594969591066,
+                "prediction_start_ts": 1594969591066,
+                "prediction_shape": {
+                    "top_shape": "star",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "star",
+                    "bottom_color": "yellow",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 2,
+                "prediction_end_ts": 1594969618331,
+                "trial_n_end_ts": 1594969618331
+            },
+            {
+                "trial_index": 7,
+                "trial_n_start_ts": 1594969618332,
+                "evidence_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "The yellow and the blue ",
+                "evidence_resp_start_ts": 1594969620777,
+                "evidence_resp_end_ts": 1594969633009,
+                "prediction_start_ts": 1594969633010,
+                "prediction_shape": {
+                    "top_shape": "star",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 2,
+                "prediction_end_ts": 1594969641654,
+                "trial_n_end_ts": 1594969641654
+            },
+            {
+                "trial_index": 8,
+                "trial_n_start_ts": 1594969641654,
+                "evidence_shape": {
+                    "top_shape": "triangle",
+                    "top_color": "green",
+                    "top_texture": true,
+                    "bottom_shape": "oval",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "The combination is matching ",
+                "evidence_resp_start_ts": 1594969643979,
+                "evidence_resp_end_ts": 1594969749575,
+                "prediction_start_ts": 1594969749575,
+                "prediction_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "oval",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 3,
+                "prediction_end_ts": 1594969762278,
+                "trial_n_end_ts": 1594969762278
+            }
+        ],
+        "trial_end_ts": 1594969762279,
+        "evaluation_data": {
+            "eval_ratings": [
+                {
+                    "eval_index": 1,
+                    "eval_id": 6,
+                    "eval_n_start_ts": 1594969762281,
+                    "rule_text": "If a lure combination has a purple dot on at least one of the lures, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.75,
+                    "input_rule_rating": 66,
+                    "eval_n_end_ts": 1594969809215
+                },
+                {
+                    "eval_index": 2,
+                    "eval_id": 4,
+                    "eval_n_start_ts": 1594969809215,
+                    "rule_text": "If a lure combination has a pointy shape on the bottom, it will catch fish.",
+                    "category": "target",
+                    "evidence": 1,
+                    "input_rule_rating": 66,
+                    "eval_n_end_ts": 1594969904393
+                },
+                {
+                    "eval_index": 3,
+                    "eval_id": 8,
+                    "eval_n_start_ts": 1594969904394,
+                    "rule_text": "There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don\u2019t.",
+                    "category": "rand",
+                    "evidence": 0,
+                    "input_rule_rating": 35,
+                    "eval_n_end_ts": 1594969908588
+                },
+                {
+                    "eval_index": 4,
+                    "eval_id": 3,
+                    "eval_n_start_ts": 1594969908589,
+                    "rule_text": "If a lure combination has a top lure with bright colors that are more visible under water (red or yellow), it will catch fish.",
+                    "category": "abstract_color",
+                    "evidence": 0.75,
+                    "input_rule_rating": 70,
+                    "eval_n_end_ts": 1594969911310
+                },
+                {
+                    "eval_index": 5,
+                    "eval_id": 2,
+                    "eval_n_start_ts": 1594969911310,
+                    "rule_text": "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",
+                    "category": "distractor",
+                    "evidence": 1,
+                    "input_rule_rating": 74,
+                    "eval_n_end_ts": 1594969914810
+                },
+                {
+                    "eval_index": 6,
+                    "eval_id": 1,
+                    "eval_n_start_ts": 1594969914811,
+                    "rule_text": "If a lure combination has a blue shape, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.5,
+                    "input_rule_rating": 67,
+                    "eval_n_end_ts": 1594969920274
+                },
+                {
+                    "eval_index": 7,
+                    "eval_id": 7,
+                    "eval_n_start_ts": 1594969920274,
+                    "rule_text": "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",
+                    "category": "abstract_shape",
+                    "evidence": 0.75,
+                    "input_rule_rating": 17,
+                    "eval_n_end_ts": 1594969923283
+                },
+                {
+                    "eval_index": 8,
+                    "eval_id": 5,
+                    "eval_n_start_ts": 1594969923284,
+                    "rule_text": "If a lure combination has a red shape on the bottom, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.25,
+                    "input_rule_rating": 82,
+                    "eval_n_end_ts": 1594969927290
+                }
+            ],
+            "evaluation_start_ts": 1594969762281,
+            "evaluation_end_ts": 1594969927291
+        },
+        "memory_data": {
+            "memory_responses": [
+                {
+                    "memory_shape": {
+                        "top_shape": "teardrop",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "diamond",
+                        "bottom_color": "green",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "triangle",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "green",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "oval",
+                        "top_color": "green",
+                        "top_texture": false,
+                        "bottom_shape": "diamond",
+                        "bottom_color": "red",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "teardrop",
+                        "top_color": "red",
+                        "top_texture": true,
+                        "bottom_shape": "triangle",
+                        "bottom_color": "yellow",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "diamond",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "blue",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "star",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "red",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "circle",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "oval",
+                        "bottom_color": "yellow",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "star",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "star",
+                        "bottom_color": "yellow",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 0
+                }
+            ],
+            "memory_start_ts": 1594969927292,
+            "memory_end_ts": 1594970072146
+        },
+        "expt_end_ts": 1594970072146
+    }
+}
