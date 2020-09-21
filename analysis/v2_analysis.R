@@ -19,9 +19,26 @@ EVAL_DATA = "03_go_fish_v2_evaluation.csv"
 MEMORY_DATA = "04_go_fish_v2_memory.csv"
 
 
+label_width = 12
 RULESET_LOOKUP = c("target" = "Target", "distractor" = "Distractor", 
                    "abstract_color" = "Abstract (color)", "abstract_shape" = "Abstract (shape)",
                    "misc" = "All other rules", "rand" = "Random")
+
+RULETEXT_LOOKUP = c(
+  "If a lure combination has a pointy shape on the bottom, it will catch fish." = str_wrap("Target (100%)", label_width),
+  "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish." = str_wrap("Distractor (100%)", label_width),
+  "If a lure combination has a top lure with bright colors that are more visible under water (red or yellow), it will catch fish." = str_wrap("Abstract Color (75%)", label_width),
+  "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish." = str_wrap("Abstract Shape (75%)", label_width),
+  "There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t." = str_wrap("Random", label_width),
+  "If a lure combination has a red shape on the bottom, it will catch fish." = str_wrap("Misc (25%)", label_width),
+  "If a lure combination has a blue shape, it will catch fish." = str_wrap("Misc (50%)", label_width),
+  "If a lure combination has a purple dot on at least one of the lures, it will catch fish." = str_wrap("Misc (75%)", label_width)
+)
+
+
+RULESET_LABELS = c(str_wrap("Misc (25%)", label_width), str_wrap("Misc (50%)", label_width), str_wrap("Misc (75%)", label_width), 
+                   str_wrap("Random", label_width), str_wrap("Abstract Color (75%)", label_width), str_wrap("Abstract Shape (75%)", label_width), 
+                   str_wrap("Distractor (100%)", label_width), str_wrap("Target (100%)", label_width))
 
 
 # ANALYSIS FUNCTIONS ===========================================================
@@ -71,14 +88,16 @@ read_memory_data = function(filepath) {
 # Summarize evaluation data across participants and conditions for target and non-target rules
 get_evaluation_summary = function(evaluation_data) {
   evaluation_data %>%
-    mutate(ruleset = RULESET_LOOKUP[category]) %>%
+    # mutate(ruleset = RULESET_LOOKUP[category]) %>%
+    mutate(ruleset = RULETEXT_LOOKUP[rule_text]) %>%
     group_by(condition, ruleset, subjID) %>%
     summarize(mean_subj_rating = mean(input_rule_rating),
               rules = n()) %>%
     group_by(ruleset, condition) %>%
     summarize(mean_rating = mean(mean_subj_rating),
               subjects = n(),
-              se_rating = sd(mean_subj_rating) / sqrt(n()),
+              sd_rating = sd(mean_subj_rating),
+              se_rating = sd_rating / sqrt(n()),
               ci_lower = mean_rating - se_rating,
               ci_upper = mean_rating + se_rating)
 }
@@ -86,20 +105,19 @@ get_evaluation_summary = function(evaluation_data) {
 
 # Summarize experiment completion time data
 get_time_summary = function(time_data) {
-  time_summary = time_data %>%
+  time_data %>%
     group_by(condition) %>%
     summarize(mean_task_time = mean(experiment_completion_time),
               subjects = n(),
               se_task_time = sd(experiment_completion_time) / sqrt(subjects),
               ci_lower = mean_task_time - se_task_time,
               ci_upper = mean_task_time + se_task_time)
-  return(time_summary)
 }
 
 
 # Summarize average trial completion time by participant
 get_trial_time_subj_summary = function(trial_data) {
-  trial_subject_summary = trial_data %>%
+  trial_data %>%
     mutate(trial_completion_time = (trial_n_end_ts - trial_n_start_ts) / 1000) %>%
     group_by(condition, subjID) %>%
     summarize(mean_trial_completion = mean(trial_completion_time),
@@ -107,13 +125,12 @@ get_trial_time_subj_summary = function(trial_data) {
               se_trial_completion = sd(trial_completion_time) / sqrt(trials),
               ci_lower = mean_trial_completion - se_trial_completion,
               ci_upper = mean_trial_completion + se_trial_completion)
-  return(trial_subject_summary)
 }
 
 
 # Get summary of time spent on trials in each condition across participants
 get_trial_time_summary = function(trial_time_subj_summary) {
-  trial_time_summary = trial_time_subj_summary %>%
+  trial_time_subj_summary %>%
     group_by(condition) %>%
     # These column names kept the same as those in `get_time_summary` for easier graphing
     summarize(mean_task_time = mean(mean_trial_completion),
@@ -121,7 +138,6 @@ get_trial_time_summary = function(trial_time_subj_summary) {
               se_trial_time = sd(mean_trial_completion) / sqrt(subjects),
               ci_lower = mean_task_time - se_trial_time,
               ci_upper = mean_task_time + se_trial_time)
-  return(trial_time_summary)
 }
 
 
@@ -144,6 +160,23 @@ get_memory_summary = function(memory_subject_summary) {
               ci_lower = mean_memory_accuracy - se_memory_accuracy,
               ci_upper = mean_memory_accuracy + se_memory_accuracy)
   return(memory_summary)
+}
+
+# Auxiliary function for printing out t test statistics
+report_t_summary = function(t_test) {
+  paste("Mean 1:", round(t_test$estimate[1], 2), "||",
+        "Mean 2:", round(t_test$estimate[2], 2), "||",
+        "t (", t_test$parameter, ") =", round(t_test$statistic, 2), ",",
+        "p =", round(t_test$p.value, 3),
+        sep = " ")
+}
+
+# Auxiliary function for printing out wilcoxon signed-rank test statistics
+report_wilcox_summary = function(wilcox_test) {
+  z_val = qnorm(wilcox_test$p.value / 2)
+  paste("z =", round(z_val, 2), ",",
+        "p =", round(wilcox_test$p.value, 3),
+        sep = " ")
 }
 
 
@@ -174,10 +207,7 @@ individ_plot_theme = theme(
 )
 
 # Bar chart of average evaluation ratings across conditions on rule evaluation task
-plot_evaluation_results = function(evaluation_summary, evaluation_data) {
-  evaluation_data_coded = evaluation_data %>%
-    mutate(ruleset = RULESET_LOOKUP[category])
-  
+plot_evaluation_results = function(evaluation_summary) {
   evaluation_summary %>%
     ggplot(aes(x = ruleset, y = mean_rating, 
                color = condition, fill = condition)) +
@@ -186,10 +216,10 @@ plot_evaluation_results = function(evaluation_summary, evaluation_data) {
       aes(ymin = ci_lower, ymax = ci_upper), 
       position = position_dodge(width = 0.5, preserve = "single"), 
       width = 0.2) +
-    geom_point(data = evaluation_data_coded, aes(x = ruleset, y = input_rule_rating, color = condition),
-               alpha = 0.75, size = 2) +
     labs(y = "Mean evaluation rating") +
-    scale_x_discrete(name = element_blank()) +
+    scale_x_discrete(name = element_blank(),
+                     breaks = RULESET_LABELS,
+                     limits = RULESET_LABELS) +
     scale_color_viridis(discrete = T,
                         name = element_blank(),
                         # Change defaults to be blue/green instead of yellow/purple
@@ -200,7 +230,9 @@ plot_evaluation_results = function(evaluation_summary, evaluation_data) {
                        # Change defaults to be blue/green instead of yellow/purple
                        begin = 0.25,
                        end = 0.75) +
-    scale_y_continuous(breaks = seq(0, 100, by = 10)) +
+    scale_y_continuous(breaks = seq(0, 100, by = 10),
+                       labels = seq(0, 100, by = 10),
+                       limits = c(0, 100)) +
     individ_plot_theme
 }
 
@@ -229,13 +261,14 @@ plot_memory_data = function(memory_summary) {
 }
 
 # Bar chart of experiment completion time or avg. trial time
-plot_time_data = function(time_summary, ylab, ymax, title) {
+plot_time_data = function(time_summary, individ_data, ylab, title) {
   time_summary %>%
     ggplot(aes(x = condition, y = mean_task_time, 
                color = condition, fill = condition)) +
     geom_bar(stat = "identity", width = 0.5, alpha = 0.5) +
     geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.25) +
-    ylim(0, ymax) +
+    geom_point(data = individ_data, aes(x = condition, y = individ_task_time, color = condition),
+               alpha = 0.5) +
     labs(x = "", y = ylab) +
     ggtitle(title) +
     scale_color_viridis(discrete = T,
@@ -256,14 +289,16 @@ plot_time_data = function(time_summary, ylab, ymax, title) {
 
 # DATA INITIALIZATION ==========================================================
 
-# TODO We have two data files with SONA survey code 33490, and only one participant...
-
-
 # Read in data
 summary_data = read_summary_data(SUMMARY_DATA)
 trial_data = read_trial_data(TRIAL_DATA)
 evaluation_data = read_evaluation_data(EVAL_DATA)
 memory_data = read_memory_data(MEMORY_DATA)
+
+# Summarize participant count before and after catch trials
+summary_data %>%
+  group_by(condition) %>%
+  summarize(participants = n())
 
 
 # Check for repeat users
@@ -272,28 +307,56 @@ summary_data %>%
   summarize(completions = n()) %>%
   filter(completions > 1)
 
-# Filter out repeat users
-# summary_data %>% 
-#   filter(sona_survey_code == 33490) %>%
-#   select(subjID, expt_start_ts, expt_end_ts)
-# 
-# REPEAT_SONA = c("user_1593731799971")
-# 
-# CATCH_USERS = c("user_1594011271068")
+# Remove users that fail catch trial evaluation
+CATCH_RULE = "If a lure combination has a red shape on the bottom, it will catch fish."
+CATCH_RULE_CUTOFF = 80
 
-# summary_data = summary_data %>%
-#   filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
-# trial_data = trial_data %>%
-#   filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
-# evaluation_data = evaluation_data %>%
-#   filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
-# memory_data = memory_data %>%
-#   filter(!subjID %in% REPEAT_SONA & !subjID %in% CATCH_USERS)
+catch_eval = evaluation_data %>%
+  filter(rule_text == CATCH_RULE)
+
+catch_eval %>%
+  ggplot(aes(x = condition, y = input_rule_rating, color = condition)) +
+  geom_point(size = 3, alpha = 0.5) +
+  geom_hline(yintercept = CATCH_RULE_CUTOFF, linetype = "dashed", color = "black", size = 1) +
+  labs(x = "", y = "Catch trial rule evaluation") +
+  individ_plot_theme +
+  theme(legend.position = "none")
+
+# Select participants that should be removed
+catch_users = evaluation_data %>%
+  filter(rule_text == CATCH_RULE & input_rule_rating > 80)
+table(catch_users$condition)
+
+
+sd(summary_data$experiment_completion_time)
+COMPLETION_TIME_CUTOFF = mean(summary_data$experiment_completion_time) + 5 * sd(summary_data$experiment_completion_time)
+# COMPLETION_TIME_CUTOFF = 10000
+# COMPLETION_TIME_CUTOFF = 2000
+
+
+completion_time_users = summary_data %>%
+  filter(experiment_completion_time > COMPLETION_TIME_CUTOFF) %>%
+  select(subjID)
+
+CATCH_USERS = c(catch_users$subjID, completion_time_users$subjID)
+
+summary_data = summary_data %>%
+  filter(!subjID %in% CATCH_USERS)
+trial_data = trial_data %>%
+  filter(!subjID %in% CATCH_USERS)
+evaluation_data = evaluation_data %>%
+  filter(!subjID %in% CATCH_USERS)
+memory_data = memory_data %>%
+  filter(!subjID %in% CATCH_USERS)
+
+# Summarize participant count before and after catch trials
+summary_data %>%
+  group_by(condition) %>%
+  summarize(participants = n())
 
 
 # Summarize data
 evaluation_summary = get_evaluation_summary(evaluation_data)
-
 completion_time_summary = get_time_summary(summary_data)
 trial_time_subject_summary = get_trial_time_subj_summary(trial_data)
 trial_time_summary = get_trial_time_summary(trial_time_subject_summary)
@@ -314,42 +377,86 @@ summary_data %>%
 
 ### GENERATION
 
-# TODO consider looking at prediction accuracy over trials to see if this group
-# is less noisy than v1 (unlikely but could be interesting)
+# Are there any condition differences in prediction accuracy?
+
+prediction_summary = trial_data %>%
+  group_by(condition, trial_index) %>%
+  summarize(mean_accuracy = sum(input_correct) / n())
+
+prediction_summary %>%
+  # filter(trial_index > 4) %>%
+  ggplot(aes(x = trial_index, y = mean_accuracy, color = condition)) +
+  geom_line() +
+  geom_point(size = 2) +
+  geom_hline(yintercept = 0.5, linetype = "dashed") +
+  labs(x = "Trial index", y = "Accuracy") +
+  # ggtitle("Prediction accuracy in each round") +
+  scale_color_viridis(discrete = T,
+                      name = element_blank()) +
+  individ_plot_theme
+
 
 
 ### EVALUATION
-plot_evaluation_results(evaluation_summary, evaluation_data)
+plot_evaluation_results(evaluation_summary)
 
+
+# Wilcoxon signed-rank test showing that target rule is different from all other rules across both groups
+eval_summary_other_rules = evaluation_data %>%
+  filter(category != "target") %>%
+  group_by(condition, subjID) %>%
+  summarize(mean_subj_rating = mean(input_rule_rating))
+
+eval_difference = evaluation_data %>%
+  group_by(subjID, condition) %>%
+  filter(category == "target") %>%
+  inner_join(., eval_summary_other_rules, by = "subjID") %>%
+  mutate(diff = input_rule_rating - mean_subj_rating) %>%
+  select(subjID, condition.x, diff)
+
+wil_exp = wilcox.test(eval_difference$diff[eval_difference$condition.x == "Explain"], exact = F)
+wil_des = wilcox.test(eval_difference$diff[eval_difference$condition.x == "Describe"], exact = F)
+report_wilcox_summary(wil_exp) # Explainers
+report_wilcox_summary(wil_des) # Describers
 
 # Target rule comparison
-t.test(evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
-                                           evaluation_data$category == "target"], 
-       evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
-                                           evaluation_data$category == "target"],
-       equal.var = T)
+report_t_summary(
+  t.test(
+    evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
+                                        evaluation_data$category == "target"], 
+    evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
+                                        evaluation_data$category == "target"],
+    var.equal = T))
 
 # Distractor comparison
-t.test(evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
-                                           evaluation_data$category == "distractor"], 
-       evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
-                                           evaluation_data$category == "distractor"],
-       equal.var = T)
-
-# Abstract: shape comparison
-t.test(evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
-                                           evaluation_data$category == "abstract_shape"], 
-       evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
-                                           evaluation_data$category == "abstract_shape"],
-       equal.var = T)
-
+report_t_summary(
+  t.test(
+    evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
+                                        evaluation_data$category == "distractor"], 
+    evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
+                                        evaluation_data$category == "distractor"],
+    var.equal = T))
 
 # Abstract: color comparison
-t.test(evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
-                                           evaluation_data$category == "abstract_color"], 
-       evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
-                                           evaluation_data$category == "abstract_color"],
-       equal.var = T)
+report_t_summary(
+  t.test(
+    evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
+                                        evaluation_data$category == "abstract_color"], 
+    evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
+                                        evaluation_data$category == "abstract_color"],
+    var.equal = T))
+
+# Abstract: shape comparison
+report_t_summary(
+  t.test(
+    evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
+                                        evaluation_data$category == "abstract_shape"], 
+    evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
+                                        evaluation_data$category == "abstract_shape"],
+    var.equal = T))
+
+
+
 
 
 
@@ -382,7 +489,12 @@ t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == 
 
 # 1. Overall time on task across conditions
 # NB: this generates the plot but we display below with patchwork
-time_on_task = plot_time_data(completion_time_summary, ylab = "Seconds", ymax = 1000, title = "Mean time on experiment")
+individ_completion = summary_data %>%
+  select(subjID, condition, experiment_completion_time) %>%
+  # filter(experiment_completion_time <= 10000) %>%
+  rename("individ_task_time" = experiment_completion_time)
+
+time_on_task = plot_time_data(completion_time_summary, individ_completion, ylab = "Seconds", title = "Mean time on experiment")
 
 # Do the two conditions spend significantly different amounts of time on the experiment?
 t.test(summary_data$experiment_completion_time[summary_data$condition == "Describe"],
@@ -391,8 +503,12 @@ t.test(summary_data$experiment_completion_time[summary_data$condition == "Descri
 
 
 # 2. Time on evidence trials across conditions
+individ_trials = trial_time_subject_summary %>%
+  select(subjID, condition, mean_trial_completion) %>%
+  # filter(mean_trial_completion <= 1000) %>%
+  rename("individ_task_time" = mean_trial_completion)
 # NB: this generates the plot but we display below with patchwork
-time_on_trials = plot_time_data(trial_time_summary, ylab = "Seconds", ymax = 80, title = "Mean time on trials")
+time_on_trials = plot_time_data(trial_time_summary, individ_trials, ylab = "Seconds", title = "Mean time on trials")
 
 # Do the two conditions spend significantly different amounts of time on each trial?
 t.test(trial_time_subject_summary$mean_trial_completion[trial_time_subject_summary$condition == "Describe"],
@@ -406,27 +522,5 @@ time_on_task + time_on_trials
 
 # APPENDIX =====================================================================
 
-CATCH_RULE = "If a lure combination has a red shape on the bottom, it will catch fish."
-
-catch_eval = evaluation_data %>%
-  filter(rule_text == CATCH_RULE)
-
-catch_eval %>%
-  ggplot(aes(x = condition, y = input_rule_rating, color = condition)) +
-  geom_point(size = 3, alpha = 0.5) +
-  individ_plot_theme
-
-# Select participants that should be removed
-catch_users = evaluation_data %>%
-  filter(rule_text == CATCH_RULE & input_rule_rating > 80)
-
-table(catch_users$condition)
-
-
-# Glimpse ratings on all rules by catch participants
-evaluation_data %>%
-  filter(subjID %in% catch_users$subjID) %>%
-  group_by(subjID) %>%
-  select(category, input_rule_rating)
 
 

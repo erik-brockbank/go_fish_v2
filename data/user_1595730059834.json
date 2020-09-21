@@ -1,0 +1,463 @@
+{
+    "expt": {
+        "exptname": "go_fish",
+        "exptversion": 2,
+        "sona_experiment_id": "1889",
+        "sona_credit_token": "dc56fda841254cf7b818f6074c925e46"
+    },
+    "client": {
+        "test": false,
+        "sid": "user_1595730059834",
+        "sona_survey_code": "33257"
+    },
+    "trials": {
+        "is_test": false,
+        "is_control": true,
+        "expt_start_ts": 1595730059836,
+        "instruction_data": {
+            "instruction_start_ts": 1595730059836,
+            "instruction_end_ts": 1595730099287
+        },
+        "trial_start_ts": 1595730099287,
+        "trial_data": [
+            {
+                "trial_index": 1,
+                "trial_n_start_ts": 1595730099707,
+                "evidence_shape": {
+                    "top_shape": "teardrop",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "triangle",
+                    "bottom_color": "yellow",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "Upside down,red ice cream cone, with a separate yellow cone underneath it. The red cone has a purple dot near the left hand-side of the tip.",
+                "evidence_resp_start_ts": 1595730116492,
+                "evidence_resp_end_ts": 1595730233689,
+                "prediction_start_ts": 1595730233690,
+                "prediction_shape": {
+                    "top_shape": "teardrop",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "green",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 5,
+                "prediction_end_ts": 1595730247834,
+                "trial_n_end_ts": 1595730247834
+            },
+            {
+                "trial_index": 2,
+                "trial_n_start_ts": 1595730247834,
+                "evidence_shape": {
+                    "top_shape": "circle",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "Large green circle in the middle, with a blue, water droplet shaped figure underneath it.",
+                "evidence_resp_start_ts": 1595730253452,
+                "evidence_resp_end_ts": 1595730293772,
+                "prediction_start_ts": 1595730293773,
+                "prediction_shape": {
+                    "top_shape": "circle",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "triangle",
+                    "bottom_color": "red",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595730304351,
+                "trial_n_end_ts": 1595730304351
+            },
+            {
+                "trial_index": 3,
+                "trial_n_start_ts": 1595730304352,
+                "evidence_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "Small, equidistant, yellow diamond. Underneath the Middle point, there is a smaller green circle, with a red dot on the lower right hand side.",
+                "evidence_resp_start_ts": 1595730309465,
+                "evidence_resp_end_ts": 1595730398083,
+                "prediction_start_ts": 1595730398084,
+                "prediction_shape": {
+                    "top_shape": "triangle",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 7,
+                "prediction_end_ts": 1595730407972,
+                "trial_n_end_ts": 1595730407972
+            },
+            {
+                "trial_index": 4,
+                "trial_n_start_ts": 1595730407973,
+                "evidence_shape": {
+                    "top_shape": "oval",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "star",
+                    "bottom_color": "yellow",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "Long, blue oval, with a  yellow diamond, 4 sided, star-like shape. Inside the yellow figure there is a red dot in between the top in the right-most points.",
+                "evidence_resp_start_ts": 1595730416052,
+                "evidence_resp_end_ts": 1595730555590,
+                "prediction_start_ts": 1595730555590,
+                "prediction_shape": {
+                    "top_shape": "oval",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595730564429,
+                "trial_n_end_ts": 1595730564429
+            },
+            {
+                "trial_index": 5,
+                "trial_n_start_ts": 1595730564430,
+                "evidence_shape": {
+                    "top_shape": "circle",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "Large red circle, with a purple dot located in the center but a bit closer to the lower right hand side. Directly beneath the red circle, there is an equidistant, small, green diamond shape. Inside the green figure, there is another smaller purple dot placed slightly to the right of the center of the diamond.",
+                "evidence_resp_start_ts": 1595730568561,
+                "evidence_resp_end_ts": 1595730711898,
+                "prediction_start_ts": 1595730711899,
+                "prediction_shape": {
+                    "top_shape": "circle",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595730725233,
+                "trial_n_end_ts": 1595730725233
+            },
+            {
+                "trial_index": 6,
+                "trial_n_start_ts": 1595730725234,
+                "evidence_shape": {
+                    "top_shape": "star",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "red",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "A large, blue, 4 sided, star-like shaped, without the curved sides. Directly beneath the bottom middle point, there is a small red circle.",
+                "evidence_resp_start_ts": 1595730729685,
+                "evidence_resp_end_ts": 1595730814224,
+                "prediction_start_ts": 1595730814225,
+                "prediction_shape": {
+                    "top_shape": "star",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "star",
+                    "bottom_color": "yellow",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 5,
+                "prediction_end_ts": 1595730837460,
+                "trial_n_end_ts": 1595730837460
+            },
+            {
+                "trial_index": 7,
+                "trial_n_start_ts": 1595730837461,
+                "evidence_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "A large, yellow, equidistant diamond. Inside the yellow figure there is a small purple circle against the upper right hand side edge. Beneath the lowest point of the diamond, there is similar, smaller equidistant, blue diamond.",
+                "evidence_resp_start_ts": 1595730841121,
+                "evidence_resp_end_ts": 1595730996271,
+                "prediction_start_ts": 1595730996272,
+                "prediction_shape": {
+                    "top_shape": "star",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595731011258,
+                "trial_n_end_ts": 1595731011258
+            },
+            {
+                "trial_index": 8,
+                "trial_n_start_ts": 1595731011258,
+                "evidence_shape": {
+                    "top_shape": "triangle",
+                    "top_color": "green",
+                    "top_texture": true,
+                    "bottom_shape": "oval",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "Large, green upside down triangle, inside the triangle there is a small, purple, circle located in the upper left side corner. Beneath the lowest point, there is a small, long, red oval. Inside the red oval, there is a smaller purple circle located to the left of the center mark of the red oval.",
+                "evidence_resp_start_ts": 1595731018624,
+                "evidence_resp_end_ts": 1595731132052,
+                "prediction_start_ts": 1595731132053,
+                "prediction_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "oval",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595731145146,
+                "trial_n_end_ts": 1595731145146
+            }
+        ],
+        "trial_end_ts": 1595731145147,
+        "evaluation_data": {
+            "eval_ratings": [
+                {
+                    "eval_index": 1,
+                    "eval_id": 5,
+                    "eval_n_start_ts": 1595731145149,
+                    "rule_text": "If a lure combination has a red shape on the bottom, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.25,
+                    "input_rule_rating": 55,
+                    "eval_n_end_ts": 1595731170879
+                },
+                {
+                    "eval_index": 2,
+                    "eval_id": 6,
+                    "eval_n_start_ts": 1595731170880,
+                    "rule_text": "If a lure combination has a purple dot on at least one of the lures, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.75,
+                    "input_rule_rating": 79,
+                    "eval_n_end_ts": 1595731192657
+                },
+                {
+                    "eval_index": 3,
+                    "eval_id": 4,
+                    "eval_n_start_ts": 1595731192658,
+                    "rule_text": "If a lure combination has a pointy shape on the bottom, it will catch fish.",
+                    "category": "target",
+                    "evidence": 1,
+                    "input_rule_rating": 91,
+                    "eval_n_end_ts": 1595731203758
+                },
+                {
+                    "eval_index": 4,
+                    "eval_id": 3,
+                    "eval_n_start_ts": 1595731203758,
+                    "rule_text": "If a lure combination has a top lure with bright colors that are more visible under water (red or yellow), it will catch fish.",
+                    "category": "abstract_color",
+                    "evidence": 0.75,
+                    "input_rule_rating": 59,
+                    "eval_n_end_ts": 1595731221949
+                },
+                {
+                    "eval_index": 5,
+                    "eval_id": 7,
+                    "eval_n_start_ts": 1595731221949,
+                    "rule_text": "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",
+                    "category": "abstract_shape",
+                    "evidence": 0.75,
+                    "input_rule_rating": 62,
+                    "eval_n_end_ts": 1595731234109
+                },
+                {
+                    "eval_index": 6,
+                    "eval_id": 2,
+                    "eval_n_start_ts": 1595731234111,
+                    "rule_text": "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",
+                    "category": "distractor",
+                    "evidence": 1,
+                    "input_rule_rating": 100,
+                    "eval_n_end_ts": 1595731251608
+                },
+                {
+                    "eval_index": 7,
+                    "eval_id": 1,
+                    "eval_n_start_ts": 1595731251609,
+                    "rule_text": "If a lure combination has a blue shape, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.5,
+                    "input_rule_rating": 57,
+                    "eval_n_end_ts": 1595731260328
+                },
+                {
+                    "eval_index": 8,
+                    "eval_id": 8,
+                    "eval_n_start_ts": 1595731260329,
+                    "rule_text": "There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don\u2019t.",
+                    "category": "rand",
+                    "evidence": 0,
+                    "input_rule_rating": 87,
+                    "eval_n_end_ts": 1595731272659
+                }
+            ],
+            "evaluation_start_ts": 1595731145149,
+            "evaluation_end_ts": 1595731272660
+        },
+        "memory_data": {
+            "memory_responses": [
+                {
+                    "memory_shape": {
+                        "top_shape": "teardrop",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "diamond",
+                        "bottom_color": "green",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "triangle",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "green",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "oval",
+                        "top_color": "green",
+                        "top_texture": false,
+                        "bottom_shape": "diamond",
+                        "bottom_color": "red",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "teardrop",
+                        "top_color": "red",
+                        "top_texture": true,
+                        "bottom_shape": "triangle",
+                        "bottom_color": "yellow",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "diamond",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "blue",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "star",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "red",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "circle",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "oval",
+                        "bottom_color": "yellow",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "star",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "star",
+                        "bottom_color": "yellow",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 0
+                }
+            ],
+            "memory_start_ts": 1595731272661,
+            "memory_end_ts": 1595731307289
+        },
+        "expt_end_ts": 1595731307289
+    }
+}

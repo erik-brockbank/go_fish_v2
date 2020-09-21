@@ -1,0 +1,463 @@
+{
+    "expt": {
+        "exptname": "go_fish",
+        "exptversion": 2,
+        "sona_experiment_id": "1889",
+        "sona_credit_token": "dc56fda841254cf7b818f6074c925e46"
+    },
+    "client": {
+        "test": false,
+        "sid": "user_1595847343533",
+        "sona_survey_code": "22885"
+    },
+    "trials": {
+        "is_test": false,
+        "is_control": false,
+        "expt_start_ts": 1595847343533,
+        "instruction_data": {
+            "instruction_start_ts": 1595847343533,
+            "instruction_end_ts": 1595847406456
+        },
+        "trial_start_ts": 1595847406456,
+        "trial_data": [
+            {
+                "trial_index": 1,
+                "trial_n_start_ts": 1595847406732,
+                "evidence_shape": {
+                    "top_shape": "teardrop",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "triangle",
+                    "bottom_color": "yellow",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "Maybe because the shape looks like the food that fish likes and the shape attracts fish to it. Also, it's flashy and colorful and might catch their attention and eyes.  ",
+                "evidence_resp_start_ts": 1595847427597,
+                "evidence_resp_end_ts": 1595847575796,
+                "prediction_start_ts": 1595847575797,
+                "prediction_shape": {
+                    "top_shape": "teardrop",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "green",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595847603581,
+                "trial_n_end_ts": 1595847603581
+            },
+            {
+                "trial_index": 2,
+                "trial_n_start_ts": 1595847603581,
+                "evidence_shape": {
+                    "top_shape": "circle",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "It could have possibly looked threatening or like a predator to the fish. It also looks like a water droplet on the bottom and that might not catch the attention of the fish and the colors are not flashy or anything.  ",
+                "evidence_resp_start_ts": 1595847617723,
+                "evidence_resp_end_ts": 1595847737737,
+                "prediction_start_ts": 1595847737737,
+                "prediction_shape": {
+                    "top_shape": "circle",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "triangle",
+                    "bottom_color": "red",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 5,
+                "prediction_end_ts": 1595847783471,
+                "trial_n_end_ts": 1595847783471
+            },
+            {
+                "trial_index": 3,
+                "trial_n_start_ts": 1595847783471,
+                "evidence_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "There is not much resemblance and similarity with the first lure that caught the fishes and it could come off as dangerous and threatening to the fishes. Also, the green ball in the bottom looks an eyeball and to the fish that could be seen as a predator or something. Also, so far just round circles have not been effective. ",
+                "evidence_resp_start_ts": 1595847808310,
+                "evidence_resp_end_ts": 1595847953245,
+                "prediction_start_ts": 1595847953245,
+                "prediction_shape": {
+                    "top_shape": "triangle",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 3,
+                "prediction_end_ts": 1595847991100,
+                "trial_n_end_ts": 1595847991100
+            },
+            {
+                "trial_index": 4,
+                "trial_n_start_ts": 1595847991100,
+                "evidence_shape": {
+                    "top_shape": "oval",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "star",
+                    "bottom_color": "yellow",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "One reason could be that based on the first lure, the bottom is both yellow in color and they are about the same in size. The yellow star-shaped structure on the bottom could look like prey to the fishes or plants or something. They might just not be threatened and are attracted to that yellow color and also includes a little purple dot similar to the large purple dot in the first lure. ",
+                "evidence_resp_start_ts": 1595848023761,
+                "evidence_resp_end_ts": 1595848236131,
+                "prediction_start_ts": 1595848236131,
+                "prediction_shape": {
+                    "top_shape": "oval",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595848264435,
+                "trial_n_end_ts": 1595848264435
+            },
+            {
+                "trial_index": 5,
+                "trial_n_start_ts": 1595848264436,
+                "evidence_shape": {
+                    "top_shape": "circle",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "green",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "This is surprising to me because it contradicts my previous statements, but there is still that red round structure and purple dot you can see in the first lure. It also more flashy and might grab the attention of the fish and so far the bottom structures of the lures have caught fish if they were not round. Also, the position of the purple dot is important and it seems like both lures have it towards the right section of their bottom structure, but this one has a red dot and red seems to attract fish like the color yellow and purple. ",
+                "evidence_resp_start_ts": 1595848281282,
+                "evidence_resp_end_ts": 1595848547507,
+                "prediction_start_ts": 1595848547507,
+                "prediction_shape": {
+                    "top_shape": "circle",
+                    "top_color": "red",
+                    "top_texture": true,
+                    "bottom_shape": "teardrop",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595848572238,
+                "trial_n_end_ts": 1595848572238
+            },
+            {
+                "trial_index": 6,
+                "trial_n_start_ts": 1595848572238,
+                "evidence_shape": {
+                    "top_shape": "star",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "circle",
+                    "bottom_color": "red",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "Again a red structure at the bottom has led to no fish and it might look like a threat or a predator to the fish. Also, there are no dots in it and not really that flashy or anything. The star blue star-shaped structure on the top is also different from the yellow star-shaped strucuter on the bottom of the two previous lures that caught fish.  ",
+                "evidence_resp_start_ts": 1595848584333,
+                "evidence_resp_end_ts": 1595848799060,
+                "prediction_start_ts": 1595848799060,
+                "prediction_shape": {
+                    "top_shape": "star",
+                    "top_color": "blue",
+                    "top_texture": false,
+                    "bottom_shape": "star",
+                    "bottom_color": "yellow",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 5,
+                "prediction_end_ts": 1595848896901,
+                "trial_n_end_ts": 1595848896901
+            },
+            {
+                "trial_index": 7,
+                "trial_n_start_ts": 1595848896901,
+                "evidence_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": true,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "evidence_catches_fish": 1,
+                "input_evidence_response": "We see that purple dot again on the right side and that common yellow color in lures that have successfully caught fish. It might just appear as food to the fish and catch their attention and it's also not round on the bottom part of the structure of the lure. ",
+                "evidence_resp_start_ts": 1595848909568,
+                "evidence_resp_end_ts": 1595849050284,
+                "prediction_start_ts": 1595849050284,
+                "prediction_shape": {
+                    "top_shape": "star",
+                    "top_color": "green",
+                    "top_texture": false,
+                    "bottom_shape": "diamond",
+                    "bottom_color": "blue",
+                    "bottom_texture": false
+                },
+                "prediction_catches_fish": 1,
+                "input_prediction_catches_fish": 1,
+                "input_prediction_conf": 3,
+                "prediction_end_ts": 1595849094618,
+                "trial_n_end_ts": 1595849094618
+            },
+            {
+                "trial_index": 8,
+                "trial_n_start_ts": 1595849094618,
+                "evidence_shape": {
+                    "top_shape": "triangle",
+                    "top_color": "green",
+                    "top_texture": true,
+                    "bottom_shape": "oval",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "evidence_catches_fish": 0,
+                "input_evidence_response": "Again, the bottom part of the structure is round, and also the purple dot is on the left side and it might appear as dangerous and threatening to the fish. The green upside-down triangle has not shown to be a successful lure also and red on the bottom has never worked. This might be flashy in a bad way where it scares fish away. ",
+                "evidence_resp_start_ts": 1595849107721,
+                "evidence_resp_end_ts": 1595849302243,
+                "prediction_start_ts": 1595849302243,
+                "prediction_shape": {
+                    "top_shape": "diamond",
+                    "top_color": "yellow",
+                    "top_texture": false,
+                    "bottom_shape": "oval",
+                    "bottom_color": "red",
+                    "bottom_texture": true
+                },
+                "prediction_catches_fish": 0,
+                "input_prediction_catches_fish": 0,
+                "input_prediction_conf": 6,
+                "prediction_end_ts": 1595849350005,
+                "trial_n_end_ts": 1595849350005
+            }
+        ],
+        "trial_end_ts": 1595849350005,
+        "evaluation_data": {
+            "eval_ratings": [
+                {
+                    "eval_index": 1,
+                    "eval_id": 7,
+                    "eval_n_start_ts": 1595849350006,
+                    "rule_text": "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish.",
+                    "category": "abstract_shape",
+                    "evidence": 0.75,
+                    "input_rule_rating": 96,
+                    "eval_n_end_ts": 1595849396813
+                },
+                {
+                    "eval_index": 2,
+                    "eval_id": 5,
+                    "eval_n_start_ts": 1595849396813,
+                    "rule_text": "If a lure combination has a red shape on the bottom, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.25,
+                    "input_rule_rating": 1,
+                    "eval_n_end_ts": 1595849416575
+                },
+                {
+                    "eval_index": 3,
+                    "eval_id": 8,
+                    "eval_n_start_ts": 1595849416576,
+                    "rule_text": "There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don\u2019t.",
+                    "category": "rand",
+                    "evidence": 0,
+                    "input_rule_rating": 19,
+                    "eval_n_end_ts": 1595849437003
+                },
+                {
+                    "eval_index": 4,
+                    "eval_id": 6,
+                    "eval_n_start_ts": 1595849437004,
+                    "rule_text": "If a lure combination has a purple dot on at least one of the lures, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.75,
+                    "input_rule_rating": 79,
+                    "eval_n_end_ts": 1595849470653
+                },
+                {
+                    "eval_index": 5,
+                    "eval_id": 4,
+                    "eval_n_start_ts": 1595849470653,
+                    "rule_text": "If a lure combination has a pointy shape on the bottom, it will catch fish.",
+                    "category": "target",
+                    "evidence": 1,
+                    "input_rule_rating": 98,
+                    "eval_n_end_ts": 1595849483256
+                },
+                {
+                    "eval_index": 6,
+                    "eval_id": 3,
+                    "eval_n_start_ts": 1595849483257,
+                    "rule_text": "If a lure combination has a top lure with bright colors that are more visible under water (red or yellow), it will catch fish.",
+                    "category": "abstract_color",
+                    "evidence": 0.75,
+                    "input_rule_rating": 96,
+                    "eval_n_end_ts": 1595849502158
+                },
+                {
+                    "eval_index": 7,
+                    "eval_id": 1,
+                    "eval_n_start_ts": 1595849502158,
+                    "rule_text": "If a lure combination has a blue shape, it will catch fish.",
+                    "category": "misc",
+                    "evidence": 0.5,
+                    "input_rule_rating": 68,
+                    "eval_n_end_ts": 1595849516926
+                },
+                {
+                    "eval_index": 8,
+                    "eval_id": 2,
+                    "eval_n_start_ts": 1595849516926,
+                    "rule_text": "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish.",
+                    "category": "distractor",
+                    "evidence": 1,
+                    "input_rule_rating": 98,
+                    "eval_n_end_ts": 1595849533433
+                }
+            ],
+            "evaluation_start_ts": 1595849350006,
+            "evaluation_end_ts": 1595849533433
+        },
+        "memory_data": {
+            "memory_responses": [
+                {
+                    "memory_shape": {
+                        "top_shape": "teardrop",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "diamond",
+                        "bottom_color": "green",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "triangle",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "green",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "oval",
+                        "top_color": "green",
+                        "top_texture": false,
+                        "bottom_shape": "diamond",
+                        "bottom_color": "red",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "teardrop",
+                        "top_color": "red",
+                        "top_texture": true,
+                        "bottom_shape": "triangle",
+                        "bottom_color": "yellow",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 1
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "diamond",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "blue",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "star",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "circle",
+                        "bottom_color": "red",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "circle",
+                        "top_color": "yellow",
+                        "top_texture": false,
+                        "bottom_shape": "oval",
+                        "bottom_color": "yellow",
+                        "bottom_texture": false
+                    },
+                    "memory_shape_in_expt": 0,
+                    "memory_shape_catches_fish": 0,
+                    "input_shape_in_expt": 0
+                },
+                {
+                    "memory_shape": {
+                        "top_shape": "star",
+                        "top_color": "blue",
+                        "top_texture": false,
+                        "bottom_shape": "star",
+                        "bottom_color": "yellow",
+                        "bottom_texture": true
+                    },
+                    "memory_shape_in_expt": 1,
+                    "memory_shape_catches_fish": 1,
+                    "input_shape_in_expt": 1
+                }
+            ],
+            "memory_start_ts": 1595849533434,
+            "memory_end_ts": 1595849569620
+        },
+        "expt_end_ts": 1595849569621
+    }
+}
