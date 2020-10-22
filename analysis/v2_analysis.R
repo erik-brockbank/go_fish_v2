@@ -1,6 +1,6 @@
-#' 
+#'
 #' Analysis for go_fish v2
-#' 
+#'
 
 
 rm(list = ls())
@@ -20,7 +20,7 @@ MEMORY_DATA = "04_go_fish_v2_memory.csv"
 
 
 label_width = 12
-RULESET_LOOKUP = c("target" = "Target", "distractor" = "Distractor", 
+RULESET_LOOKUP = c("target" = "Target", "distractor" = "Distractor",
                    "abstract_color" = "Abstract (color)", "abstract_shape" = "Abstract (shape)",
                    "misc" = "All other rules", "rand" = "Random")
 
@@ -36,8 +36,8 @@ RULETEXT_LOOKUP = c(
 )
 
 
-RULESET_LABELS = c(str_wrap("Misc (25%)", label_width), str_wrap("Misc (50%)", label_width), str_wrap("Misc (75%)", label_width), 
-                   str_wrap("Random", label_width), str_wrap("Abstract Color (75%)", label_width), str_wrap("Abstract Shape (75%)", label_width), 
+RULESET_LABELS = c(str_wrap("Misc (25%)", label_width), str_wrap("Misc (50%)", label_width), str_wrap("Misc (75%)", label_width),
+                   str_wrap("Random", label_width), str_wrap("Abstract Color (75%)", label_width), str_wrap("Abstract Shape (75%)", label_width),
                    str_wrap("Distractor (100%)", label_width), str_wrap("Target (100%)", label_width))
 
 
@@ -209,12 +209,12 @@ individ_plot_theme = theme(
 # Bar chart of average evaluation ratings across conditions on rule evaluation task
 plot_evaluation_results = function(evaluation_summary) {
   evaluation_summary %>%
-    ggplot(aes(x = ruleset, y = mean_rating, 
+    ggplot(aes(x = ruleset, y = mean_rating,
                color = condition, fill = condition)) +
     geom_bar(stat = "identity", position = position_dodge(preserve = "single"), width = 0.5, alpha = 0.5) +
     geom_errorbar(
-      aes(ymin = ci_lower, ymax = ci_upper), 
-      position = position_dodge(width = 0.5, preserve = "single"), 
+      aes(ymin = ci_lower, ymax = ci_upper),
+      position = position_dodge(width = 0.5, preserve = "single"),
       width = 0.2) +
     labs(y = "Mean evaluation rating") +
     scale_x_discrete(name = element_blank(),
@@ -236,10 +236,10 @@ plot_evaluation_results = function(evaluation_summary) {
     individ_plot_theme
 }
 
-# Bar chart of average memory accuracy across conditions 
+# Bar chart of average memory accuracy across conditions
 plot_memory_data = function(memory_summary) {
   memory_summary %>%
-    ggplot(aes(x = condition, y = mean_memory_accuracy, 
+    ggplot(aes(x = condition, y = mean_memory_accuracy,
                color = condition, fill = condition)) +
     geom_bar(stat = "identity", width = 0.5, alpha = 0.5) +
     geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.25) +
@@ -263,7 +263,7 @@ plot_memory_data = function(memory_summary) {
 # Bar chart of experiment completion time or avg. trial time
 plot_time_data = function(time_summary, individ_data, ylab, title) {
   time_summary %>%
-    ggplot(aes(x = condition, y = mean_task_time, 
+    ggplot(aes(x = condition, y = mean_task_time,
                color = condition, fill = condition)) +
     geom_bar(stat = "identity", width = 0.5, alpha = 0.5) +
     geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.25) +
@@ -295,7 +295,7 @@ trial_data = read_trial_data(TRIAL_DATA)
 evaluation_data = read_evaluation_data(EVAL_DATA)
 memory_data = read_memory_data(MEMORY_DATA)
 
-# Summarize participant count before and after catch trials
+# Summarize participant count before catch trials
 summary_data %>%
   group_by(condition) %>%
   summarize(participants = n())
@@ -349,7 +349,7 @@ evaluation_data = evaluation_data %>%
 memory_data = memory_data %>%
   filter(!subjID %in% CATCH_USERS)
 
-# Summarize participant count before and after catch trials
+# Summarize participant count after catch trials
 summary_data %>%
   group_by(condition) %>%
   summarize(participants = n())
@@ -383,6 +383,7 @@ prediction_summary = trial_data %>%
   group_by(condition, trial_index) %>%
   summarize(mean_accuracy = sum(input_correct) / n())
 
+# NB: this plot not included in manuscript
 prediction_summary %>%
   # filter(trial_index > 4) %>%
   ggplot(aes(x = trial_index, y = mean_accuracy, color = condition)) +
@@ -423,7 +424,7 @@ report_wilcox_summary(wil_des) # Describers
 report_t_summary(
   t.test(
     evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
-                                        evaluation_data$category == "target"], 
+                                        evaluation_data$category == "target"],
     evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
                                         evaluation_data$category == "target"],
     var.equal = T))
@@ -432,7 +433,7 @@ report_t_summary(
 report_t_summary(
   t.test(
     evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
-                                        evaluation_data$category == "distractor"], 
+                                        evaluation_data$category == "distractor"],
     evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
                                         evaluation_data$category == "distractor"],
     var.equal = T))
@@ -441,7 +442,7 @@ report_t_summary(
 report_t_summary(
   t.test(
     evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
-                                        evaluation_data$category == "abstract_color"], 
+                                        evaluation_data$category == "abstract_color"],
     evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
                                         evaluation_data$category == "abstract_color"],
     var.equal = T))
@@ -450,7 +451,7 @@ report_t_summary(
 report_t_summary(
   t.test(
     evaluation_data$input_rule_rating[evaluation_data$condition == "Explain" &
-                                        evaluation_data$category == "abstract_shape"], 
+                                        evaluation_data$category == "abstract_shape"],
     evaluation_data$input_rule_rating[evaluation_data$condition == "Describe" &
                                         evaluation_data$category == "abstract_shape"],
     var.equal = T))
@@ -464,11 +465,11 @@ report_t_summary(
 
 # 1. Memory performance compared to chance
 # NB: not doing binomial test here because we are looking at accuracy percentages for N subjects
-t_mem_chance_exp = t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == "Explain"], 
+t_mem_chance_exp = t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == "Explain"],
                           mu = 0.5,
                           equal.var = T)
 
-t_mem_chance_desc = t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == "Describe"], 
+t_mem_chance_desc = t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == "Describe"],
                            mu = 0.5,
                            equal.var = T)
 
@@ -477,7 +478,7 @@ t_mem_chance_desc
 
 
 # 2. Memory accuracy across conditions
-plot_memory_data(memory_summary)
+plot_memory_data(memory_summary) # NB: this plot not included in manuscript
 
 t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == "Describe"],
        memory_subject_summary$subj_accuracy[memory_subject_summary$condition == "Explain"],
@@ -516,7 +517,7 @@ t.test(trial_time_subject_summary$mean_trial_completion[trial_time_subject_summa
        var.equal = T) # Means are seconds on trials
 
 # Plot graphs from 1. and 2. above side by side with patchwork
-time_on_task + time_on_trials
+time_on_task + time_on_trials # NB: this plot not included in manuscript
 
 
 
