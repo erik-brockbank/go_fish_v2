@@ -4,7 +4,7 @@
 
 
 rm(list = ls())
-setwd("~/web/go_fish_v2/analysis/")
+setwd("/Users/erikbrockbank/web/elc-lab/go_fish_v2/analysis/")
 
 library(tidyverse)
 library(viridis)
