@@ -17,6 +17,7 @@ SUMMARY_DATA = "01_go_fish_v2_meta.csv"
 TRIAL_DATA = "02_go_fish_v2_trials.csv"
 EVAL_DATA = "03_go_fish_v2_evaluation.csv"
 MEMORY_DATA = "04_go_fish_v2_memory.csv"
+EXPLANATION_DATA_CODED = "explanation_coded.csv"
 
 
 label_width = 12
@@ -39,6 +40,32 @@ RULETEXT_LOOKUP = c(
 RULESET_LABELS = c(str_wrap("Misc (25%)", label_width), str_wrap("Misc (50%)", label_width), str_wrap("Misc (75%)", label_width),
                    str_wrap("Random", label_width), str_wrap("Abstract Color (75%)", label_width), str_wrap("Abstract Shape (75%)", label_width),
                    str_wrap("Distractor (100%)", label_width), str_wrap("Target (100%)", label_width))
+
+
+CODED_MEASURE_FILTER = c("shape_total", "color_total", "purple_dot_total")
+coded_measure_width = 10
+CODED_MEASURE_LOOKUP = c("mechanism_total" = str_wrap("Mechanism", width = coded_measure_width),
+                         # "shape_total" = str_wrap("Shape (total)", width = coded_measure_width),
+                         "shape_abstract_total" = str_wrap("Shape (abstract)", width = coded_measure_width),
+                         "shape_concrete_total" = str_wrap("Shape (concrete)", width = coded_measure_width),
+                         # "color_total" = str_wrap("Color (total)", width = coded_measure_width),
+                         "color_abstract_total" = str_wrap("Color (abstract)", width = coded_measure_width),
+                         "color_concrete_total" = str_wrap("Color (concrete)", width = coded_measure_width),
+                         # "purple_dot_total" = str_wrap("Purple dot (total)", width = coded_measure_width),
+                         "purple_dot_abstract_total" = str_wrap("Purple dot (abstract)", width = coded_measure_width),
+                         "purple_dot_concrete_total" = str_wrap("Purple dot (concrete)", width = coded_measure_width)
+)
+CODED_MEASURE_LEVELS = c(str_wrap("Mechanism", width = coded_measure_width),
+                         # str_wrap("Shape (total)", width = coded_measure_width),
+                         str_wrap("Shape (abstract)", width = coded_measure_width), str_wrap("Shape (concrete)", width = coded_measure_width),
+                         # str_wrap("Color (total)", width = coded_measure_width),
+                         str_wrap("Color (abstract)", width = coded_measure_width), str_wrap("Color (concrete)", width = coded_measure_width),
+                         # str_wrap("Purple dot (total)", width = coded_measure_width),
+                         str_wrap("Purple dot (abstract)", width = coded_measure_width), str_wrap("Purple dot (concrete)", width = coded_measure_width))
+
+
+
+
 
 
 # ANALYSIS FUNCTIONS ===========================================================
@@ -82,6 +109,12 @@ read_memory_data = function(filepath) {
     mutate(condition = ifelse(is_control == TRUE, "Describe", "Explain"),
            memory_correct = (memory_shape_in_expt == input_shape_in_expt))
   return(memory_data)
+}
+
+# Read in coded explanation/description data
+read_coded_explanation_data = function(filename) {
+  explanation_free_resp_coded = read_csv(filename)
+  return(explanation_free_resp_coded)
 }
 
 
@@ -161,6 +194,43 @@ get_memory_summary = function(memory_subject_summary) {
               ci_upper = mean_memory_accuracy + se_memory_accuracy)
   return(memory_summary)
 }
+
+# Summarize explanation/description coded data
+get_explanation_coded_subj_summary = function(explanation_data) {
+  explanation_summary = explanation_data %>%
+    group_by(Condition, Subject) %>%
+    summarize(mechanism_total = sum(`FINAL - total mechanisms`, na.rm = T),
+              shape_total = sum(`FINAL - total shape references`, na.rm = T),
+              shape_abstract_total = sum(`FINAL - abstract shape references`, na.rm = T),
+              shape_concrete_total = sum(`FINAL - concrete shape references`, na.rm = T),
+              color_total = sum(`FINAL - total color references`, na.rm = T),
+              color_abstract_total = sum(`FINAL - abstract color references`, na.rm = T),
+              color_concrete_total = sum(`FINAL - concrete color references`, na.rm = T),
+              purple_dot_total = sum(`FINAL - total purple dot references`, na.rm = T),
+              purple_dot_abstract_total = sum(`FINAL - abstract purple dot references`, na.rm = T),
+              purple_dot_concrete_total = sum(`FINAL - concrete purple dot references`, na.rm = T)) %>%
+    gather(
+      key = "measure",
+      value = "subject_total",
+      -Condition,
+      -Subject
+    )
+  return(explanation_summary)
+}
+
+# Summarize coded explanation/description results across participants by condition
+get_explanation_coded_summary = function(explanation_subject_summary) {
+  explanation_summary = explanation_subject_summary %>%
+    filter(!measure %in% CODED_MEASURE_FILTER) %>%
+    mutate(measure = factor(CODED_MEASURE_LOOKUP[measure], levels = CODED_MEASURE_LEVELS)) %>%
+    group_by(Condition, measure) %>%
+    summarize(subjects = n(),
+              measure_mean = mean(subject_total),
+              measure_se = sd(subject_total) / sqrt(subjects)
+    )
+  return(explanation_summary)
+}
+
 
 # Auxiliary function for printing out t test statistics
 report_t_summary = function(t_test) {
@@ -286,6 +356,32 @@ plot_time_data = function(time_summary, individ_data, ylab, title) {
           plot.title = element_text(size = 32, face = "bold"))
 }
 
+# Bar chart of counts of feature references in coded explanations/descriptions, by condition
+plot_coded_explanation_data = function(explanation_coded_summary) {
+  explanation_coded_summary %>%
+    ggplot(aes(x = measure, y = measure_mean,
+               color = Condition, fill = Condition)) +
+    geom_bar(stat = "identity", position = position_dodge(preserve = "single"),
+             width = 0.5, alpha = 0.5) +
+    geom_errorbar(aes(ymin = measure_mean - measure_se, ymax = measure_mean + measure_se),
+                  position = position_dodge(width = 0.5, preserve = "single"),
+                  width = 0.25) +
+    ggtitle("Explanation and description measures") +
+    labs(x = "", y = "Mean number of references") +
+    scale_color_viridis(discrete = T,
+                        name = element_blank(),
+                        # Change defaults to be blue/green instead of yellow/purple
+                        begin = 0.25,
+                        end = 0.75) +
+    scale_fill_viridis(discrete = T,
+                       name = element_blank(),
+                       # Change defaults to be blue/green instead of yellow/purple
+                       begin = 0.25,
+                       end = 0.75) +
+    individ_plot_theme
+
+}
+
 
 # DATA INITIALIZATION ==========================================================
 
@@ -294,6 +390,13 @@ summary_data = read_summary_data(SUMMARY_DATA)
 trial_data = read_trial_data(TRIAL_DATA)
 evaluation_data = read_evaluation_data(EVAL_DATA)
 memory_data = read_memory_data(MEMORY_DATA)
+
+# Coded explanation / description data
+explanation_coded_data = read_coded_explanation_data(EXPLANATION_DATA_CODED)
+explanation_coded_summary_subjects = get_explanation_coded_subj_summary(explanation_coded_data)
+explanation_coded_summary = get_explanation_coded_summary(explanation_coded_summary_subjects)
+
+
 
 # Summarize participant count before catch trials
 summary_data %>%
@@ -348,6 +451,10 @@ evaluation_data = evaluation_data %>%
   filter(!subjID %in% CATCH_USERS)
 memory_data = memory_data %>%
   filter(!subjID %in% CATCH_USERS)
+
+# TODO filter catch users out of coded responses?
+
+
 
 # Summarize participant count after catch trials
 summary_data %>%
@@ -456,6 +563,16 @@ report_t_summary(
                                         evaluation_data$category == "abstract_shape"],
     var.equal = T))
 
+
+
+
+# CONTENT ANALYSIS: EXPLANATIONS / DESCRIPTIONS ==============================
+
+# Plot results
+plot_coded_explanation_data(explanation_coded_summary)
+
+
+# TODO add stats here for reporting differences
 
 
 
