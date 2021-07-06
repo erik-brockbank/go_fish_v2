@@ -10,6 +10,9 @@ library(tidyverse)
 library(viridis)
 library(patchwork)
 
+library(lme4)
+library(emmeans)
+
 
 # GLOBALS ======================================================================
 # Data files
@@ -40,6 +43,10 @@ RULETEXT_LOOKUP = c(
 RULESET_LABELS = c(str_wrap("Misc (25%)", label_width), str_wrap("Misc (50%)", label_width), str_wrap("Misc (75%)", label_width),
                    str_wrap("Random", label_width), str_wrap("Abstract Color (75%)", label_width), str_wrap("Abstract Shape (75%)", label_width),
                    str_wrap("Distractor (100%)", label_width), str_wrap("Target (100%)", label_width))
+RULESET_LABELS = c(str_wrap("Target (100%)", label_width), str_wrap("Distractor (100%)", label_width),
+                   str_wrap("Abstract Color (75%)", label_width), str_wrap("Abstract Shape (75%)", label_width),
+                   str_wrap("Random", label_width), str_wrap("Misc (75%)", label_width),
+                   str_wrap("Misc (50%)", label_width), str_wrap("Misc (25%)", label_width))
 
 
 CODED_MEASURE_FILTER = c("shape_total", "color_total", "purple_dot_total")
@@ -429,6 +436,7 @@ catch_eval %>%
 catch_users = evaluation_data %>%
   filter(rule_text == CATCH_RULE & input_rule_rating > 80)
 table(catch_users$condition)
+unique(catch_users$subjID)
 
 
 sd(summary_data$experiment_completion_time)
@@ -452,7 +460,8 @@ evaluation_data = evaluation_data %>%
 memory_data = memory_data %>%
   filter(!subjID %in% CATCH_USERS)
 
-# TODO filter catch users out of coded responses?
+# NB: catch users filtered out of coded explanation/description data at earlier stage
+# In order to generate accurate stats about coder agreement
 
 
 
@@ -473,16 +482,16 @@ memory_summary = get_memory_summary(memory_subject_summary)
 
 
 
-# DATA ANALYSIS ================================================================
 
 ### SUMMARY
+
 summary_data %>%
   group_by(condition) %>%
   summarize(N = n()) %>%
   rename("Condition" = condition)
 
 
-### GENERATION
+### GENERATION ANALYSIS ========================================================
 
 # Are there any condition differences in prediction accuracy?
 
@@ -505,7 +514,11 @@ prediction_summary %>%
 
 
 
-### EVALUATION
+### EVALUATION ANALYSIS ========================================================
+
+evaluation_summary$condition = factor(evaluation_summary$condition,
+                                      levels = c("Explain", "Describe"))
+
 plot_evaluation_results(evaluation_summary)
 
 
@@ -565,15 +578,173 @@ report_t_summary(
 
 
 
+# EVALUATION MIXED EFFECTS ANALYSIS ============================================
+
+ruleset_factors = c(
+  "If a lure combination has a pointy shape on the bottom, it will catch fish." = "target",
+  "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish." = "distractor",
+  "If a lure combination has a top lure with bright colors that are more visible under water (red or yellow), it will catch fish." = "abstract_color",
+  "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish." = "abstract_shape",
+  "There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t." = "random",
+  "If a lure combination has a red shape on the bottom, it will catch fish." = "misc25",
+  "If a lure combination has a blue shape, it will catch fish." = "misc50",
+  "If a lure combination has a purple dot on at least one of the lures, it will catch fish." = "misc75"
+)
+
+evaluation_data = evaluation_data %>%
+  mutate(rule_factor = factor(ruleset_factors[rule_text]))
+evaluation_data$condition = factor(evaluation_data$condition,
+                                      levels = c("Explain", "Describe"))
+
+# glimpse(evaluation_data)
+
+
+m0 = lmer(formula = input_rule_rating ~ rule_factor + (1 | subjID),
+          data = evaluation_data,
+          REML = F)
+m1 = lmer(formula = input_rule_rating ~ rule_factor + condition + (1 | subjID),
+          data = evaluation_data,
+          REML = F)
+anova(m1, m0)
+
+# Pairwise: difference between conditions for target and distractor
+emmeans(m1,
+        specs = pairwise ~ rule_factor + condition,
+        adjust = "none")
+# No main effects of condition for target or distractor
+# contrast                                          estimate   SE   df t.ratio p.value
+# distractor Explain - distractor Describe             1.251 2.22  166   0.565 0.5731
+# target Explain - target Describe                     1.251 2.22  166   0.565 0.5731
+
+
+
 
 # CONTENT ANALYSIS: EXPLANATIONS / DESCRIPTIONS ==============================
 
 # Plot results
+explanation_coded_summary$Condition = factor(explanation_coded_summary$Condition,
+                                             levels = c("Explain", "Describe"))
 plot_coded_explanation_data(explanation_coded_summary)
 
 
-# TODO add stats here for reporting differences
+# Check mechanism effect: were explainers more likely to provide a mechanistic account?
+t_mech = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "mechanism_total" &
+                                                                   explanation_coded_summary_subjects$Condition == "Explain"],
+                explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "mechanism_total" &
+                                                                   explanation_coded_summary_subjects$Condition == "Describe"],
+                var.equal = T)
+report_t_summary(t_mech) # Means are avg. number of references
 
+# Analysis (copied from Williams & Lombrozo, 2010)
+# First, do abstract feature references show a main effect of condition?
+# i.e. do explainers make more abstract references?
+abstract_data = explanation_coded_summary_subjects %>%
+  filter(measure %in% c("shape_abstract_total", "color_abstract_total", "purple_dot_abstract_total"))
+anova_abstract = aov(data = abstract_data, subject_total ~ Condition + measure)
+summary(anova_abstract)
+
+# Do concrete feature references show a main effect of condition?
+# i.e. do control participants make more concrete references?
+concrete_data = explanation_coded_summary_subjects %>%
+  filter(measure %in% c("shape_concrete_total", "color_concrete_total", "purple_dot_concrete_total"))
+anova_concrete = aov(data = concrete_data, subject_total ~ Condition + measure)
+summary(anova_concrete)
+
+# ANOVAs suggest main effect of condition on number of concrete and abstract features
+# Below t-tests confirm direction/significance for each feature individually
+# Shape
+t_shape_abs = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "shape_abstract_total" &
+                                                                        explanation_coded_summary_subjects$Condition == "Explain"],
+                     explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "shape_abstract_total" &
+                                                                        explanation_coded_summary_subjects$Condition == "Describe"],
+                     var.equal = T)
+report_t_summary(t_shape_abs) # Means are avg. number of references
+
+t_shape_conc = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "shape_concrete_total" &
+                                                                         explanation_coded_summary_subjects$Condition == "Explain"],
+                      explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "shape_concrete_total" &
+                                                                         explanation_coded_summary_subjects$Condition == "Describe"],
+                      var.equal = T)
+report_t_summary(t_shape_conc) # Means are avg. number of references
+
+# Color
+t_color_abs = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "color_abstract_total" &
+                                                                        explanation_coded_summary_subjects$Condition == "Explain"],
+                     explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "color_abstract_total" &
+                                                                        explanation_coded_summary_subjects$Condition == "Describe"],
+                     var.equal = T)
+report_t_summary(t_color_abs) # Means are avg. number of references
+
+t_color_conc = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "color_concrete_total" &
+                                                                         explanation_coded_summary_subjects$Condition == "Explain"],
+                      explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "color_concrete_total" &
+                                                                         explanation_coded_summary_subjects$Condition == "Describe"],
+                      var.equal = T)
+report_t_summary(t_color_conc) # Means are avg. number of references
+
+# Purple dot
+t_dot_abs = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "purple_dot_abstract_total" &
+                                                                      explanation_coded_summary_subjects$Condition == "Explain"],
+                   explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "purple_dot_abstract_total" &
+                                                                      explanation_coded_summary_subjects$Condition == "Describe"],
+                   var.equal = T)
+report_t_summary(t_dot_abs) # Means are avg. number of references
+
+t_dot_conc = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "purple_dot_concrete_total" &
+                                                                       explanation_coded_summary_subjects$Condition == "Explain"],
+                    explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "purple_dot_concrete_total" &
+                                                                       explanation_coded_summary_subjects$Condition == "Describe"],
+                    var.equal = T)
+report_t_summary(t_dot_conc) # Means are avg. number of references
+
+
+
+# CONTENT ANALYSIS: EXPLANATIONS / DESCRIPTIOSN MIXED EFFECTS ==================
+
+# Make data long form
+explanation_coded_long = explanation_coded_data %>%
+  gather(measure, references, `FINAL - total mechanisms`:`FINAL - concrete purple dot references`)
+explanation_coded_long$measure = factor(explanation_coded_long$measure)
+explanation_coded_long$Condition = factor(explanation_coded_long$Condition,
+                                          levels = c("Explain", "Describe"))
+glimpse(explanation_coded_long)
+
+
+# NB: each of these takes 90-120s to fit
+m0 = lmer(formula = references ~ measure + (1 + measure | Subject), # measure effect varies across subjects
+          data = explanation_coded_long, REML = F)
+m1 = lmer(formula = references ~ measure * Condition + (1 + measure | Subject),
+          data = explanation_coded_long, REML = F)
+
+# NB: the models above may produce singular fit, but simpler model comparison here generates nearly identical results
+# m0 = lmer(formula = references ~ measure + (1 | Subject), # measure effect varies across subjects
+#           data = explanation_coded_long, REML = F)
+# m1 = lmer(formula = references ~ measure * Condition + (1 | Subject),
+#           data = explanation_coded_long, REML = F)
+
+
+# Effect of including the condition interaction
+anova(m1, m0)
+# X^2(10) = 183.5, p < 0.001
+
+
+# 2. Pairwise: emmeans comparisons of abstract v. concrete references in each condition
+emmeans(m1, specs = pairwise ~ measure * Condition)
+
+# $contrasts
+#  contrast                                                                                              estimate     SE  df z.ratio p.value
+#  (FINAL - abstract color references Explain) - (FINAL - abstract color references Describe)             0.06762 0.0247 Inf   2.738 0.4001
+#  (FINAL - abstract purple dot references Explain) - (FINAL - abstract purple dot references Describe)   0.00846 0.0235 Inf   0.359 1.0000
+#  (FINAL - abstract shape references Explain) - (FINAL - abstract shape references Describe)             0.28916 0.0539 Inf   5.361 <.0001
+#  (FINAL - concrete color references Explain) - (FINAL - concrete color references Describe)            -1.29648 0.1024 Inf -12.655 <.0001
+#  (FINAL - concrete purple dot references Explain) - (FINAL - concrete purple dot references Describe)  -0.69594 0.0540 Inf -12.878 <.0001
+#  (FINAL - concrete shape references Explain) - (FINAL - concrete shape references Describe)            -1.57992 0.0834 Inf -18.941 <.0001
+#  (FINAL - total color references Explain) - (FINAL - total color references Describe)                  -1.22886 0.1057 Inf -11.630 <.0001
+
+#  (FINAL - total mechanisms Explain) - (FINAL - total mechanisms Describe)                               0.42138 0.0528 Inf   7.976 <.0001
+
+#  (FINAL - total purple dot references Explain) - (FINAL - total purple dot references Describe)        -0.68748 0.0533 Inf -12.901 <.0001
+#  (FINAL - total shape references Explain) - (FINAL - total shape references Describe)                  -1.29076 0.0840 Inf -15.358 <.0001
 
 
 
