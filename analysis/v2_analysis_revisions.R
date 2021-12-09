@@ -22,6 +22,8 @@ EVAL_DATA = "03_go_fish_v2_evaluation.csv"
 MEMORY_DATA = "04_go_fish_v2_memory.csv"
 EXPLANATION_DATA_CODED = "explanation_coded.csv"
 
+EXCLUDE = TRUE # toggle this to confirm results with or without exclusions
+
 
 label_width = 12
 RULESET_LOOKUP = c("target" = "Target", "distractor" = "Distractor",
@@ -143,44 +145,6 @@ get_evaluation_summary = function(evaluation_data) {
 }
 
 
-# Summarize experiment completion time data
-get_time_summary = function(time_data) {
-  time_data %>%
-    group_by(condition) %>%
-    summarize(mean_task_time = mean(experiment_completion_time),
-              subjects = n(),
-              se_task_time = sd(experiment_completion_time) / sqrt(subjects),
-              ci_lower = mean_task_time - se_task_time,
-              ci_upper = mean_task_time + se_task_time)
-}
-
-
-# Summarize average trial completion time by participant
-get_trial_time_subj_summary = function(trial_data) {
-  trial_data %>%
-    mutate(trial_completion_time = (trial_n_end_ts - trial_n_start_ts) / 1000) %>%
-    group_by(condition, subjID) %>%
-    summarize(mean_trial_completion = mean(trial_completion_time),
-              trials = n(),
-              se_trial_completion = sd(trial_completion_time) / sqrt(trials),
-              ci_lower = mean_trial_completion - se_trial_completion,
-              ci_upper = mean_trial_completion + se_trial_completion)
-}
-
-
-# Get summary of time spent on trials in each condition across participants
-get_trial_time_summary = function(trial_time_subj_summary) {
-  trial_time_subj_summary %>%
-    group_by(condition) %>%
-    # These column names kept the same as those in `get_time_summary` for easier graphing
-    summarize(mean_task_time = mean(mean_trial_completion),
-              subjects = n(),
-              se_trial_time = sd(mean_trial_completion) / sqrt(subjects),
-              ci_lower = mean_task_time - se_trial_time,
-              ci_upper = mean_task_time + se_trial_time)
-}
-
-
 # Summarize memory performance data by participant
 get_memory_subj_summary = function(memory_data) {
   memory_subj_accuracy = memory_data %>%
@@ -247,15 +211,6 @@ report_t_summary = function(t_test) {
         "p =", round(t_test$p.value, 3),
         sep = " ")
 }
-
-# Auxiliary function for printing out wilcoxon signed-rank test statistics
-report_wilcox_summary = function(wilcox_test) {
-  z_val = qnorm(wilcox_test$p.value / 2)
-  paste("z =", round(z_val, 2), ",",
-        "p =", round(wilcox_test$p.value, 3),
-        sep = " ")
-}
-
 
 
 
@@ -337,32 +292,6 @@ plot_memory_data = function(memory_summary) {
     theme(axis.text.x = element_blank())
 }
 
-# Bar chart of experiment completion time or avg. trial time
-plot_time_data = function(time_summary, individ_data, ylab, title) {
-  time_summary %>%
-    ggplot(aes(x = condition, y = mean_task_time,
-               color = condition, fill = condition)) +
-    geom_bar(stat = "identity", width = 0.5, alpha = 0.5) +
-    geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.25) +
-    geom_point(data = individ_data, aes(x = condition, y = individ_task_time, color = condition),
-               alpha = 0.5) +
-    labs(x = "", y = ylab) +
-    ggtitle(title) +
-    scale_color_viridis(discrete = T,
-                        name = element_blank(),
-                        # Change defaults to be blue/green instead of yellow/purple
-                        begin = 0.25,
-                        end = 0.75) +
-    scale_fill_viridis(discrete = T,
-                       name = element_blank(),
-                       # Change defaults to be blue/green instead of yellow/purple
-                       begin = 0.25,
-                       end = 0.75) +
-    individ_plot_theme +
-    theme(axis.text.x = element_blank(),
-          plot.title = element_text(size = 32, face = "bold"))
-}
-
 # Bar chart of counts of feature references in coded explanations/descriptions, by condition
 plot_coded_explanation_data = function(explanation_coded_summary) {
   explanation_coded_summary %>%
@@ -390,7 +319,7 @@ plot_coded_explanation_data = function(explanation_coded_summary) {
 }
 
 
-# DATA INITIALIZATION ==========================================================
+# DATA INITIALIZATION ====
 
 # Read in data
 summary_data = read_summary_data(SUMMARY_DATA)
@@ -434,7 +363,7 @@ catch_eval %>%
 
 # Select participants that should be removed
 catch_users = evaluation_data %>%
-  filter(rule_text == CATCH_RULE & input_rule_rating > 80)
+  filter(rule_text == CATCH_RULE & input_rule_rating > CATCH_RULE_CUTOFF)
 table(catch_users$condition)
 unique(catch_users$subjID)
 
@@ -451,95 +380,91 @@ completion_time_users = summary_data %>%
 
 CATCH_USERS = c(catch_users$subjID, completion_time_users$subjID)
 
-summary_data = summary_data %>%
-  filter(!subjID %in% CATCH_USERS)
-trial_data = trial_data %>%
-  filter(!subjID %in% CATCH_USERS)
-evaluation_data = evaluation_data %>%
-  filter(!subjID %in% CATCH_USERS)
-memory_data = memory_data %>%
-  filter(!subjID %in% CATCH_USERS)
+glimpse(summary_data)
+if (EXCLUDE) {
+  summary_data = summary_data %>%
+    filter(!subjID %in% CATCH_USERS)
+  trial_data = trial_data %>%
+    filter(!subjID %in% CATCH_USERS)
+  evaluation_data = evaluation_data %>%
+    filter(!subjID %in% CATCH_USERS)
+  memory_data = memory_data %>%
+    filter(!subjID %in% CATCH_USERS)
+}
+
 
 # NB: catch users filtered out of coded explanation/description data at earlier stage
 # In order to generate accurate stats about coder agreement
 
 
-
-# Summarize participant count after catch trials
-summary_data %>%
-  group_by(condition) %>%
-  summarize(participants = n())
-
-
 # Summarize data
 evaluation_summary = get_evaluation_summary(evaluation_data)
-completion_time_summary = get_time_summary(summary_data)
-trial_time_subject_summary = get_trial_time_subj_summary(trial_data)
-trial_time_summary = get_trial_time_summary(trial_time_subject_summary)
 memory_subject_summary = get_memory_subj_summary(memory_data)
 memory_summary = get_memory_summary(memory_subject_summary)
 
 
 
-
-
-### SUMMARY
-
+# CONDITION SUMMARY
 summary_data %>%
   group_by(condition) %>%
   summarize(N = n()) %>%
   rename("Condition" = condition)
 
 
-### GENERATION ANALYSIS ========================================================
 
-# Are there any condition differences in prediction accuracy?
+# ANALYSIS: EVALUATION ====
 
-prediction_summary = trial_data %>%
-  group_by(condition, trial_index) %>%
-  summarize(mean_accuracy = sum(input_correct) / n())
-
-# NB: this plot not included in manuscript
-prediction_summary %>%
-  # filter(trial_index > 4) %>%
-  ggplot(aes(x = trial_index, y = mean_accuracy, color = condition)) +
-  geom_line() +
-  geom_point(size = 2) +
-  geom_hline(yintercept = 0.5, linetype = "dashed") +
-  labs(x = "Trial index", y = "Accuracy") +
-  # ggtitle("Prediction accuracy in each round") +
-  scale_color_viridis(discrete = T,
-                      name = element_blank()) +
-  individ_plot_theme
-
-
-
-### EVALUATION ANALYSIS ========================================================
-
+# Figures
 evaluation_summary$condition = factor(evaluation_summary$condition,
                                       levels = c("Explain", "Describe"))
-
 plot_evaluation_results(evaluation_summary)
 
 
-# Wilcoxon signed-rank test showing that target rule is different from all other rules across both groups
-eval_summary_other_rules = evaluation_data %>%
-  filter(category != "target") %>%
-  group_by(condition, subjID) %>%
-  summarize(mean_subj_rating = mean(input_rule_rating))
+# Analysis
+ruleset_factors = c(
+  "If a lure combination has a pointy shape on the bottom, it will catch fish." = "target",
+  "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish." = "distractor",
+  "If a lure combination has a top lure with bright colors that are more visible under water (red or yellow), it will catch fish." = "abstract_color",
+  "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish." = "abstract_shape",
+  "There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t." = "random",
+  "If a lure combination has a red shape on the bottom, it will catch fish." = "misc25",
+  "If a lure combination has a blue shape, it will catch fish." = "misc50",
+  "If a lure combination has a purple dot on at least one of the lures, it will catch fish." = "misc75"
+)
 
-eval_difference = evaluation_data %>%
-  group_by(subjID, condition) %>%
-  filter(category == "target") %>%
-  inner_join(., eval_summary_other_rules, by = "subjID") %>%
-  mutate(diff = input_rule_rating - mean_subj_rating) %>%
-  select(subjID, condition.x, diff)
+evaluation_data = evaluation_data %>%
+  mutate(rule_factor = factor(ruleset_factors[rule_text]))
 
-wil_exp = wilcox.test(eval_difference$diff[eval_difference$condition.x == "Explain"], exact = F)
-wil_des = wilcox.test(eval_difference$diff[eval_difference$condition.x == "Describe"], exact = F)
-report_wilcox_summary(wil_exp) # Explainers
-report_wilcox_summary(wil_des) # Describers
+# Mixed effects analysis
+# glimpse(evaluation_data)
+m0 = lmer(formula = input_rule_rating ~ rule_factor + (1|subjID),
+          data = evaluation_data,
+          REML = F)
+m1.main = lmer(formula = input_rule_rating ~ rule_factor + condition + (1|subjID),
+               data = evaluation_data,
+               REML = F)
+m1.int = lmer(formula = input_rule_rating ~ rule_factor * condition + (1|subjID),
+              data = evaluation_data,
+              REML = F)
 
+anova(m1.int, m1.main, m0, test = 'LRT')
+# summary(m1)
+# Pairwise: difference between conditions for target and distractor
+emmeans(m1.int, specs = pairwise ~ rule_factor * condition)
+
+# No significant differences between conditions
+# contrast                                          estimate   SE   df t.ratio p.value
+# target Describe - target Explain                     3.745 4.26 1113   0.879 1.0000
+# distractor Describe - distractor Explain            -2.182 4.26 1113  -0.512 1.0000
+# abstract_color Describe - abstract_color Explain    -2.262 4.26 1113  -0.531 1.0000
+# abstract_shape Describe - abstract_shape Explain    -5.180 4.26 1113  -1.215 0.9980
+# random Describe - random Explain                     2.402 4.26 1113   0.563 1.0000
+# misc25 Describe - misc25 Explain                    -5.614 4.26 1113  -1.317 0.9953
+# misc50 Describe - misc50 Explain                    -1.074 4.26 1113  -0.252 1.0000
+# misc75 Describe - misc75 Explain                     0.153 4.26 1113   0.036 1.0000
+
+
+# Individual rule t-tests
 # Target rule comparison
 report_t_summary(
   t.test(
@@ -578,238 +503,82 @@ report_t_summary(
 
 
 
-# EVALUATION MIXED EFFECTS ANALYSIS ============================================
+# ANALYSIS: EXPLANATION / DESCRIPTION CONTENT ====
 
-ruleset_factors = c(
-  "If a lure combination has a pointy shape on the bottom, it will catch fish." = "target",
-  "If a lure combination has a yellow shape or a diamond on the bottom, it will catch fish." = "distractor",
-  "If a lure combination has a top lure with bright colors that are more visible under water (red or yellow), it will catch fish." = "abstract_color",
-  "If a lure combination has a rounded top shape that resembles a fish's body, it will catch fish." = "abstract_shape",
-  "There is no pattern to which lure combinations catch fish: the results are random, but there are approximately equal numbers that catch fish and don’t." = "random",
-  "If a lure combination has a red shape on the bottom, it will catch fish." = "misc25",
-  "If a lure combination has a blue shape, it will catch fish." = "misc50",
-  "If a lure combination has a purple dot on at least one of the lures, it will catch fish." = "misc75"
-)
-
-evaluation_data = evaluation_data %>%
-  mutate(rule_factor = factor(ruleset_factors[rule_text]))
-evaluation_data$condition = factor(evaluation_data$condition,
-                                      levels = c("Explain", "Describe"))
-
-# glimpse(evaluation_data)
-
-
-m0 = lmer(formula = input_rule_rating ~ rule_factor + (1 | subjID),
-          data = evaluation_data,
-          REML = F)
-m1 = lmer(formula = input_rule_rating ~ rule_factor + condition + (1 | subjID),
-          data = evaluation_data,
-          REML = F)
-anova(m1, m0)
-
-# Pairwise: difference between conditions for target and distractor
-emmeans(m1,
-        specs = pairwise ~ rule_factor + condition,
-        adjust = "none")
-# No main effects of condition for target or distractor
-# contrast                                          estimate   SE   df t.ratio p.value
-# distractor Explain - distractor Describe             1.251 2.22  166   0.565 0.5731
-# target Explain - target Describe                     1.251 2.22  166   0.565 0.5731
-
-
-
-
-# CONTENT ANALYSIS: EXPLANATIONS / DESCRIPTIONS ==============================
-
-# Plot results
+# Figures
 explanation_coded_summary$Condition = factor(explanation_coded_summary$Condition,
                                              levels = c("Explain", "Describe"))
 plot_coded_explanation_data(explanation_coded_summary)
 
 
-# Check mechanism effect: were explainers more likely to provide a mechanistic account?
-t_mech = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "mechanism_total" &
-                                                                   explanation_coded_summary_subjects$Condition == "Explain"],
-                explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "mechanism_total" &
-                                                                   explanation_coded_summary_subjects$Condition == "Describe"],
-                var.equal = T)
-report_t_summary(t_mech) # Means are avg. number of references
+# Analysis
+# Do explainers reference *more* features?
+explanation_coded_data = explanation_coded_data %>%
+  rowwise() %>%
+  mutate(total_refs = sum(`FINAL - total shape references`, `FINAL - total color references`, `FINAL - total purple dot references`),
+         total_abstract = sum(`FINAL - abstract shape references`, `FINAL - abstract color references`, `FINAL - abstract purple dot references`),
+         total_concrete = sum(`FINAL - concrete shape references`, `FINAL - concrete color references`, `FINAL - concrete purple dot references`),
+         total_mechanisms = `FINAL - total mechanisms`)
+# glimpse(explanation_coded_data)
 
-# Analysis (copied from Williams & Lombrozo, 2010)
-# First, do abstract feature references show a main effect of condition?
-# i.e. do explainers make more abstract references?
-abstract_data = explanation_coded_summary_subjects %>%
-  filter(measure %in% c("shape_abstract_total", "color_abstract_total", "purple_dot_abstract_total"))
-anova_abstract = aov(data = abstract_data, subject_total ~ Condition + measure)
-summary(anova_abstract)
-
-# Do concrete feature references show a main effect of condition?
-# i.e. do control participants make more concrete references?
-concrete_data = explanation_coded_summary_subjects %>%
-  filter(measure %in% c("shape_concrete_total", "color_concrete_total", "purple_dot_concrete_total"))
-anova_concrete = aov(data = concrete_data, subject_total ~ Condition + measure)
-summary(anova_concrete)
-
-# ANOVAs suggest main effect of condition on number of concrete and abstract features
-# Below t-tests confirm direction/significance for each feature individually
-# Shape
-t_shape_abs = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "shape_abstract_total" &
-                                                                        explanation_coded_summary_subjects$Condition == "Explain"],
-                     explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "shape_abstract_total" &
-                                                                        explanation_coded_summary_subjects$Condition == "Describe"],
-                     var.equal = T)
-report_t_summary(t_shape_abs) # Means are avg. number of references
-
-t_shape_conc = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "shape_concrete_total" &
-                                                                         explanation_coded_summary_subjects$Condition == "Explain"],
-                      explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "shape_concrete_total" &
-                                                                         explanation_coded_summary_subjects$Condition == "Describe"],
-                      var.equal = T)
-report_t_summary(t_shape_conc) # Means are avg. number of references
-
-# Color
-t_color_abs = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "color_abstract_total" &
-                                                                        explanation_coded_summary_subjects$Condition == "Explain"],
-                     explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "color_abstract_total" &
-                                                                        explanation_coded_summary_subjects$Condition == "Describe"],
-                     var.equal = T)
-report_t_summary(t_color_abs) # Means are avg. number of references
-
-t_color_conc = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "color_concrete_total" &
-                                                                         explanation_coded_summary_subjects$Condition == "Explain"],
-                      explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "color_concrete_total" &
-                                                                         explanation_coded_summary_subjects$Condition == "Describe"],
-                      var.equal = T)
-report_t_summary(t_color_conc) # Means are avg. number of references
-
-# Purple dot
-t_dot_abs = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "purple_dot_abstract_total" &
-                                                                      explanation_coded_summary_subjects$Condition == "Explain"],
-                   explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "purple_dot_abstract_total" &
-                                                                      explanation_coded_summary_subjects$Condition == "Describe"],
-                   var.equal = T)
-report_t_summary(t_dot_abs) # Means are avg. number of references
-
-t_dot_conc = t.test(explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "purple_dot_concrete_total" &
-                                                                       explanation_coded_summary_subjects$Condition == "Explain"],
-                    explanation_coded_summary_subjects$subject_total[explanation_coded_summary_subjects$measure == "purple_dot_concrete_total" &
-                                                                       explanation_coded_summary_subjects$Condition == "Describe"],
-                    var.equal = T)
-report_t_summary(t_dot_conc) # Means are avg. number of references
+m0.total = glmer(formula = total_refs ~ (1 | Subject) + (1 | `Trial index`),
+                 data = explanation_coded_data,
+                 family = "poisson")
+m1.total = glmer(formula = total_refs ~ Condition + (1 | Subject) + (1 | `Trial index`),
+                 data = explanation_coded_data,
+                 family = "poisson")
+anova(m1.total, m0.total, test = 'LRT')
+emmeans(m1.total, pairwise ~ Condition)
+exp(1.334)
+exp(-0.223)
 
 
-
-# CONTENT ANALYSIS: EXPLANATIONS / DESCRIPTIOSN MIXED EFFECTS ==================
-
-# Make data long form
+# Interaction between condition and type
+glimpse(explanation_coded_data)
 explanation_coded_long = explanation_coded_data %>%
-  gather(measure, references, `FINAL - total mechanisms`:`FINAL - concrete purple dot references`)
-explanation_coded_long$measure = factor(explanation_coded_long$measure)
-explanation_coded_long$Condition = factor(explanation_coded_long$Condition,
-                                          levels = c("Explain", "Describe"))
-glimpse(explanation_coded_long)
+  select(Subject, Condition, `Trial index`, total_abstract, total_concrete, total_mechanisms) %>%
+  pivot_longer(.,
+               cols = total_abstract:total_mechanisms,
+               names_to = "ref_type",
+               names_prefix = "total_",
+               values_to = "Count")
+# sanity check the above
+hist(explanation_coded_long$Count[explanation_coded_long$ref_type == "mechanisms"])
+hist(explanation_coded_long$Count[explanation_coded_long$ref_type == "abstract"])
+hist(explanation_coded_long$Count[explanation_coded_long$ref_type == "concrete"])
 
 
-# NB: each of these takes 90-120s to fit
-m0 = lmer(formula = references ~ measure + (1 + measure | Subject), # measure effect varies across subjects
-          data = explanation_coded_long, REML = F)
-m1 = lmer(formula = references ~ measure * Condition + (1 + measure | Subject),
-          data = explanation_coded_long, REML = F)
+m0 = glmer(formula = Count ~ (1 | Subject) + (1 | `Trial index`),
+           data = explanation_coded_long,
+           family = "poisson")
+m1.cond = glmer(formula = Count ~ Condition + (1 | Subject) + (1 | `Trial index`),
+                data = explanation_coded_long,
+                family = "poisson")
+m1.main = glmer(formula = Count ~ Condition + ref_type + (1 | Subject) + (1 | `Trial index`),
+                data = explanation_coded_long,
+                family = "poisson")
+m1.int = glmer(formula = Count ~ Condition * ref_type + (1 | Subject) + (1 | `Trial index`),
+               data = explanation_coded_long,
+               family = "poisson")
 
-# NB: the models above may produce singular fit, but simpler model comparison here generates nearly identical results
-# m0 = lmer(formula = references ~ measure + (1 | Subject), # measure effect varies across subjects
-#           data = explanation_coded_long, REML = F)
-# m1 = lmer(formula = references ~ measure * Condition + (1 | Subject),
-#           data = explanation_coded_long, REML = F)
+anova(m0, m1.cond, m1.main, m1.int, test = 'LRT')
+emmeans(m1.int, pairwise ~ Condition * ref_type)
 
-
-# Effect of including the condition interaction
-anova(m1, m0)
-# X^2(10) = 183.5, p < 0.001
-
-
-# 2. Pairwise: emmeans comparisons of abstract v. concrete references in each condition
-emmeans(m1, specs = pairwise ~ measure * Condition)
+# $emmeans
+# Condition ref_type   emmean     SE  df asymp.LCL asymp.UCL
+# Describe  abstract   -2.616 0.1697 Inf     -2.95    -2.284
+# Explain   abstract   -0.901 0.0909 Inf     -1.08    -0.723
+# Describe  concrete    1.340 0.0628 Inf      1.22     1.463
+# Explain   concrete   -0.839 0.0894 Inf     -1.01    -0.663
+# Describe  mechanisms -3.284 0.2299 Inf     -3.73    -2.833
+# Explain   mechanisms -0.861 0.0899 Inf     -1.04    -0.684
 
 # $contrasts
-#  contrast                                                                                              estimate     SE  df z.ratio p.value
-#  (FINAL - abstract color references Explain) - (FINAL - abstract color references Describe)             0.06762 0.0247 Inf   2.738 0.4001
-#  (FINAL - abstract purple dot references Explain) - (FINAL - abstract purple dot references Describe)   0.00846 0.0235 Inf   0.359 1.0000
-#  (FINAL - abstract shape references Explain) - (FINAL - abstract shape references Describe)             0.28916 0.0539 Inf   5.361 <.0001
-#  (FINAL - concrete color references Explain) - (FINAL - concrete color references Describe)            -1.29648 0.1024 Inf -12.655 <.0001
-#  (FINAL - concrete purple dot references Explain) - (FINAL - concrete purple dot references Describe)  -0.69594 0.0540 Inf -12.878 <.0001
-#  (FINAL - concrete shape references Explain) - (FINAL - concrete shape references Describe)            -1.57992 0.0834 Inf -18.941 <.0001
-#  (FINAL - total color references Explain) - (FINAL - total color references Describe)                  -1.22886 0.1057 Inf -11.630 <.0001
+# contrast                                 estimate     SE  df z.ratio p.value
+# Describe abstract - Explain abstract      -1.7149 0.1868 Inf  -9.181 <.0001
+# Describe concrete - Explain concrete       2.1785 0.0988 Inf  22.044 <.0001
+# Describe mechanisms - Explain mechanisms  -2.4235 0.2424 Inf  -9.997 <.0001
 
-#  (FINAL - total mechanisms Explain) - (FINAL - total mechanisms Describe)                               0.42138 0.0528 Inf   7.976 <.0001
-
-#  (FINAL - total purple dot references Explain) - (FINAL - total purple dot references Describe)        -0.68748 0.0533 Inf -12.901 <.0001
-#  (FINAL - total shape references Explain) - (FINAL - total shape references Describe)                  -1.29076 0.0840 Inf -15.358 <.0001
-
-
-
-
-# COVARIATE ANALYSIS: MEMORY ===================================================
-
-# 1. Memory performance compared to chance
-# NB: not doing binomial test here because we are looking at accuracy percentages for N subjects
-t_mem_chance_exp = t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == "Explain"],
-                          mu = 0.5,
-                          equal.var = T)
-
-t_mem_chance_desc = t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == "Describe"],
-                           mu = 0.5,
-                           equal.var = T)
-
-t_mem_chance_exp
-t_mem_chance_desc
-
-
-# 2. Memory accuracy across conditions
-plot_memory_data(memory_summary) # NB: this plot not included in manuscript
-
-t.test(memory_subject_summary$subj_accuracy[memory_subject_summary$condition == "Describe"],
-       memory_subject_summary$subj_accuracy[memory_subject_summary$condition == "Explain"],
-       var.equal = T)
-
-
-
-# COVARIATE ANALYSIS: TIME =====================================================
-
-# 1. Overall time on task across conditions
-# NB: this generates the plot but we display below with patchwork
-individ_completion = summary_data %>%
-  select(subjID, condition, experiment_completion_time) %>%
-  # filter(experiment_completion_time <= 10000) %>%
-  rename("individ_task_time" = experiment_completion_time)
-
-time_on_task = plot_time_data(completion_time_summary, individ_completion, ylab = "Seconds", title = "Mean time on experiment")
-
-# Do the two conditions spend significantly different amounts of time on the experiment?
-t.test(summary_data$experiment_completion_time[summary_data$condition == "Describe"],
-       summary_data$experiment_completion_time[summary_data$condition == "Explain"],
-       var.equal = T) # Means are seconds on task
-
-
-# 2. Time on evidence trials across conditions
-individ_trials = trial_time_subject_summary %>%
-  select(subjID, condition, mean_trial_completion) %>%
-  # filter(mean_trial_completion <= 1000) %>%
-  rename("individ_task_time" = mean_trial_completion)
-# NB: this generates the plot but we display below with patchwork
-time_on_trials = plot_time_data(trial_time_summary, individ_trials, ylab = "Seconds", title = "Mean time on trials")
-
-# Do the two conditions spend significantly different amounts of time on each trial?
-t.test(trial_time_subject_summary$mean_trial_completion[trial_time_subject_summary$condition == "Describe"],
-       trial_time_subject_summary$mean_trial_completion[trial_time_subject_summary$condition == "Explain"],
-       var.equal = T) # Means are seconds on trials
-
-# Plot graphs from 1. and 2. above side by side with patchwork
-time_on_task + time_on_trials # NB: this plot not included in manuscript
-
-
-
-# APPENDIX =====================================================================
 
 
 
